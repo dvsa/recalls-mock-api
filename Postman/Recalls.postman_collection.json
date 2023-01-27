@@ -1,0 +1,988 @@
+{
+	"info": {
+		"_postman_id": "af7e7888-8f54-40fb-a0b8-c8f91fdd45a7",
+		"name": "Recalls",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "8553673"
+	},
+	"item": [
+		{
+			"name": "failures",
+			"item": [
+				{
+					"name": "Create a new Recall - fail not authorised",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 401\", function () {",
+									"    pm.response.to.have.status(401);",
+									"});",
+									"pm.test(\"Body matches string\", function () {",
+									"    pm.expect(pm.response.text()).to.include(\"Unauthorized\");",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"vin\": \"ABCD122CBAD11435\",\n  \"manufacturerCampaignReference\": \"string\",\n  \"dvsaCampaignReference\": \"R/2013/121\",\n  \"recallCampaignStartDate\": \"2022-01-31\"\n}"
+						},
+						"url": {
+							"raw": "http://127.0.0.1:3000/recalls/",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "3000",
+							"path": [
+								"recalls",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create a new Recall - fail missing field",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 400\", function () {",
+									"    pm.response.to.have.status(400);",
+									"});",
+									"pm.test(\"Body matches string\", function () {",
+									"    pm.expect(pm.response.text()).to.include(\"Invalid request body\");",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsIng1dCI6IjJaUXBKM1VwYmpBWVhZR2FYRUpsOGxWMFRPSSIsImtpZCI6IjJaUXBKM1VwYmpBWVhZR2FYRUpsOGxWMFRPSSJ9.eyJhdWQiOiJodHRwczovL2R2c2F0ZXN0LWNsb3VkLnVrLzRhZGUwMzFkLTZlZjEtNGZiOC1hODczLTVkNjU1MmZlMDZkNCIsImlzcyI6Imh0dHBzOi8vc3RzLndpbmRvd3MubmV0LzZjNDQ4ZDkwLTRjYTEtNGNhZi1hYjU5LTBhMmFhNjdkNzgwMS8iLCJpYXQiOjE2NjkyODg0ODEsIm5iZiI6MTY2OTI4ODQ4MSwiZXhwIjoxNjY5Mjg5OTgxLCJhaW8iOiJFMlpnWUdqNzQ1OTAwbjJWYkx2Zm9aU1d2KzhqQVE9PSIsImFwcGlkIjoiY2M5YmNjZjYtOGM3ZS00OGYzLWI4YmUtZGE1YzVhZTZlNzVhIiwiYXBwaWRhY3IiOiIxIiwiaWRwIjoiaHR0cHM6Ly9zdHMud2luZG93cy5uZXQvNmM0NDhkOTAtNGNhMS00Y2FmLWFiNTktMGEyYWE2N2Q3ODAxLyIsIm9pZCI6IjU0MDM5ZGQyLTk1MDUtNGZhNC1iNjlhLWNiYTRjMzBlOWYwYiIsInJoIjoiMC5BVWdBa0kxRWJLRk1yMHlyV1FvcXBuMTRBUjBEM2tyeGJyaFBxSE5kWlZMLUJ0UklBQUEuIiwic3ViIjoiNTQwMzlkZDItOTUwNS00ZmE0LWI2OWEtY2JhNGMzMGU5ZjBiIiwidGlkIjoiNmM0NDhkOTAtNGNhMS00Y2FmLWFiNTktMGEyYWE2N2Q3ODAxIiwidXRpIjoiWWlWdGVyY0d3RXFhcjhaeEIwYXBBQSIsInZlciI6IjEuMCJ9.Ok8rv-jEZ4yLX1Q6ruzMO0dXxvOBYd9PhVec1omwkn-DyFeRXVYwmX5-b82fwCtEN9lDs-tdF6kkx63t1EaUKCz6SKYqzfZLMRe361MacPV310JAuAg78m88cAuaq1MUSqG39F6iyUWrW7WW9xuwOJq310WZl8uNpT0SL4Qx-4JCyrNCsXA6QHdF1crk8p0yOku-GfUyhWqSBW7M-5ndF2lO7Tlf5eYEo-P3z3327pAOAjHz9mNuzyiUFXZMjcp0NyROBGeZmbuXZGO9faoAbkBtQpVo0x8_IrHtOa3BUwF4tolEEnIL3y10B3ik-9QGjGkkxkHdjJdfMiBiuRm-KQ",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"manufacturerCampaignReference\": \"string\",\n  \"dvsaCampaignReference\": \"R/2013/121\",\n  \"recallCampaignStartDate\": \"2022-01-31\"\n}"
+						},
+						"url": {
+							"raw": "http://127.0.0.1:3000/recalls/",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "3000",
+							"path": [
+								"recalls",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create a new Recall - fail invalid dvsa refererence",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 400\", function () {",
+									"    pm.response.to.have.status(400);",
+									"});",
+									"pm.test(\"Body matches string\", function () {",
+									"    pm.expect(pm.response.text()).to.include(\"Invalid dvsa campaign reference number\");",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsIng1dCI6IjJaUXBKM1VwYmpBWVhZR2FYRUpsOGxWMFRPSSIsImtpZCI6IjJaUXBKM1VwYmpBWVhZR2FYRUpsOGxWMFRPSSJ9.eyJhdWQiOiJodHRwczovL2R2c2F0ZXN0LWNsb3VkLnVrLzRhZGUwMzFkLTZlZjEtNGZiOC1hODczLTVkNjU1MmZlMDZkNCIsImlzcyI6Imh0dHBzOi8vc3RzLndpbmRvd3MubmV0LzZjNDQ4ZDkwLTRjYTEtNGNhZi1hYjU5LTBhMmFhNjdkNzgwMS8iLCJpYXQiOjE2NjkyODg0ODEsIm5iZiI6MTY2OTI4ODQ4MSwiZXhwIjoxNjY5Mjg5OTgxLCJhaW8iOiJFMlpnWUdqNzQ1OTAwbjJWYkx2Zm9aU1d2KzhqQVE9PSIsImFwcGlkIjoiY2M5YmNjZjYtOGM3ZS00OGYzLWI4YmUtZGE1YzVhZTZlNzVhIiwiYXBwaWRhY3IiOiIxIiwiaWRwIjoiaHR0cHM6Ly9zdHMud2luZG93cy5uZXQvNmM0NDhkOTAtNGNhMS00Y2FmLWFiNTktMGEyYWE2N2Q3ODAxLyIsIm9pZCI6IjU0MDM5ZGQyLTk1MDUtNGZhNC1iNjlhLWNiYTRjMzBlOWYwYiIsInJoIjoiMC5BVWdBa0kxRWJLRk1yMHlyV1FvcXBuMTRBUjBEM2tyeGJyaFBxSE5kWlZMLUJ0UklBQUEuIiwic3ViIjoiNTQwMzlkZDItOTUwNS00ZmE0LWI2OWEtY2JhNGMzMGU5ZjBiIiwidGlkIjoiNmM0NDhkOTAtNGNhMS00Y2FmLWFiNTktMGEyYWE2N2Q3ODAxIiwidXRpIjoiWWlWdGVyY0d3RXFhcjhaeEIwYXBBQSIsInZlciI6IjEuMCJ9.Ok8rv-jEZ4yLX1Q6ruzMO0dXxvOBYd9PhVec1omwkn-DyFeRXVYwmX5-b82fwCtEN9lDs-tdF6kkx63t1EaUKCz6SKYqzfZLMRe361MacPV310JAuAg78m88cAuaq1MUSqG39F6iyUWrW7WW9xuwOJq310WZl8uNpT0SL4Qx-4JCyrNCsXA6QHdF1crk8p0yOku-GfUyhWqSBW7M-5ndF2lO7Tlf5eYEo-P3z3327pAOAjHz9mNuzyiUFXZMjcp0NyROBGeZmbuXZGO9faoAbkBtQpVo0x8_IrHtOa3BUwF4tolEEnIL3y10B3ik-9QGjGkkxkHdjJdfMiBiuRm-KQ",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"vin\": \"string\",\n  \"manufacturerCampaignReference\": \"string\",\n  \"dvsaCampaignReference\": \"R/2013/1\",\n  \"recallCampaignStartDate\": \"2022-01-31\"\n}"
+						},
+						"url": {
+							"raw": "http://127.0.0.1:3000/recalls/",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "3000",
+							"path": [
+								"recalls",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create a new Recall - fail invalid date",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 400\", function () {",
+									"    pm.response.to.have.status(400);",
+									"});",
+									"pm.test(\"Body matches string\", function () {",
+									"    pm.expect(pm.response.text()).to.include(\"Invalid date format\");",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsIng1dCI6IjJaUXBKM1VwYmpBWVhZR2FYRUpsOGxWMFRPSSIsImtpZCI6IjJaUXBKM1VwYmpBWVhZR2FYRUpsOGxWMFRPSSJ9.eyJhdWQiOiJodHRwczovL2R2c2F0ZXN0LWNsb3VkLnVrLzRhZGUwMzFkLTZlZjEtNGZiOC1hODczLTVkNjU1MmZlMDZkNCIsImlzcyI6Imh0dHBzOi8vc3RzLndpbmRvd3MubmV0LzZjNDQ4ZDkwLTRjYTEtNGNhZi1hYjU5LTBhMmFhNjdkNzgwMS8iLCJpYXQiOjE2NjkyODg0ODEsIm5iZiI6MTY2OTI4ODQ4MSwiZXhwIjoxNjY5Mjg5OTgxLCJhaW8iOiJFMlpnWUdqNzQ1OTAwbjJWYkx2Zm9aU1d2KzhqQVE9PSIsImFwcGlkIjoiY2M5YmNjZjYtOGM3ZS00OGYzLWI4YmUtZGE1YzVhZTZlNzVhIiwiYXBwaWRhY3IiOiIxIiwiaWRwIjoiaHR0cHM6Ly9zdHMud2luZG93cy5uZXQvNmM0NDhkOTAtNGNhMS00Y2FmLWFiNTktMGEyYWE2N2Q3ODAxLyIsIm9pZCI6IjU0MDM5ZGQyLTk1MDUtNGZhNC1iNjlhLWNiYTRjMzBlOWYwYiIsInJoIjoiMC5BVWdBa0kxRWJLRk1yMHlyV1FvcXBuMTRBUjBEM2tyeGJyaFBxSE5kWlZMLUJ0UklBQUEuIiwic3ViIjoiNTQwMzlkZDItOTUwNS00ZmE0LWI2OWEtY2JhNGMzMGU5ZjBiIiwidGlkIjoiNmM0NDhkOTAtNGNhMS00Y2FmLWFiNTktMGEyYWE2N2Q3ODAxIiwidXRpIjoiWWlWdGVyY0d3RXFhcjhaeEIwYXBBQSIsInZlciI6IjEuMCJ9.Ok8rv-jEZ4yLX1Q6ruzMO0dXxvOBYd9PhVec1omwkn-DyFeRXVYwmX5-b82fwCtEN9lDs-tdF6kkx63t1EaUKCz6SKYqzfZLMRe361MacPV310JAuAg78m88cAuaq1MUSqG39F6iyUWrW7WW9xuwOJq310WZl8uNpT0SL4Qx-4JCyrNCsXA6QHdF1crk8p0yOku-GfUyhWqSBW7M-5ndF2lO7Tlf5eYEo-P3z3327pAOAjHz9mNuzyiUFXZMjcp0NyROBGeZmbuXZGO9faoAbkBtQpVo0x8_IrHtOa3BUwF4tolEEnIL3y10B3ik-9QGjGkkxkHdjJdfMiBiuRm-KQ",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"vin\": \"string\",\n  \"manufacturerCampaignReference\": \"string\",\n  \"dvsaCampaignReference\": \"R/2013/121\",\n  \"recallCampaignStartDate\": \"12-a2332\"\n}"
+						},
+						"url": {
+							"raw": "http://127.0.0.1:3000/recalls/",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "3000",
+							"path": [
+								"recalls",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get recalls by vin - fail no vin",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 404\", function () {",
+									"    pm.response.to.have.status(404);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsIng1dCI6IjJaUXBKM1VwYmpBWVhZR2FYRUpsOGxWMFRPSSIsImtpZCI6IjJaUXBKM1VwYmpBWVhZR2FYRUpsOGxWMFRPSSJ9.eyJhdWQiOiJodHRwczovL2R2c2F0ZXN0LWNsb3VkLnVrLzRhZGUwMzFkLTZlZjEtNGZiOC1hODczLTVkNjU1MmZlMDZkNCIsImlzcyI6Imh0dHBzOi8vc3RzLndpbmRvd3MubmV0LzZjNDQ4ZDkwLTRjYTEtNGNhZi1hYjU5LTBhMmFhNjdkNzgwMS8iLCJpYXQiOjE2NjkyODg0ODEsIm5iZiI6MTY2OTI4ODQ4MSwiZXhwIjoxNjY5Mjg5OTgxLCJhaW8iOiJFMlpnWUdqNzQ1OTAwbjJWYkx2Zm9aU1d2KzhqQVE9PSIsImFwcGlkIjoiY2M5YmNjZjYtOGM3ZS00OGYzLWI4YmUtZGE1YzVhZTZlNzVhIiwiYXBwaWRhY3IiOiIxIiwiaWRwIjoiaHR0cHM6Ly9zdHMud2luZG93cy5uZXQvNmM0NDhkOTAtNGNhMS00Y2FmLWFiNTktMGEyYWE2N2Q3ODAxLyIsIm9pZCI6IjU0MDM5ZGQyLTk1MDUtNGZhNC1iNjlhLWNiYTRjMzBlOWYwYiIsInJoIjoiMC5BVWdBa0kxRWJLRk1yMHlyV1FvcXBuMTRBUjBEM2tyeGJyaFBxSE5kWlZMLUJ0UklBQUEuIiwic3ViIjoiNTQwMzlkZDItOTUwNS00ZmE0LWI2OWEtY2JhNGMzMGU5ZjBiIiwidGlkIjoiNmM0NDhkOTAtNGNhMS00Y2FmLWFiNTktMGEyYWE2N2Q3ODAxIiwidXRpIjoiWWlWdGVyY0d3RXFhcjhaeEIwYXBBQSIsInZlciI6IjEuMCJ9.Ok8rv-jEZ4yLX1Q6ruzMO0dXxvOBYd9PhVec1omwkn-DyFeRXVYwmX5-b82fwCtEN9lDs-tdF6kkx63t1EaUKCz6SKYqzfZLMRe361MacPV310JAuAg78m88cAuaq1MUSqG39F6iyUWrW7WW9xuwOJq310WZl8uNpT0SL4Qx-4JCyrNCsXA6QHdF1crk8p0yOku-GfUyhWqSBW7M-5ndF2lO7Tlf5eYEo-P3z3327pAOAjHz9mNuzyiUFXZMjcp0NyROBGeZmbuXZGO9faoAbkBtQpVo0x8_IrHtOa3BUwF4tolEEnIL3y10B3ik-9QGjGkkxkHdjJdfMiBiuRm-KQ",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://127.0.0.1:3000/recalls/vin/?dvsaCampaignReference=R/2022/002",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "3000",
+							"path": [
+								"recalls",
+								"vin",
+								""
+							],
+							"query": [
+								{
+									"key": "dvsaCampaignReference",
+									"value": "R/2022/002"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get recalls by vin - fail no reference",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 404\", function () {",
+									"    pm.response.to.have.status(404);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsIng1dCI6IjJaUXBKM1VwYmpBWVhZR2FYRUpsOGxWMFRPSSIsImtpZCI6IjJaUXBKM1VwYmpBWVhZR2FYRUpsOGxWMFRPSSJ9.eyJhdWQiOiJodHRwczovL2R2c2F0ZXN0LWNsb3VkLnVrLzRhZGUwMzFkLTZlZjEtNGZiOC1hODczLTVkNjU1MmZlMDZkNCIsImlzcyI6Imh0dHBzOi8vc3RzLndpbmRvd3MubmV0LzZjNDQ4ZDkwLTRjYTEtNGNhZi1hYjU5LTBhMmFhNjdkNzgwMS8iLCJpYXQiOjE2NjkyODg0ODEsIm5iZiI6MTY2OTI4ODQ4MSwiZXhwIjoxNjY5Mjg5OTgxLCJhaW8iOiJFMlpnWUdqNzQ1OTAwbjJWYkx2Zm9aU1d2KzhqQVE9PSIsImFwcGlkIjoiY2M5YmNjZjYtOGM3ZS00OGYzLWI4YmUtZGE1YzVhZTZlNzVhIiwiYXBwaWRhY3IiOiIxIiwiaWRwIjoiaHR0cHM6Ly9zdHMud2luZG93cy5uZXQvNmM0NDhkOTAtNGNhMS00Y2FmLWFiNTktMGEyYWE2N2Q3ODAxLyIsIm9pZCI6IjU0MDM5ZGQyLTk1MDUtNGZhNC1iNjlhLWNiYTRjMzBlOWYwYiIsInJoIjoiMC5BVWdBa0kxRWJLRk1yMHlyV1FvcXBuMTRBUjBEM2tyeGJyaFBxSE5kWlZMLUJ0UklBQUEuIiwic3ViIjoiNTQwMzlkZDItOTUwNS00ZmE0LWI2OWEtY2JhNGMzMGU5ZjBiIiwidGlkIjoiNmM0NDhkOTAtNGNhMS00Y2FmLWFiNTktMGEyYWE2N2Q3ODAxIiwidXRpIjoiWWlWdGVyY0d3RXFhcjhaeEIwYXBBQSIsInZlciI6IjEuMCJ9.Ok8rv-jEZ4yLX1Q6ruzMO0dXxvOBYd9PhVec1omwkn-DyFeRXVYwmX5-b82fwCtEN9lDs-tdF6kkx63t1EaUKCz6SKYqzfZLMRe361MacPV310JAuAg78m88cAuaq1MUSqG39F6iyUWrW7WW9xuwOJq310WZl8uNpT0SL4Qx-4JCyrNCsXA6QHdF1crk8p0yOku-GfUyhWqSBW7M-5ndF2lO7Tlf5eYEo-P3z3327pAOAjHz9mNuzyiUFXZMjcp0NyROBGeZmbuXZGO9faoAbkBtQpVo0x8_IrHtOa3BUwF4tolEEnIL3y10B3ik-9QGjGkkxkHdjJdfMiBiuRm-KQ",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://127.0.0.1:3000/recalls/vin/ABCD122CBAD11433",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "3000",
+							"path": [
+								"recalls",
+								"vin",
+								"ABCD122CBAD11433"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "put recall - fail invalid body",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 400\", function () {",
+									"    pm.response.to.have.status(400);",
+									"});",
+									"pm.test(\"Body matches string\", function () {",
+									"    pm.expect(pm.response.text()).to.include(\"Invalid request body\");",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsIng1dCI6IjJaUXBKM1VwYmpBWVhZR2FYRUpsOGxWMFRPSSIsImtpZCI6IjJaUXBKM1VwYmpBWVhZR2FYRUpsOGxWMFRPSSJ9.eyJhdWQiOiJodHRwczovL2R2c2F0ZXN0LWNsb3VkLnVrLzRhZGUwMzFkLTZlZjEtNGZiOC1hODczLTVkNjU1MmZlMDZkNCIsImlzcyI6Imh0dHBzOi8vc3RzLndpbmRvd3MubmV0LzZjNDQ4ZDkwLTRjYTEtNGNhZi1hYjU5LTBhMmFhNjdkNzgwMS8iLCJpYXQiOjE2NjkyODg0ODEsIm5iZiI6MTY2OTI4ODQ4MSwiZXhwIjoxNjY5Mjg5OTgxLCJhaW8iOiJFMlpnWUdqNzQ1OTAwbjJWYkx2Zm9aU1d2KzhqQVE9PSIsImFwcGlkIjoiY2M5YmNjZjYtOGM3ZS00OGYzLWI4YmUtZGE1YzVhZTZlNzVhIiwiYXBwaWRhY3IiOiIxIiwiaWRwIjoiaHR0cHM6Ly9zdHMud2luZG93cy5uZXQvNmM0NDhkOTAtNGNhMS00Y2FmLWFiNTktMGEyYWE2N2Q3ODAxLyIsIm9pZCI6IjU0MDM5ZGQyLTk1MDUtNGZhNC1iNjlhLWNiYTRjMzBlOWYwYiIsInJoIjoiMC5BVWdBa0kxRWJLRk1yMHlyV1FvcXBuMTRBUjBEM2tyeGJyaFBxSE5kWlZMLUJ0UklBQUEuIiwic3ViIjoiNTQwMzlkZDItOTUwNS00ZmE0LWI2OWEtY2JhNGMzMGU5ZjBiIiwidGlkIjoiNmM0NDhkOTAtNGNhMS00Y2FmLWFiNTktMGEyYWE2N2Q3ODAxIiwidXRpIjoiWWlWdGVyY0d3RXFhcjhaeEIwYXBBQSIsInZlciI6IjEuMCJ9.Ok8rv-jEZ4yLX1Q6ruzMO0dXxvOBYd9PhVec1omwkn-DyFeRXVYwmX5-b82fwCtEN9lDs-tdF6kkx63t1EaUKCz6SKYqzfZLMRe361MacPV310JAuAg78m88cAuaq1MUSqG39F6iyUWrW7WW9xuwOJq310WZl8uNpT0SL4Qx-4JCyrNCsXA6QHdF1crk8p0yOku-GfUyhWqSBW7M-5ndF2lO7Tlf5eYEo-P3z3327pAOAjHz9mNuzyiUFXZMjcp0NyROBGeZmbuXZGO9faoAbkBtQpVo0x8_IrHtOa3BUwF4tolEEnIL3y10B3ik-9QGjGkkxkHdjJdfMiBiuRm-KQ",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"rectificationDate\": \"2022-09-05\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://127.0.0.1:3000/recalls/vin/ABCD122CBAD11433?dvsaCampaignReference=R/2022/002",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "3000",
+							"path": [
+								"recalls",
+								"vin",
+								"ABCD122CBAD11433"
+							],
+							"query": [
+								{
+									"key": "dvsaCampaignReference",
+									"value": "R/2022/002"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "put recall - fail no vin",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 404\", function () {",
+									"    pm.response.to.have.status(404);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsIng1dCI6IjJaUXBKM1VwYmpBWVhZR2FYRUpsOGxWMFRPSSIsImtpZCI6IjJaUXBKM1VwYmpBWVhZR2FYRUpsOGxWMFRPSSJ9.eyJhdWQiOiJodHRwczovL2R2c2F0ZXN0LWNsb3VkLnVrLzRhZGUwMzFkLTZlZjEtNGZiOC1hODczLTVkNjU1MmZlMDZkNCIsImlzcyI6Imh0dHBzOi8vc3RzLndpbmRvd3MubmV0LzZjNDQ4ZDkwLTRjYTEtNGNhZi1hYjU5LTBhMmFhNjdkNzgwMS8iLCJpYXQiOjE2NjkyODg0ODEsIm5iZiI6MTY2OTI4ODQ4MSwiZXhwIjoxNjY5Mjg5OTgxLCJhaW8iOiJFMlpnWUdqNzQ1OTAwbjJWYkx2Zm9aU1d2KzhqQVE9PSIsImFwcGlkIjoiY2M5YmNjZjYtOGM3ZS00OGYzLWI4YmUtZGE1YzVhZTZlNzVhIiwiYXBwaWRhY3IiOiIxIiwiaWRwIjoiaHR0cHM6Ly9zdHMud2luZG93cy5uZXQvNmM0NDhkOTAtNGNhMS00Y2FmLWFiNTktMGEyYWE2N2Q3ODAxLyIsIm9pZCI6IjU0MDM5ZGQyLTk1MDUtNGZhNC1iNjlhLWNiYTRjMzBlOWYwYiIsInJoIjoiMC5BVWdBa0kxRWJLRk1yMHlyV1FvcXBuMTRBUjBEM2tyeGJyaFBxSE5kWlZMLUJ0UklBQUEuIiwic3ViIjoiNTQwMzlkZDItOTUwNS00ZmE0LWI2OWEtY2JhNGMzMGU5ZjBiIiwidGlkIjoiNmM0NDhkOTAtNGNhMS00Y2FmLWFiNTktMGEyYWE2N2Q3ODAxIiwidXRpIjoiWWlWdGVyY0d3RXFhcjhaeEIwYXBBQSIsInZlciI6IjEuMCJ9.Ok8rv-jEZ4yLX1Q6ruzMO0dXxvOBYd9PhVec1omwkn-DyFeRXVYwmX5-b82fwCtEN9lDs-tdF6kkx63t1EaUKCz6SKYqzfZLMRe361MacPV310JAuAg78m88cAuaq1MUSqG39F6iyUWrW7WW9xuwOJq310WZl8uNpT0SL4Qx-4JCyrNCsXA6QHdF1crk8p0yOku-GfUyhWqSBW7M-5ndF2lO7Tlf5eYEo-P3z3327pAOAjHz9mNuzyiUFXZMjcp0NyROBGeZmbuXZGO9faoAbkBtQpVo0x8_IrHtOa3BUwF4tolEEnIL3y10B3ik-9QGjGkkxkHdjJdfMiBiuRm-KQ",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"rectificationDate\": \"2022-09-05\",\n  \"repairStatus\": \"FIXED\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://127.0.0.1:3000/recalls/vin/?dvsaCampaignReference=R/2022/002",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "3000",
+							"path": [
+								"recalls",
+								"vin",
+								""
+							],
+							"query": [
+								{
+									"key": "dvsaCampaignReference",
+									"value": "R/2022/002"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "put recall - fail no refererence",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 404\", function () {",
+									"    pm.response.to.have.status(404);",
+									"});",
+									"pm.test(\"Body matches string\", function () {",
+									"    pm.expect(pm.response.text()).to.include(\"Required dvsaCampaignReference and/or manufacturerCampaignReference parameter is missing\");",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsIng1dCI6IjJaUXBKM1VwYmpBWVhZR2FYRUpsOGxWMFRPSSIsImtpZCI6IjJaUXBKM1VwYmpBWVhZR2FYRUpsOGxWMFRPSSJ9.eyJhdWQiOiJodHRwczovL2R2c2F0ZXN0LWNsb3VkLnVrLzRhZGUwMzFkLTZlZjEtNGZiOC1hODczLTVkNjU1MmZlMDZkNCIsImlzcyI6Imh0dHBzOi8vc3RzLndpbmRvd3MubmV0LzZjNDQ4ZDkwLTRjYTEtNGNhZi1hYjU5LTBhMmFhNjdkNzgwMS8iLCJpYXQiOjE2NjkyODg0ODEsIm5iZiI6MTY2OTI4ODQ4MSwiZXhwIjoxNjY5Mjg5OTgxLCJhaW8iOiJFMlpnWUdqNzQ1OTAwbjJWYkx2Zm9aU1d2KzhqQVE9PSIsImFwcGlkIjoiY2M5YmNjZjYtOGM3ZS00OGYzLWI4YmUtZGE1YzVhZTZlNzVhIiwiYXBwaWRhY3IiOiIxIiwiaWRwIjoiaHR0cHM6Ly9zdHMud2luZG93cy5uZXQvNmM0NDhkOTAtNGNhMS00Y2FmLWFiNTktMGEyYWE2N2Q3ODAxLyIsIm9pZCI6IjU0MDM5ZGQyLTk1MDUtNGZhNC1iNjlhLWNiYTRjMzBlOWYwYiIsInJoIjoiMC5BVWdBa0kxRWJLRk1yMHlyV1FvcXBuMTRBUjBEM2tyeGJyaFBxSE5kWlZMLUJ0UklBQUEuIiwic3ViIjoiNTQwMzlkZDItOTUwNS00ZmE0LWI2OWEtY2JhNGMzMGU5ZjBiIiwidGlkIjoiNmM0NDhkOTAtNGNhMS00Y2FmLWFiNTktMGEyYWE2N2Q3ODAxIiwidXRpIjoiWWlWdGVyY0d3RXFhcjhaeEIwYXBBQSIsInZlciI6IjEuMCJ9.Ok8rv-jEZ4yLX1Q6ruzMO0dXxvOBYd9PhVec1omwkn-DyFeRXVYwmX5-b82fwCtEN9lDs-tdF6kkx63t1EaUKCz6SKYqzfZLMRe361MacPV310JAuAg78m88cAuaq1MUSqG39F6iyUWrW7WW9xuwOJq310WZl8uNpT0SL4Qx-4JCyrNCsXA6QHdF1crk8p0yOku-GfUyhWqSBW7M-5ndF2lO7Tlf5eYEo-P3z3327pAOAjHz9mNuzyiUFXZMjcp0NyROBGeZmbuXZGO9faoAbkBtQpVo0x8_IrHtOa3BUwF4tolEEnIL3y10B3ik-9QGjGkkxkHdjJdfMiBiuRm-KQ",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"rectificationDate\": \"2022-09-05\",\n  \"repairStatus\": \"FIXED\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://127.0.0.1:3000/recalls/vin/ABCD122CBAD11433",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "3000",
+							"path": [
+								"recalls",
+								"vin",
+								"ABCD122CBAD11433"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "put recall - fail already fixed",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 400\", function () {",
+									"    pm.response.to.have.status(400);",
+									"});",
+									"pm.test(\"Body matches string\", function () {",
+									"    pm.expect(pm.response.text()).to.include(\"Vehicle recall has already been marked as fixed\");",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsIng1dCI6IjJaUXBKM1VwYmpBWVhZR2FYRUpsOGxWMFRPSSIsImtpZCI6IjJaUXBKM1VwYmpBWVhZR2FYRUpsOGxWMFRPSSJ9.eyJhdWQiOiJodHRwczovL2R2c2F0ZXN0LWNsb3VkLnVrLzRhZGUwMzFkLTZlZjEtNGZiOC1hODczLTVkNjU1MmZlMDZkNCIsImlzcyI6Imh0dHBzOi8vc3RzLndpbmRvd3MubmV0LzZjNDQ4ZDkwLTRjYTEtNGNhZi1hYjU5LTBhMmFhNjdkNzgwMS8iLCJpYXQiOjE2NjkyODg0ODEsIm5iZiI6MTY2OTI4ODQ4MSwiZXhwIjoxNjY5Mjg5OTgxLCJhaW8iOiJFMlpnWUdqNzQ1OTAwbjJWYkx2Zm9aU1d2KzhqQVE9PSIsImFwcGlkIjoiY2M5YmNjZjYtOGM3ZS00OGYzLWI4YmUtZGE1YzVhZTZlNzVhIiwiYXBwaWRhY3IiOiIxIiwiaWRwIjoiaHR0cHM6Ly9zdHMud2luZG93cy5uZXQvNmM0NDhkOTAtNGNhMS00Y2FmLWFiNTktMGEyYWE2N2Q3ODAxLyIsIm9pZCI6IjU0MDM5ZGQyLTk1MDUtNGZhNC1iNjlhLWNiYTRjMzBlOWYwYiIsInJoIjoiMC5BVWdBa0kxRWJLRk1yMHlyV1FvcXBuMTRBUjBEM2tyeGJyaFBxSE5kWlZMLUJ0UklBQUEuIiwic3ViIjoiNTQwMzlkZDItOTUwNS00ZmE0LWI2OWEtY2JhNGMzMGU5ZjBiIiwidGlkIjoiNmM0NDhkOTAtNGNhMS00Y2FmLWFiNTktMGEyYWE2N2Q3ODAxIiwidXRpIjoiWWlWdGVyY0d3RXFhcjhaeEIwYXBBQSIsInZlciI6IjEuMCJ9.Ok8rv-jEZ4yLX1Q6ruzMO0dXxvOBYd9PhVec1omwkn-DyFeRXVYwmX5-b82fwCtEN9lDs-tdF6kkx63t1EaUKCz6SKYqzfZLMRe361MacPV310JAuAg78m88cAuaq1MUSqG39F6iyUWrW7WW9xuwOJq310WZl8uNpT0SL4Qx-4JCyrNCsXA6QHdF1crk8p0yOku-GfUyhWqSBW7M-5ndF2lO7Tlf5eYEo-P3z3327pAOAjHz9mNuzyiUFXZMjcp0NyROBGeZmbuXZGO9faoAbkBtQpVo0x8_IrHtOa3BUwF4tolEEnIL3y10B3ik-9QGjGkkxkHdjJdfMiBiuRm-KQ",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"rectificationDate\": \"2022-09-05\",\n  \"repairStatus\": \"FIXED\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://127.0.0.1:3000/recalls/vin/ABCD122CBAD11432?dvsaCampaignReference=R/2022/001",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "3000",
+							"path": [
+								"recalls",
+								"vin",
+								"ABCD122CBAD11432"
+							],
+							"query": [
+								{
+									"key": "dvsaCampaignReference",
+									"value": "R/2022/001"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete recall - fail no vin",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 404\", function () {",
+									"    pm.response.to.have.status(404);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsIng1dCI6IjJaUXBKM1VwYmpBWVhZR2FYRUpsOGxWMFRPSSIsImtpZCI6IjJaUXBKM1VwYmpBWVhZR2FYRUpsOGxWMFRPSSJ9.eyJhdWQiOiJodHRwczovL2R2c2F0ZXN0LWNsb3VkLnVrLzRhZGUwMzFkLTZlZjEtNGZiOC1hODczLTVkNjU1MmZlMDZkNCIsImlzcyI6Imh0dHBzOi8vc3RzLndpbmRvd3MubmV0LzZjNDQ4ZDkwLTRjYTEtNGNhZi1hYjU5LTBhMmFhNjdkNzgwMS8iLCJpYXQiOjE2NjkyODg0ODEsIm5iZiI6MTY2OTI4ODQ4MSwiZXhwIjoxNjY5Mjg5OTgxLCJhaW8iOiJFMlpnWUdqNzQ1OTAwbjJWYkx2Zm9aU1d2KzhqQVE9PSIsImFwcGlkIjoiY2M5YmNjZjYtOGM3ZS00OGYzLWI4YmUtZGE1YzVhZTZlNzVhIiwiYXBwaWRhY3IiOiIxIiwiaWRwIjoiaHR0cHM6Ly9zdHMud2luZG93cy5uZXQvNmM0NDhkOTAtNGNhMS00Y2FmLWFiNTktMGEyYWE2N2Q3ODAxLyIsIm9pZCI6IjU0MDM5ZGQyLTk1MDUtNGZhNC1iNjlhLWNiYTRjMzBlOWYwYiIsInJoIjoiMC5BVWdBa0kxRWJLRk1yMHlyV1FvcXBuMTRBUjBEM2tyeGJyaFBxSE5kWlZMLUJ0UklBQUEuIiwic3ViIjoiNTQwMzlkZDItOTUwNS00ZmE0LWI2OWEtY2JhNGMzMGU5ZjBiIiwidGlkIjoiNmM0NDhkOTAtNGNhMS00Y2FmLWFiNTktMGEyYWE2N2Q3ODAxIiwidXRpIjoiWWlWdGVyY0d3RXFhcjhaeEIwYXBBQSIsInZlciI6IjEuMCJ9.Ok8rv-jEZ4yLX1Q6ruzMO0dXxvOBYd9PhVec1omwkn-DyFeRXVYwmX5-b82fwCtEN9lDs-tdF6kkx63t1EaUKCz6SKYqzfZLMRe361MacPV310JAuAg78m88cAuaq1MUSqG39F6iyUWrW7WW9xuwOJq310WZl8uNpT0SL4Qx-4JCyrNCsXA6QHdF1crk8p0yOku-GfUyhWqSBW7M-5ndF2lO7Tlf5eYEo-P3z3327pAOAjHz9mNuzyiUFXZMjcp0NyROBGeZmbuXZGO9faoAbkBtQpVo0x8_IrHtOa3BUwF4tolEEnIL3y10B3ik-9QGjGkkxkHdjJdfMiBiuRm-KQ",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://127.0.0.1:3000/recalls/vin/?dvsaCampaignReference=R/2022/002",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "3000",
+							"path": [
+								"recalls",
+								"vin",
+								""
+							],
+							"query": [
+								{
+									"key": "dvsaCampaignReference",
+									"value": "R/2022/002"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete recall - fail no reference",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 400\", function () {",
+									"    pm.response.to.have.status(400);",
+									"});",
+									"pm.test(\"Body matches string\", function () {",
+									"    pm.expect(pm.response.text()).to.include(\"Required dvsaCampaignReference and/or manufacturerCampaignReference parameter is missing\");",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsIng1dCI6IjJaUXBKM1VwYmpBWVhZR2FYRUpsOGxWMFRPSSIsImtpZCI6IjJaUXBKM1VwYmpBWVhZR2FYRUpsOGxWMFRPSSJ9.eyJhdWQiOiJodHRwczovL2R2c2F0ZXN0LWNsb3VkLnVrLzRhZGUwMzFkLTZlZjEtNGZiOC1hODczLTVkNjU1MmZlMDZkNCIsImlzcyI6Imh0dHBzOi8vc3RzLndpbmRvd3MubmV0LzZjNDQ4ZDkwLTRjYTEtNGNhZi1hYjU5LTBhMmFhNjdkNzgwMS8iLCJpYXQiOjE2NjkyODg0ODEsIm5iZiI6MTY2OTI4ODQ4MSwiZXhwIjoxNjY5Mjg5OTgxLCJhaW8iOiJFMlpnWUdqNzQ1OTAwbjJWYkx2Zm9aU1d2KzhqQVE9PSIsImFwcGlkIjoiY2M5YmNjZjYtOGM3ZS00OGYzLWI4YmUtZGE1YzVhZTZlNzVhIiwiYXBwaWRhY3IiOiIxIiwiaWRwIjoiaHR0cHM6Ly9zdHMud2luZG93cy5uZXQvNmM0NDhkOTAtNGNhMS00Y2FmLWFiNTktMGEyYWE2N2Q3ODAxLyIsIm9pZCI6IjU0MDM5ZGQyLTk1MDUtNGZhNC1iNjlhLWNiYTRjMzBlOWYwYiIsInJoIjoiMC5BVWdBa0kxRWJLRk1yMHlyV1FvcXBuMTRBUjBEM2tyeGJyaFBxSE5kWlZMLUJ0UklBQUEuIiwic3ViIjoiNTQwMzlkZDItOTUwNS00ZmE0LWI2OWEtY2JhNGMzMGU5ZjBiIiwidGlkIjoiNmM0NDhkOTAtNGNhMS00Y2FmLWFiNTktMGEyYWE2N2Q3ODAxIiwidXRpIjoiWWlWdGVyY0d3RXFhcjhaeEIwYXBBQSIsInZlciI6IjEuMCJ9.Ok8rv-jEZ4yLX1Q6ruzMO0dXxvOBYd9PhVec1omwkn-DyFeRXVYwmX5-b82fwCtEN9lDs-tdF6kkx63t1EaUKCz6SKYqzfZLMRe361MacPV310JAuAg78m88cAuaq1MUSqG39F6iyUWrW7WW9xuwOJq310WZl8uNpT0SL4Qx-4JCyrNCsXA6QHdF1crk8p0yOku-GfUyhWqSBW7M-5ndF2lO7Tlf5eYEo-P3z3327pAOAjHz9mNuzyiUFXZMjcp0NyROBGeZmbuXZGO9faoAbkBtQpVo0x8_IrHtOa3BUwF4tolEEnIL3y10B3ik-9QGjGkkxkHdjJdfMiBiuRm-KQ",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://127.0.0.1:3000/recalls/vin/ABCD122CBAD11433",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "3000",
+							"path": [
+								"recalls",
+								"vin",
+								"ABCD122CBAD11433"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete recall - fail already repaired",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 400\", function () {",
+									"    pm.response.to.have.status(400);",
+									"});",
+									"pm.test(\"Body matches string\", function () {",
+									"    pm.expect(pm.response.text()).to.include(\"Vehicle recall has already been marked as fixed\");",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsIng1dCI6IjJaUXBKM1VwYmpBWVhZR2FYRUpsOGxWMFRPSSIsImtpZCI6IjJaUXBKM1VwYmpBWVhZR2FYRUpsOGxWMFRPSSJ9.eyJhdWQiOiJodHRwczovL2R2c2F0ZXN0LWNsb3VkLnVrLzRhZGUwMzFkLTZlZjEtNGZiOC1hODczLTVkNjU1MmZlMDZkNCIsImlzcyI6Imh0dHBzOi8vc3RzLndpbmRvd3MubmV0LzZjNDQ4ZDkwLTRjYTEtNGNhZi1hYjU5LTBhMmFhNjdkNzgwMS8iLCJpYXQiOjE2NjkyODg0ODEsIm5iZiI6MTY2OTI4ODQ4MSwiZXhwIjoxNjY5Mjg5OTgxLCJhaW8iOiJFMlpnWUdqNzQ1OTAwbjJWYkx2Zm9aU1d2KzhqQVE9PSIsImFwcGlkIjoiY2M5YmNjZjYtOGM3ZS00OGYzLWI4YmUtZGE1YzVhZTZlNzVhIiwiYXBwaWRhY3IiOiIxIiwiaWRwIjoiaHR0cHM6Ly9zdHMud2luZG93cy5uZXQvNmM0NDhkOTAtNGNhMS00Y2FmLWFiNTktMGEyYWE2N2Q3ODAxLyIsIm9pZCI6IjU0MDM5ZGQyLTk1MDUtNGZhNC1iNjlhLWNiYTRjMzBlOWYwYiIsInJoIjoiMC5BVWdBa0kxRWJLRk1yMHlyV1FvcXBuMTRBUjBEM2tyeGJyaFBxSE5kWlZMLUJ0UklBQUEuIiwic3ViIjoiNTQwMzlkZDItOTUwNS00ZmE0LWI2OWEtY2JhNGMzMGU5ZjBiIiwidGlkIjoiNmM0NDhkOTAtNGNhMS00Y2FmLWFiNTktMGEyYWE2N2Q3ODAxIiwidXRpIjoiWWlWdGVyY0d3RXFhcjhaeEIwYXBBQSIsInZlciI6IjEuMCJ9.Ok8rv-jEZ4yLX1Q6ruzMO0dXxvOBYd9PhVec1omwkn-DyFeRXVYwmX5-b82fwCtEN9lDs-tdF6kkx63t1EaUKCz6SKYqzfZLMRe361MacPV310JAuAg78m88cAuaq1MUSqG39F6iyUWrW7WW9xuwOJq310WZl8uNpT0SL4Qx-4JCyrNCsXA6QHdF1crk8p0yOku-GfUyhWqSBW7M-5ndF2lO7Tlf5eYEo-P3z3327pAOAjHz9mNuzyiUFXZMjcp0NyROBGeZmbuXZGO9faoAbkBtQpVo0x8_IrHtOa3BUwF4tolEEnIL3y10B3ik-9QGjGkkxkHdjJdfMiBiuRm-KQ",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://127.0.0.1:3000/recalls/vin/ABCD122CBAD11432?dvsaCampaignReference=R/2022/001",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "3000",
+							"path": [
+								"recalls",
+								"vin",
+								"ABCD122CBAD11432"
+							],
+							"query": [
+								{
+									"key": "dvsaCampaignReference",
+									"value": "R/2022/001"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "authentication - sucess",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "grant_type",
+							"value": "client_credentials",
+							"type": "text"
+						},
+						{
+							"key": "client_id",
+							"value": "yourdvsaissuedclient_id",
+							"type": "text"
+						},
+						{
+							"key": "client_secret",
+							"value": "yourdvsaissuedclient_secret",
+							"type": "text"
+						},
+						{
+							"key": "scope",
+							"value": "http//:dvsaissuedscope.default",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "localhost:3000/oauth2/v2.0/token",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"oauth2",
+						"v2.0",
+						"token"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create a new Recall - sucess",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 201\", function () {",
+							"    pm.response.to.have.status(201);",
+							"});",
+							"pm.test(\"Body matches string\", function () {",
+							"    pm.expect(pm.response.text()).to.include(\"Created\");",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsIng1dCI6IjJaUXBKM1VwYmpBWVhZR2FYRUpsOGxWMFRPSSIsImtpZCI6IjJaUXBKM1VwYmpBWVhZR2FYRUpsOGxWMFRPSSJ9.eyJhdWQiOiJodHRwczovL2R2c2F0ZXN0LWNsb3VkLnVrLzRhZGUwMzFkLTZlZjEtNGZiOC1hODczLTVkNjU1MmZlMDZkNCIsImlzcyI6Imh0dHBzOi8vc3RzLndpbmRvd3MubmV0LzZjNDQ4ZDkwLTRjYTEtNGNhZi1hYjU5LTBhMmFhNjdkNzgwMS8iLCJpYXQiOjE2NjkyODg0ODEsIm5iZiI6MTY2OTI4ODQ4MSwiZXhwIjoxNjY5Mjg5OTgxLCJhaW8iOiJFMlpnWUdqNzQ1OTAwbjJWYkx2Zm9aU1d2KzhqQVE9PSIsImFwcGlkIjoiY2M5YmNjZjYtOGM3ZS00OGYzLWI4YmUtZGE1YzVhZTZlNzVhIiwiYXBwaWRhY3IiOiIxIiwiaWRwIjoiaHR0cHM6Ly9zdHMud2luZG93cy5uZXQvNmM0NDhkOTAtNGNhMS00Y2FmLWFiNTktMGEyYWE2N2Q3ODAxLyIsIm9pZCI6IjU0MDM5ZGQyLTk1MDUtNGZhNC1iNjlhLWNiYTRjMzBlOWYwYiIsInJoIjoiMC5BVWdBa0kxRWJLRk1yMHlyV1FvcXBuMTRBUjBEM2tyeGJyaFBxSE5kWlZMLUJ0UklBQUEuIiwic3ViIjoiNTQwMzlkZDItOTUwNS00ZmE0LWI2OWEtY2JhNGMzMGU5ZjBiIiwidGlkIjoiNmM0NDhkOTAtNGNhMS00Y2FmLWFiNTktMGEyYWE2N2Q3ODAxIiwidXRpIjoiWWlWdGVyY0d3RXFhcjhaeEIwYXBBQSIsInZlciI6IjEuMCJ9.Ok8rv-jEZ4yLX1Q6ruzMO0dXxvOBYd9PhVec1omwkn-DyFeRXVYwmX5-b82fwCtEN9lDs-tdF6kkx63t1EaUKCz6SKYqzfZLMRe361MacPV310JAuAg78m88cAuaq1MUSqG39F6iyUWrW7WW9xuwOJq310WZl8uNpT0SL4Qx-4JCyrNCsXA6QHdF1crk8p0yOku-GfUyhWqSBW7M-5ndF2lO7Tlf5eYEo-P3z3327pAOAjHz9mNuzyiUFXZMjcp0NyROBGeZmbuXZGO9faoAbkBtQpVo0x8_IrHtOa3BUwF4tolEEnIL3y10B3ik-9QGjGkkxkHdjJdfMiBiuRm-KQ",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"vin\": \"ABCD122CBAD11435\",\n  \"manufacturerCampaignReference\": \"string\",\n  \"dvsaCampaignReference\": \"R/2013/121\",\n  \"recallCampaignStartDate\": \"2022-01-31\"\n}"
+				},
+				"url": {
+					"raw": "http://127.0.0.1:3000/recalls/",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "3000",
+					"path": [
+						"recalls",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "put recall",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 204\", function () {",
+							"    pm.response.to.have.status(204);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsIng1dCI6IjJaUXBKM1VwYmpBWVhZR2FYRUpsOGxWMFRPSSIsImtpZCI6IjJaUXBKM1VwYmpBWVhZR2FYRUpsOGxWMFRPSSJ9.eyJhdWQiOiJodHRwczovL2R2c2F0ZXN0LWNsb3VkLnVrLzRhZGUwMzFkLTZlZjEtNGZiOC1hODczLTVkNjU1MmZlMDZkNCIsImlzcyI6Imh0dHBzOi8vc3RzLndpbmRvd3MubmV0LzZjNDQ4ZDkwLTRjYTEtNGNhZi1hYjU5LTBhMmFhNjdkNzgwMS8iLCJpYXQiOjE2NjkyODg0ODEsIm5iZiI6MTY2OTI4ODQ4MSwiZXhwIjoxNjY5Mjg5OTgxLCJhaW8iOiJFMlpnWUdqNzQ1OTAwbjJWYkx2Zm9aU1d2KzhqQVE9PSIsImFwcGlkIjoiY2M5YmNjZjYtOGM3ZS00OGYzLWI4YmUtZGE1YzVhZTZlNzVhIiwiYXBwaWRhY3IiOiIxIiwiaWRwIjoiaHR0cHM6Ly9zdHMud2luZG93cy5uZXQvNmM0NDhkOTAtNGNhMS00Y2FmLWFiNTktMGEyYWE2N2Q3ODAxLyIsIm9pZCI6IjU0MDM5ZGQyLTk1MDUtNGZhNC1iNjlhLWNiYTRjMzBlOWYwYiIsInJoIjoiMC5BVWdBa0kxRWJLRk1yMHlyV1FvcXBuMTRBUjBEM2tyeGJyaFBxSE5kWlZMLUJ0UklBQUEuIiwic3ViIjoiNTQwMzlkZDItOTUwNS00ZmE0LWI2OWEtY2JhNGMzMGU5ZjBiIiwidGlkIjoiNmM0NDhkOTAtNGNhMS00Y2FmLWFiNTktMGEyYWE2N2Q3ODAxIiwidXRpIjoiWWlWdGVyY0d3RXFhcjhaeEIwYXBBQSIsInZlciI6IjEuMCJ9.Ok8rv-jEZ4yLX1Q6ruzMO0dXxvOBYd9PhVec1omwkn-DyFeRXVYwmX5-b82fwCtEN9lDs-tdF6kkx63t1EaUKCz6SKYqzfZLMRe361MacPV310JAuAg78m88cAuaq1MUSqG39F6iyUWrW7WW9xuwOJq310WZl8uNpT0SL4Qx-4JCyrNCsXA6QHdF1crk8p0yOku-GfUyhWqSBW7M-5ndF2lO7Tlf5eYEo-P3z3327pAOAjHz9mNuzyiUFXZMjcp0NyROBGeZmbuXZGO9faoAbkBtQpVo0x8_IrHtOa3BUwF4tolEEnIL3y10B3ik-9QGjGkkxkHdjJdfMiBiuRm-KQ",
+						"type": "default"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"rectificationDate\": \"2022-09-05\",\n  \"repairStatus\": \"FIXED\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://127.0.0.1:3000/recalls/vin/ABCD122CBAD11433?dvsaCampaignReference=R/2022/002",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "3000",
+					"path": [
+						"recalls",
+						"vin",
+						"ABCD122CBAD11433"
+					],
+					"query": [
+						{
+							"key": "dvsaCampaignReference",
+							"value": "R/2022/002"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get recalls by vin",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"pm.test(\"Body matches string\", function () {",
+							"    pm.expect(pm.response.text()).to.include(\"vin\");",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsIng1dCI6IjJaUXBKM1VwYmpBWVhZR2FYRUpsOGxWMFRPSSIsImtpZCI6IjJaUXBKM1VwYmpBWVhZR2FYRUpsOGxWMFRPSSJ9.eyJhdWQiOiJodHRwczovL2R2c2F0ZXN0LWNsb3VkLnVrLzRhZGUwMzFkLTZlZjEtNGZiOC1hODczLTVkNjU1MmZlMDZkNCIsImlzcyI6Imh0dHBzOi8vc3RzLndpbmRvd3MubmV0LzZjNDQ4ZDkwLTRjYTEtNGNhZi1hYjU5LTBhMmFhNjdkNzgwMS8iLCJpYXQiOjE2NjkyODg0ODEsIm5iZiI6MTY2OTI4ODQ4MSwiZXhwIjoxNjY5Mjg5OTgxLCJhaW8iOiJFMlpnWUdqNzQ1OTAwbjJWYkx2Zm9aU1d2KzhqQVE9PSIsImFwcGlkIjoiY2M5YmNjZjYtOGM3ZS00OGYzLWI4YmUtZGE1YzVhZTZlNzVhIiwiYXBwaWRhY3IiOiIxIiwiaWRwIjoiaHR0cHM6Ly9zdHMud2luZG93cy5uZXQvNmM0NDhkOTAtNGNhMS00Y2FmLWFiNTktMGEyYWE2N2Q3ODAxLyIsIm9pZCI6IjU0MDM5ZGQyLTk1MDUtNGZhNC1iNjlhLWNiYTRjMzBlOWYwYiIsInJoIjoiMC5BVWdBa0kxRWJLRk1yMHlyV1FvcXBuMTRBUjBEM2tyeGJyaFBxSE5kWlZMLUJ0UklBQUEuIiwic3ViIjoiNTQwMzlkZDItOTUwNS00ZmE0LWI2OWEtY2JhNGMzMGU5ZjBiIiwidGlkIjoiNmM0NDhkOTAtNGNhMS00Y2FmLWFiNTktMGEyYWE2N2Q3ODAxIiwidXRpIjoiWWlWdGVyY0d3RXFhcjhaeEIwYXBBQSIsInZlciI6IjEuMCJ9.Ok8rv-jEZ4yLX1Q6ruzMO0dXxvOBYd9PhVec1omwkn-DyFeRXVYwmX5-b82fwCtEN9lDs-tdF6kkx63t1EaUKCz6SKYqzfZLMRe361MacPV310JAuAg78m88cAuaq1MUSqG39F6iyUWrW7WW9xuwOJq310WZl8uNpT0SL4Qx-4JCyrNCsXA6QHdF1crk8p0yOku-GfUyhWqSBW7M-5ndF2lO7Tlf5eYEo-P3z3327pAOAjHz9mNuzyiUFXZMjcp0NyROBGeZmbuXZGO9faoAbkBtQpVo0x8_IrHtOa3BUwF4tolEEnIL3y10B3ik-9QGjGkkxkHdjJdfMiBiuRm-KQ",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://127.0.0.1:3000/recalls/vin/ABCD122CBAD11433?dvsaCampaignReference=R/2022/002",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "3000",
+					"path": [
+						"recalls",
+						"vin",
+						"ABCD122CBAD11433"
+					],
+					"query": [
+						{
+							"key": "dvsaCampaignReference",
+							"value": "R/2022/002"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "delete recall",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 204\", function () {",
+							"    pm.response.to.have.status(204);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsIng1dCI6IjJaUXBKM1VwYmpBWVhZR2FYRUpsOGxWMFRPSSIsImtpZCI6IjJaUXBKM1VwYmpBWVhZR2FYRUpsOGxWMFRPSSJ9.eyJhdWQiOiJodHRwczovL2R2c2F0ZXN0LWNsb3VkLnVrLzRhZGUwMzFkLTZlZjEtNGZiOC1hODczLTVkNjU1MmZlMDZkNCIsImlzcyI6Imh0dHBzOi8vc3RzLndpbmRvd3MubmV0LzZjNDQ4ZDkwLTRjYTEtNGNhZi1hYjU5LTBhMmFhNjdkNzgwMS8iLCJpYXQiOjE2NjkyODg0ODEsIm5iZiI6MTY2OTI4ODQ4MSwiZXhwIjoxNjY5Mjg5OTgxLCJhaW8iOiJFMlpnWUdqNzQ1OTAwbjJWYkx2Zm9aU1d2KzhqQVE9PSIsImFwcGlkIjoiY2M5YmNjZjYtOGM3ZS00OGYzLWI4YmUtZGE1YzVhZTZlNzVhIiwiYXBwaWRhY3IiOiIxIiwiaWRwIjoiaHR0cHM6Ly9zdHMud2luZG93cy5uZXQvNmM0NDhkOTAtNGNhMS00Y2FmLWFiNTktMGEyYWE2N2Q3ODAxLyIsIm9pZCI6IjU0MDM5ZGQyLTk1MDUtNGZhNC1iNjlhLWNiYTRjMzBlOWYwYiIsInJoIjoiMC5BVWdBa0kxRWJLRk1yMHlyV1FvcXBuMTRBUjBEM2tyeGJyaFBxSE5kWlZMLUJ0UklBQUEuIiwic3ViIjoiNTQwMzlkZDItOTUwNS00ZmE0LWI2OWEtY2JhNGMzMGU5ZjBiIiwidGlkIjoiNmM0NDhkOTAtNGNhMS00Y2FmLWFiNTktMGEyYWE2N2Q3ODAxIiwidXRpIjoiWWlWdGVyY0d3RXFhcjhaeEIwYXBBQSIsInZlciI6IjEuMCJ9.Ok8rv-jEZ4yLX1Q6ruzMO0dXxvOBYd9PhVec1omwkn-DyFeRXVYwmX5-b82fwCtEN9lDs-tdF6kkx63t1EaUKCz6SKYqzfZLMRe361MacPV310JAuAg78m88cAuaq1MUSqG39F6iyUWrW7WW9xuwOJq310WZl8uNpT0SL4Qx-4JCyrNCsXA6QHdF1crk8p0yOku-GfUyhWqSBW7M-5ndF2lO7Tlf5eYEo-P3z3327pAOAjHz9mNuzyiUFXZMjcp0NyROBGeZmbuXZGO9faoAbkBtQpVo0x8_IrHtOa3BUwF4tolEEnIL3y10B3ik-9QGjGkkxkHdjJdfMiBiuRm-KQ",
+						"type": "default"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://127.0.0.1:3000/recalls/vin/ABCD122CBAD11433?dvsaCampaignReference=R/2022/002",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "3000",
+					"path": [
+						"recalls",
+						"vin",
+						"ABCD122CBAD11433"
+					],
+					"query": [
+						{
+							"key": "dvsaCampaignReference",
+							"value": "R/2022/002"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
