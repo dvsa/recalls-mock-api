@@ -36,7 +36,7 @@ Before raising a pull request, ensure all tests pass and you have run the lintin
 
 ## Need help?
 
-Contact Shaun Hare or Anna Dodson for help with this project.
+Contact Shaun Hare for help with this project.
 
 ## Code of Conduct
 

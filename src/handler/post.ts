@@ -28,8 +28,7 @@ export const handler = async (event: APIGatewayProxyEvent): Promise<APIGatewayPr
     if (!validDateFormat(recall.recallCampaignStartDate)) {
       return HttpResponse(StatusCodes.BAD_REQUEST, ExternalApiErrorMessages.InvalidDateFormat);
     }
-    const vehicles = Vehicles;
-    const duplicateVehicle = vehicles.find((vehicle) => vehicle.vin === recall.vin);
+    const duplicateVehicle = Vehicles.find((vehicle) => vehicle.vin === recall.vin);
     if (duplicateVehicle) {
       return HttpResponse(StatusCodes.CONFLICT, duplicateVehicle);
     }

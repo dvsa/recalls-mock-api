@@ -1,7 +1,7 @@
 {
-  "name": "dvsa-recalls-api-tester",
+  "name": "dvsa-recalls-mock-api",
   "version": "1.0.0",
-  "description": "A package to act as a starter for typescript lambdas",
+  "description": "A SAM Local application to help development teams test output from their solution locally for the safety recalls API",
   "main": "index.js",
   "scripts": {
     "lint": "eslint '*/**/*.ts' --quiet --fix",
@@ -18,9 +18,6 @@
     {
       "name": "Shaun Hare",
       "email": "shaun.hare@dvsa.gov.uk"
-    },    {
-      "name": "Justin Johnston",
-      "email": "justin.johnston@kainos.com"
     }
   ],
   "license": "Open Government Licence v3.0",

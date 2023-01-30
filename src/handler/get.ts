@@ -24,14 +24,13 @@ export const handler = async (event: APIGatewayProxyEvent): Promise<APIGatewayPr
   }
   const { vin } = event.pathParameters;
   const { manufacturerCampaignReference, dvsaCampaignReference } = event.queryStringParameters;
-  const vehicles = Vehicles;
   if (dvsaCampaignReference) {
-    const vehicleFound = vehicles.find((vehicle) => vehicle.vin === vin && vehicle.dvsaCampaignReference === dvsaCampaignReference);
+    const vehicleFound = Vehicles.find((vehicle) => vehicle.vin === vin && vehicle.dvsaCampaignReference === dvsaCampaignReference);
     if (vehicleFound) {
       return HttpResponse(StatusCodes.OK, vehicleFound);
     }
   }
-  const vehicleFound = vehicles.find((vehicle) => vehicle.vin === vin && vehicle.manufacturerCampaignReference === manufacturerCampaignReference);
+  const vehicleFound = Vehicles.find((vehicle) => vehicle.vin === vin && vehicle.manufacturerCampaignReference === manufacturerCampaignReference);
   if (vehicleFound) {
     return HttpResponse(StatusCodes.OK, vehicleFound);
   }
