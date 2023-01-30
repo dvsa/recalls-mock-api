@@ -82,19 +82,6 @@ Resources:
               Path: /oauth2/v2.0/token
               Method: post
 
-    CWEventLambdaFunction:
-      Type: 'AWS::Serverless::Function'
-      Properties:
-        CodeUri: src/handler/
-        Handler: cloudWatchEvent.handler
-        Runtime: nodejs14.x
-        Events:
-          CWEventLambdaSchedule:
-            Type: Schedule
-            Properties:
-              Schedule: 'rate(1 minute)'
-              # Schedule: 'cron(1 * * * ? *)'
-
 Outputs:
   GetLambdaApi:
     Description: "API Gateway endpoint URL for GetLambdaFunction on dev stage"
@@ -110,9 +97,3 @@ Outputs:
     Description: "Post Lambda Function ARN"
     Value: !GetAtt PostLambdaFunction.Arn
 
-  CWEventLambdaSchedule:
-    Description: "CloudWatch Event schedule for CloudWatchEventLambdaFunction"
-    Value: "rate(1 minute)"
-  CWEventLambdaFunction:
-    Description: "CloudWatch Event Lambda Function ARN"
-    Value: !GetAtt CWEventLambdaFunction.Arn
