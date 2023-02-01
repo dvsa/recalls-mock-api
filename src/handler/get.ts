@@ -31,36 +31,40 @@ export const handler = async (event: APIGatewayProxyEvent): Promise<APIGatewayPr
   if (dvsaCampaignReference) {
     if (vehicleFound && vehicleFound.dvsaCampaignReference === dvsaCampaignReference) {
       vehiclesFound.push(vehicleFound);
-      return HttpResponse(StatusCodes.OK, buildresponse(vehiclesFound, vehicleFound.vin, vehicleFound.manufacturerId));
+      return HttpResponse(StatusCodes.OK, createRecallsDataResponse(vehiclesFound, vehicleFound.vin, vehicleFound.manufacturerId));
     }
   } else if (manufacturerCampaignReference) {
     if (vehicleFound && vehicleFound.manufacturerCampaignReference === manufacturerCampaignReference) {
       vehiclesFound.push(vehicleFound);
-      return HttpResponse(StatusCodes.OK, buildresponse(vehiclesFound, vehicleFound.vin, vehicleFound.manufacturerId));
+      return HttpResponse(StatusCodes.OK, createRecallsDataResponse(vehiclesFound, vehicleFound.vin, vehicleFound.manufacturerId));
     }
   } else {
     if (vehicleFound) {
       vehiclesFound = Vehicles.filter((vehicle) => vehicle.vin === vin);
-      return HttpResponse(StatusCodes.OK, buildresponse(vehiclesFound, vehicleFound.vin, vehicleFound.manufacturerId));
+      return HttpResponse(StatusCodes.OK, createRecallsDataResponse(vehiclesFound, vehicleFound.vin, vehicleFound.manufacturerId));
     }
     return HttpResponse(StatusCodes.NOT_FOUND, getReasonPhrase(StatusCodes.NOT_FOUND));
   }
   return HttpResponse(StatusCodes.NOT_FOUND, getReasonPhrase(StatusCodes.NOT_FOUND));
 };
 
-const buildresponse = (vehicles:RecallResponseContract[], vin:string, manufacturer:string):RecallsDataResponse => {
-  const recallResponse = <RecallsDataResponse>{};
-  recallResponse.vin = vin;
-  recallResponse.manufacturer = manufacturer;
-  const recallsArray:RecallsDataReponseDetail[] = [];
+const createRecallsDataResponse = (vehicles:RecallResponseContract[], vin:string, manufacturer:string):RecallsDataResponse => {
+  const recallDataResponse = <RecallsDataResponse>{};
+  recallDataResponse.vin = vin;
+  recallDataResponse.manufacturer = manufacturer;
+  recallDataResponse.recalls = createArrayOfRecalls(vehicles);
+  return recallDataResponse;
+};
+
+const createArrayOfRecalls = (vehicles:RecallResponseContract[]):RecallsDataReponseDetail[] => {
+  const vehicleRecalls:RecallsDataReponseDetail[] = [];
   vehicles.forEach((vehicle) => {
-    const recallResponseDetail = <RecallsDataReponseDetail>{};
-    recallResponseDetail.dvsaCampaignReference = vehicle.dvsaCampaignReference;
-    recallResponseDetail.manufacturerCampaignReference = vehicle.manufacturerCampaignReference;
-    recallResponseDetail.recallCampaignStartDate = vehicle.recallCampaignStartDate;
-    recallResponseDetail.repairStatus = vehicle.repairStatus;
-    recallsArray.push(recallResponseDetail);
+    const recallDataResponseDetail = <RecallsDataReponseDetail>{};
+    recallDataResponseDetail.dvsaCampaignReference = vehicle.dvsaCampaignReference;
+    recallDataResponseDetail.manufacturerCampaignReference = vehicle.manufacturerCampaignReference;
+    recallDataResponseDetail.recallCampaignStartDate = vehicle.recallCampaignStartDate;
+    recallDataResponseDetail.repairStatus = vehicle.repairStatus;
+    vehicleRecalls.push(recallDataResponseDetail);
   });
-  recallResponse.recalls = recallsArray;
-  return recallResponse;
+  return vehicleRecalls;
 };
