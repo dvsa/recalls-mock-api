@@ -17,6 +17,14 @@ const Vehicles:RecallResponseContract[] = [
     manufacturerId: 'manufacturer',
     repairStatus: RepairStatus.NOT_FIXED,
   },
+  {
+    vin: 'ABCD122CBAD11433',
+    manufacturerCampaignReference: '12AB14',
+    dvsaCampaignReference: 'R/2022/004',
+    recallCampaignStartDate: '2006/01/02',
+    manufacturerId: 'manufacturer',
+    repairStatus: RepairStatus.NOT_FIXED,
+  },
 ];
 
 export default Vehicles;

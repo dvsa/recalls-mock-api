@@ -10,29 +10,36 @@ export const handler = async (event: APIGatewayProxyEvent): Promise<APIGatewayPr
   if (!validAuthorisation(event.headers)) {
     return HttpResponse(StatusCodes.UNAUTHORIZED, getReasonPhrase(StatusCodes.UNAUTHORIZED));
   }
-  if (!event.queryStringParameters) {
-    return HttpResponse(StatusCodes.NOT_FOUND, getReasonPhrase(StatusCodes.NOT_FOUND));
-  }
   if (!event.pathParameters) {
     return HttpResponse(StatusCodes.NOT_FOUND, getReasonPhrase(StatusCodes.NOT_FOUND));
   }
   if (!event.pathParameters.vin) {
     return HttpResponse(StatusCodes.NOT_FOUND, getReasonPhrase(StatusCodes.NOT_FOUND));
   }
-  if (!event.queryStringParameters.manufacturerCampaignReference && !event.queryStringParameters.dvsaCampaignReference) {
-    return HttpResponse(StatusCodes.INTERNAL_SERVER_ERROR, getReasonPhrase(StatusCodes.INTERNAL_SERVER_ERROR));
-  }
   const { vin } = event.pathParameters;
-  const { manufacturerCampaignReference, dvsaCampaignReference } = event.queryStringParameters;
-  if (dvsaCampaignReference) {
-    const vehicleFound = Vehicles.find((vehicle) => vehicle.vin === vin && vehicle.dvsaCampaignReference === dvsaCampaignReference);
-    if (vehicleFound) {
-      return HttpResponse(StatusCodes.OK, vehicleFound);
+  let manufacturerCampaignReference: string | undefined;
+  let dvsaCampaignReference: string | undefined;
+  if (event.queryStringParameters) {
+    if (event.queryStringParameters.dvsaCampaignReference || event.queryStringParameters.manufacturerCampaignReference) {
+      manufacturerCampaignReference = event.queryStringParameters.manufacturerCampaignReference;
+      dvsaCampaignReference = event.queryStringParameters.dvsaCampaignReference;
     }
   }
-  const vehicleFound = Vehicles.find((vehicle) => vehicle.vin === vin && vehicle.manufacturerCampaignReference === manufacturerCampaignReference);
-  if (vehicleFound) {
-    return HttpResponse(StatusCodes.OK, vehicleFound);
+  const vehicleFound = Vehicles.find((vehicle) => vehicle.vin === vin);
+  if (dvsaCampaignReference) {
+    if (vehicleFound && vehicleFound.dvsaCampaignReference === dvsaCampaignReference) {
+      return HttpResponse(StatusCodes.OK, vehicleFound);
+    }
+  } else if (manufacturerCampaignReference) {
+    if (vehicleFound && vehicleFound.manufacturerCampaignReference === manufacturerCampaignReference) {
+      return HttpResponse(StatusCodes.OK, vehicleFound);
+    }
+  } else {
+    if (vehicleFound) {
+      const vehiclesFound: unknown[] = Vehicles.filter((vehicle) => vehicle.vin === vin);
+      return HttpResponse(StatusCodes.OK, vehiclesFound);
+    }
+    return HttpResponse(StatusCodes.NOT_FOUND, getReasonPhrase(StatusCodes.NOT_FOUND));
   }
   return HttpResponse(StatusCodes.NOT_FOUND, getReasonPhrase(StatusCodes.NOT_FOUND));
 };
