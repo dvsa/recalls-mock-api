@@ -249,49 +249,6 @@
 					"response": []
 				},
 				{
-					"name": "Get recalls by vin - fail no reference",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									"pm.test(\"Status code is 404\", function () {",
-									"    pm.response.to.have.status(404);",
-									"});"
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"request": {
-						"method": "GET",
-						"header": [
-							{
-								"key": "Authorization",
-								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c",
-								"type": "text"
-							}
-						],
-						"url": {
-							"raw": "http://127.0.0.1:3000/recalls/vin/ABCD122CBAD11433",
-							"protocol": "http",
-							"host": [
-								"127",
-								"0",
-								"0",
-								"1"
-							],
-							"port": "3000",
-							"path": [
-								"recalls",
-								"vin",
-								"ABCD122CBAD11433"
-							]
-						}
-					},
-					"response": []
-				},
-				{
 					"name": "put recall - fail invalid body",
 					"event": [
 						{
@@ -875,7 +832,7 @@
 			"response": []
 		},
 		{
-			"name": "Get recalls by vin",
+			"name": "Get single recall with reference",
 			"event": [
 				{
 					"listen": "test",
@@ -921,6 +878,52 @@
 							"key": "dvsaCampaignReference",
 							"value": "R/2022/002"
 						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get all recalls by vin",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"pm.test(\"Body matches string\", function () {",
+							"    pm.expect(pm.response.text()).to.include(\"vin\");",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://127.0.0.1:3000/recalls/vin/ABCD122CBAD11433",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "3000",
+					"path": [
+						"recalls",
+						"vin",
+						"ABCD122CBAD11433"
 					]
 				}
 			},
