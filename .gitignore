@@ -109,3 +109,4 @@ dist
 
 # IDE files
 .vscode
+.idea
