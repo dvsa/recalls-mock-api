@@ -1,0 +1,323 @@
+---
+openapi: 3.0.3
+info:
+  title: DVSA - Vehicle Recalls Service API
+  description: |-
+    The Vehicle Recalls Service API allows vehicle manufacturers to supply outstanding safety recall data to DVSA.
+
+    The API is based on REST principles. The response data is in JSON format and uses standard HTTP error response codes.
+
+    You can use the API from 4 different endpoints. For a given Vehicle Identification Number (VIN), you can create a new safety recall, mark a safety recall as fixed, get safety recall information or delete a safety recall added in error.
+
+    **Authentication**
+    The API uses OAuth2.0 with the Client Credentials flow for authentication and authorisation.
+
+    When you successfully register to use the API, DVSA will provide you with a client ID, client secret and scope.
+
+    Your application will use these credentials to obtain an access token, which is required in the header of each request to the API.
+  version: 0.3.1
+servers:
+- url: https://external.api.check-vehicle-recalls.service.gov.uk
+  description: Production server (uses live data)
+security:
+  - oAuth2ClientCredentials: []
+paths:
+  /recalls:
+    post:
+      tags:
+      - recalls
+      summary: Create a new safety recall for a single vehicle
+      description:
+        In the request body, include the vin, manufacturerCampaignReference, dvsaCampaignReference and recallCampaignStartDate.
+        For a vehicle with multiple safety recalls, send multiple requests with the same VIN but different DVSA  campaign references.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/recallsCreateRequest'
+        required: true
+      responses:
+        '201':
+          $ref: '#/components/responses/201Created'
+        '400':
+          $ref: '#/components/responses/400BadRequest'
+        '401':
+          $ref: '#/components/responses/401Unauthorized'
+        '403':
+          $ref: '#/components/responses/403Forbidden'
+        '409':
+          $ref: '#/components/responses/409Conflict'
+        '429':
+          $ref: '#/components/responses/429TooManyRequests'
+        '500':
+          $ref: '#/components/responses/500InternalServerError'
+  /recalls/vin/{vin}:
+    get:
+      tags:
+      - recalls
+      summary: Get safety recall information for a given VIN
+      description:
+        A vehicle with more than one safety recall will return multiple entries.
+        To only return information for a specific recall campaign, include the manufacturer or DVSA campaign reference as a query parameter.
+      parameters:
+      - $ref: '#/components/parameters/vinParam'
+      # Either manufacturerCampaignReferenceParam OR dvsaCampaignReferenceParam
+      - $ref: '#/components/parameters/manufacturerCampaignReferenceParam'
+      - $ref: '#/components/parameters/dvsaCampaignReferenceParam'
+      responses:
+        '200':
+          $ref: '#/components/responses/200Success'
+        '400':
+          $ref: '#/components/responses/400BadRequest'
+        '401':
+          $ref: '#/components/responses/401Unauthorized'
+        '403':
+          $ref: '#/components/responses/403Forbidden'
+        '404':
+          $ref: '#/components/responses/404NotFound'
+        '409':
+          $ref: '#/components/responses/409Conflict'
+        "429":
+          $ref: '#/components/responses/429TooManyRequests'
+        "500":
+          $ref: '#/components/responses/500InternalServerError'
+    put:
+      tags:
+      - recalls
+      summary: Update a safety recall as fixed for a given VIN
+      description:
+        Include the rectificationDate and repairStatus in the request body.
+        If a vehicle has multiple safety recalls but you are only marking a specific recall as fixed, include the manufacturer or DVSA campaign reference as a query parameter.
+      parameters:
+      - $ref: '#/components/parameters/vinParam'
+      # Either manufacturerCampaignReferenceParam OR dvsaCampaignReferenceParam
+      - $ref: '#/components/parameters/manufacturerCampaignReferenceParam'
+      - $ref: '#/components/parameters/dvsaCampaignReferenceParam'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/recallsUpdateRequest'
+        required: true
+      responses:
+        '204':
+          $ref: '#/components/responses/204NoContent'
+        '400':
+          $ref: '#/components/responses/400BadRequest'
+        '401':
+          $ref: '#/components/responses/401Unauthorized'
+        '403':
+          $ref: '#/components/responses/403Forbidden'
+        '404':
+          $ref: '#/components/responses/404NotFound'
+        '409':
+          $ref: '#/components/responses/409Conflict'
+        "429":
+          $ref: '#/components/responses/429TooManyRequests'
+        "500":
+          $ref: '#/components/responses/500InternalServerError'
+    delete:
+      tags:
+      - recalls
+      summary: Delete a safety recall for a given VIN
+      description: If a vehicle has multiple safety recalls but you are only deleting a specific recall, include the manufacturer or DVSA campaign reference as a query parameter.
+      parameters:
+      - $ref: '#/components/parameters/vinParam'
+      # Either manufacturerCampaignReferenceParam OR dvsaCampaignReferenceParam
+      - $ref: '#/components/parameters/manufacturerCampaignReferenceParam'
+      - $ref: '#/components/parameters/dvsaCampaignReferenceParam'
+      responses:
+        '204':
+          $ref: '#/components/responses/204NoContent'
+        '400':
+          $ref: '#/components/responses/400BadRequest'
+        '401':
+          $ref: '#/components/responses/401Unauthorized'
+        '403':
+          $ref: '#/components/responses/403Forbidden'
+        '404':
+          $ref: '#/components/responses/404NotFound'
+        '409':
+          $ref: '#/components/responses/409Conflict'
+        "429":
+          $ref: '#/components/responses/429TooManyRequests'
+        "500":
+          $ref: '#/components/responses/500InternalServerError'
+components:
+  responses:
+    200Success:
+      description: Request successful and Recalls data returned
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/recallsDataResponse'
+    201Created:
+      description: Resource has been created
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/recallsResponse'
+    204NoContent:
+      description: Resource has been updated successfully
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/recallsResponse'
+    400BadRequest:
+      description: The format of the request is incorrect
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/recallsResponse'
+    401Unauthorized:
+      description: The required Bearer token is not present in the request Authorization header or it is missing required encoded information
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/recallsResponse'
+    403Forbidden:
+      description: The request token does not correspond to a valid active system user
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/recallsResponse'
+    404NotFound:
+      description: The requested data is not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/recallsResponse'
+    409Conflict:
+      description: The provided data conflicts with existing data in the database
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/recallsResponse'
+    429TooManyRequests:
+      description: The amount of requests made has exceeded the rate limit of the API
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/recallsResponse'
+    500InternalServerError:
+      description: An unexpected error has occurred
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/recallsResponse'
+  schemas:
+    recallsCreateRequest:
+      type: object
+      description: Request body to create a new safety recall for a single vehicle
+      properties:
+        vin:
+          $ref: '#/components/schemas/vin'
+        manufacturerCampaignReference:
+          $ref: '#/components/schemas/manufacturerCampaignReference'
+        dvsaCampaignReference:
+          $ref: '#/components/schemas/dvsaCampaignReference'
+        recallCampaignStartDate:
+          $ref: '#/components/schemas/date'
+    recallsUpdateRequest:
+      type: object
+      description: Request body to update a safety recall as fixed
+      properties:
+        rectificationDate:
+          $ref: '#/components/schemas/rectificationDate'
+        repairStatus:
+          $ref: '#/components/schemas/repairStatus'
+    recallsResponse:
+      type: object
+      properties:
+        message:
+          description: Contains additional details about the error or success of the operation
+          maxLength: 4096
+          type: string
+    recallsDataResponse:
+      type: object
+      properties:
+        vin:
+          $ref: '#/components/schemas/vin'
+        manufacturer:
+          $ref: '#/components/schemas/manufacturer'
+        recalls:
+          type: array
+          description: The array containing safety recall information. A vehicle with more than one recall will return multiple entries.
+          items:
+            $ref: '#/components/schemas/recallsDataResponseDetail'
+    recallsDataResponseDetail:
+      type: object
+      description: A single safety recall identified by its campaign references, campaign start date and state of repair
+      properties:
+        manufacturerCampaignReference:
+          $ref: '#/components/schemas/manufacturerCampaignReference'
+        dvsaCampaignReference:
+          $ref: '#/components/schemas/dvsaCampaignReference'
+        recallCampaignStartDate:
+          $ref: '#/components/schemas/date'
+        repairStatus:
+          $ref: '#/components/schemas/repairStatus'
+    vin:
+      type: string
+      description: Vehicle Identification Number used as a unique reference for the vehicle
+      example: WAUZZZF49HA036784
+    dvsaCampaignReference:
+      type: string
+      description: DVSA reference for the recall campaign
+      example: R/2022/123
+    manufacturerCampaignReference:
+      type: string
+      description: Manufacturers reference for the recall campaign
+      example: ABC1234
+    manufacturer:
+      type: string
+      description: Manufacturer name
+      example: DVSA Motors
+    repairStatus:
+      type: string
+      description: State of repair for the recall
+      enum:
+      - NOT_FIXED
+      - FIXED
+    rectificationDate:
+      type: string
+      description: Date the recall was fixed
+      format: date
+    date:
+      type: string
+      description: Launch date of the recall campaign. Date field in ISO8601 UTC format
+      format: date
+  parameters:
+    vinParam:
+      name: vin
+      in: path
+      description: Vehicle Identification Number used as a unique reference for the vehicle
+      required: true
+      style: simple
+      explode: false
+      schema:
+        $ref: '#/components/schemas/vin'
+    dvsaCampaignReferenceParam:
+      name: dvsaCampaignReference
+      in: query
+      description: The reference number issued by the DVSA for the campaign
+      schema:
+        $ref: '#/components/schemas/dvsaCampaignReference'
+      allowReserved: true
+    manufacturerCampaignReferenceParam:
+      name: manufacturerCampaignReference
+      in: query
+      description: The unique reference number used by the manufacturer to identify the campaign
+      schema:
+        $ref: '#/components/schemas/manufacturerCampaignReference'
+      allowReserved: true
+  securitySchemes:
+    oAuth2ClientCredentials:
+      type: oauth2
+      description: OAuth 2.0 client credentials flow Authentication managed by Microsoft Azure AD
+      flows:
+        clientCredentials:
+          tokenUrl: https://login.microsoftonline.com/6c448d90-4ca1-4caf-ab59-0a2aa67d7801/oauth2/v2.0/token
+          scopes: {}
+
+

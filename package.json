@@ -1,0 +1,58 @@
+{
+  "name": "dvsa-recalls-mock-api",
+  "version": "1.0.0",
+  "description": "A SAM Local application to help development teams test output from their solution locally for the safety recalls API",
+  "main": "index.js",
+  "scripts": {
+    "lint": "eslint '*/**/*.ts' --quiet --fix",
+    "lint:ci": "eslint '*/**/*.ts'",
+    "test": "jest --coverage",
+    "test:ci": "jest --ci",
+    "build:dev": "NODE_ENV=development webpack-cli --config webpack/webpack.development.js",
+    "watch:dev": "NODE_ENV=development webpack-cli --config webpack/webpack.development.watch.js",
+    "build:prod": "webpack-cli --config webpack/webpack.production.js",
+    "start:dev": "sam local start-api",
+    "invoke": "sam local invoke"
+  },
+  "contributors": [
+    {
+      "name": "Shaun Hare",
+      "email": "shaun.hare@dvsa.gov.uk"
+    }
+  ],
+  "license": "Open Government Licence v3.0",
+  "dependencies": {
+    "aws-sdk": "^2.1189.0",
+    "http-status-codes": "^2.2.0"
+  },
+  "devDependencies": {
+    "@dvsa/eslint-config-ts": "^2.4.0",
+    "@types/aws-lambda": "^8.10.78",
+    "@types/jest": "^28.1.4",
+    "@types/node": "^16.10.2",
+    "@types/uuid": "^8.3.1",
+    "archiver": "^5.3.0",
+    "aws-sam-webpack-plugin": "^0.12.0",
+    "copy-webpack-plugin": "^11.0.0",
+    "current-git-branch": "^1.1.0",
+    "dotenv": "^16.0.0",
+    "eslint": "^8.23.0",
+    "eslint-import-resolver-typescript": "^2.7.1",
+    "fs-extra": "^10.0.0",
+    "husky": "^8.0.3",
+    "jest": "^28.1.2",
+    "lint-staged": "^13.1.0",
+    "source-map-support": "^0.5.19",
+    "ts-jest": "^28.0.5",
+    "ts-loader": "^9.2.6",
+    "typescript": "^4.4.3",
+    "uuid": "^8.3.2",
+    "webpack": "^5.56.1",
+    "webpack-cli": "^4.8.0",
+    "webpack-merge": "^5.8.0",
+    "winston": "^3.6.0"
+  },
+  "engines": {
+    "node": "^14.17.3"
+  }
+}
