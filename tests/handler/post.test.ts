@@ -15,7 +15,7 @@ describe('Test Post Lambda Function', () => {
       recallCampaignStartDate: '2022-01-31',
     };
     const requestContext: APIGatewayEventRequestContext = <APIGatewayEventRequestContext> { requestId: v4() };
-    const headers: Record<string, string> = { Authorization: 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsIng1dCI6Ij' };
+    const headers: Record<string, string> = { Authorization: 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsIng1dCI6Ij', 'X-Api-Key' : 'theprovidedapiusagekey' };
     const eventMock: APIGatewayProxyEvent = <APIGatewayProxyEvent> {
       body: JSON.stringify(body),
       requestContext,
