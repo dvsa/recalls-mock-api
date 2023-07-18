@@ -30,6 +30,9 @@ To run the recalls mock api locally, you will need to use Postman to send reques
 
 ## Sample Calls
 
+### API Usage Key
+An API Usage Key will be provided to you when you register for the service, this must be provided in the x-api-key header with every request.
+
 ### Authentication
  make a post request to http://127.0.0.1:3000/oauth2/v2.0/token
  
@@ -47,6 +50,7 @@ To run the recalls mock api locally, you will need to use Postman to send reques
  header:
  ```json
   "Authorization": "insert bearer token",
+  "x-api-key": "insert usage key"
 ```
  body:
  ```json
@@ -63,6 +67,7 @@ To run the recalls mock api locally, you will need to use Postman to send reques
  header:
  ```json
   "Authorization": "insert bearer token",
+  "x-api-key": "insert usage key"
 ```
  body:
  ```json
@@ -78,6 +83,7 @@ To run the recalls mock api locally, you will need to use Postman to send reques
  header:
  ```json
   "Authorization": "insert bearer token",
+  "x-api-key": "insert usage key"
 ```
 
 ### Delete a recall
@@ -87,6 +93,7 @@ To run the recalls mock api locally, you will need to use Postman to send reques
  header:
  ```json
   "Authorization": "insert bearer token",
+  "x-api-key": "insert usage key"
 ```
 
 ## Directories

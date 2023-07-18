@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "af7e7888-8f54-40fb-a0b8-c8f91fdd45a7",
+		"_postman_id": "c7574902-1f0b-4110-ae64-3e0649304eaa",
 		"name": "Recalls",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "8553673"
@@ -29,7 +29,13 @@
 					],
 					"request": {
 						"method": "POST",
-						"header": [],
+						"header": [
+							{
+								"key": "x-api-key",
+								"value": "theprovidedapiusagekey",
+								"type": "text"
+							}
+						],
 						"body": {
 							"mode": "raw",
 							"raw": "{\n  \"vin\": \"ABCD122CBAD11435\",\n  \"manufacturerCampaignReference\": \"string\",\n  \"dvsaCampaignReference\": \"R/2013/121\",\n  \"recallCampaignStartDate\": \"2022-01-31\"\n}"
@@ -76,6 +82,11 @@
 							{
 								"key": "Authorization",
 								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c",
+								"type": "text"
+							},
+							{
+								"key": "x-api-key",
+								"value": "theprovidedapiusagekey",
 								"type": "text"
 							}
 						],
@@ -126,6 +137,11 @@
 								"key": "Authorization",
 								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c",
 								"type": "text"
+							},
+							{
+								"key": "x-api-key",
+								"value": "theprovidedapiusagekey",
+								"type": "text"
 							}
 						],
 						"body": {
@@ -175,11 +191,65 @@
 								"key": "Authorization",
 								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c",
 								"type": "text"
+							},
+							{
+								"key": "x-api-key",
+								"value": "theprovidedapiusagekey",
+								"type": "text"
 							}
 						],
 						"body": {
 							"mode": "raw",
 							"raw": "{\n  \"vin\": \"string\",\n  \"manufacturerCampaignReference\": \"string\",\n  \"dvsaCampaignReference\": \"R/2013/121\",\n  \"recallCampaignStartDate\": \"12-a2332\"\n}"
+						},
+						"url": {
+							"raw": "http://127.0.0.1:3000/recalls/",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "3000",
+							"path": [
+								"recalls",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create a new Recall - fail no usage key",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 403\", function () {",
+									"    pm.response.to.have.status(403);",
+									"});",
+									"pm.test(\"Body matches string\", function () {",
+									"    pm.expect(pm.response.text()).to.include(\"Forbidden\");",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"vin\": \"ABCD122CBAD11435\",\n  \"manufacturerCampaignReference\": \"string\",\n  \"dvsaCampaignReference\": \"R/2013/121\",\n  \"recallCampaignStartDate\": \"2022-01-31\"\n}"
 						},
 						"url": {
 							"raw": "http://127.0.0.1:3000/recalls/",
@@ -220,6 +290,11 @@
 							{
 								"key": "Authorization",
 								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c",
+								"type": "text"
+							},
+							{
+								"key": "x-api-key",
+								"value": "theprovidedapiusagekey",
 								"type": "text"
 							}
 						],
@@ -273,6 +348,11 @@
 								"key": "Authorization",
 								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c",
 								"type": "default"
+							},
+							{
+								"key": "x-api-key",
+								"value": "theprovidedapiusagekey",
+								"type": "text"
 							}
 						],
 						"body": {
@@ -331,6 +411,11 @@
 								"key": "Authorization",
 								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c",
 								"type": "default"
+							},
+							{
+								"key": "x-api-key",
+								"value": "theprovidedapiusagekey",
+								"type": "text"
 							}
 						],
 						"body": {
@@ -392,6 +477,11 @@
 								"key": "Authorization",
 								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c",
 								"type": "default"
+							},
+							{
+								"key": "x-api-key",
+								"value": "theprovidedapiusagekey",
+								"type": "text"
 							}
 						],
 						"body": {
@@ -447,6 +537,11 @@
 								"key": "Authorization",
 								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c",
 								"type": "default"
+							},
+							{
+								"key": "x-api-key",
+								"value": "theprovidedapiusagekey",
+								"type": "text"
 							}
 						],
 						"body": {
@@ -505,6 +600,11 @@
 								"key": "Authorization",
 								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c",
 								"type": "default"
+							},
+							{
+								"key": "x-api-key",
+								"value": "theprovidedapiusagekey",
+								"type": "text"
 							}
 						],
 						"body": {
@@ -566,6 +666,11 @@
 								"key": "Authorization",
 								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c",
 								"type": "default"
+							},
+							{
+								"key": "x-api-key",
+								"value": "theprovidedapiusagekey",
+								"type": "text"
 							}
 						],
 						"body": {
@@ -621,6 +726,11 @@
 								"key": "Authorization",
 								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c",
 								"type": "default"
+							},
+							{
+								"key": "x-api-key",
+								"value": "theprovidedapiusagekey",
+								"type": "text"
 							}
 						],
 						"body": {
@@ -749,6 +859,11 @@
 						"key": "Authorization",
 						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c",
 						"type": "text"
+					},
+					{
+						"key": "x-api-key",
+						"value": "theprovidedapiusagekey",
+						"type": "text"
 					}
 				],
 				"body": {
@@ -795,6 +910,11 @@
 						"key": "Authorization",
 						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c",
 						"type": "default"
+					},
+					{
+						"key": "x-api-key",
+						"value": "theprovidedapiusagekey",
+						"type": "text"
 					}
 				],
 				"body": {
@@ -856,6 +976,11 @@
 						"key": "Authorization",
 						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c",
 						"type": "text"
+					},
+					{
+						"key": "x-api-key",
+						"value": "theprovidedapiusagekey",
+						"type": "text"
 					}
 				],
 				"url": {
@@ -908,6 +1033,11 @@
 						"key": "Authorization",
 						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c",
 						"type": "text"
+					},
+					{
+						"key": "x-api-key",
+						"value": "theprovidedapiusagekey",
+						"type": "text"
 					}
 				],
 				"url": {
@@ -951,6 +1081,11 @@
 						"key": "Authorization",
 						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c",
 						"type": "default"
+					},
+					{
+						"key": "x-api-key",
+						"value": "theprovidedapiusagekey",
+						"type": "text"
 					}
 				],
 				"body": {

@@ -7,11 +7,15 @@ import { validDvsaCampaignReference, allRequiredFieldsCreateRecall, validDateFor
 import validAuthorisation from '../util/authorisation';
 import Vehicles from '../util/vehicles';
 import ExternalApiErrorMessages from '../util/externalApiReferences';
+import validUsageKey from '../util/apiUsageKey';
 
 // eslint-disable-next-line @typescript-eslint/require-await
 export const handler = async (event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> => {
   if (!validAuthorisation(event.headers)) {
     return HttpResponse(StatusCodes.UNAUTHORIZED, getReasonPhrase(StatusCodes.UNAUTHORIZED));
+  }
+  if (!validUsageKey(event.headers)) {
+    return HttpResponse(StatusCodes.FORBIDDEN, getReasonPhrase(StatusCodes.FORBIDDEN));
   }
   if (!event.body) {
     return HttpResponse(StatusCodes.BAD_REQUEST, ExternalApiErrorMessages.InvalidRequestBody);
