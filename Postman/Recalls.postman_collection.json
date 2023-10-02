@@ -390,6 +390,72 @@
 					"response": []
 				},
 				{
+					"name": "put recall - incorrect vehicle",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 400\", function () {",
+									"    pm.response.to.have.status(404);",
+									"});",
+									"pm.test(\"Body matches string\", function () {",
+									"    pm.expect(pm.response.text()).to.include(\"Not Found\");",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c",
+								"type": "default"
+							},
+							{
+								"key": "x-api-key",
+								"value": "theprovidedapiusagekey",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"rectificationDate\": \"2022-09-05\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://127.0.0.1:3000/recalls/vin/ABCD122CBA33?dvsaCampaignReference=R/2022/002",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "3000",
+							"path": [
+								"recalls",
+								"vin",
+								"ABCD122CBA33"
+							],
+							"query": [
+								{
+									"key": "dvsaCampaignReference",
+									"value": "R/2022/002"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
 					"name": "put recall - fail no vin",
 					"event": [
 						{
@@ -507,72 +573,6 @@
 								"recalls",
 								"vin",
 								"ABCD122CBAD11433"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "put recall - fail already fixed",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									"pm.test(\"Status code is 400\", function () {",
-									"    pm.response.to.have.status(400);",
-									"});",
-									"pm.test(\"Body matches string\", function () {",
-									"    pm.expect(pm.response.text()).to.include(\"Vehicle recall has already been marked as fixed\");",
-									"});"
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"request": {
-						"method": "PUT",
-						"header": [
-							{
-								"key": "Authorization",
-								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c",
-								"type": "default"
-							},
-							{
-								"key": "x-api-key",
-								"value": "theprovidedapiusagekey",
-								"type": "text"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n  \"rectificationDate\": \"2022-09-05\",\n  \"repairStatus\": \"FIXED\"\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "http://127.0.0.1:3000/recalls/vin/ABCD122CBAD11432?dvsaCampaignReference=R/2022/001",
-							"protocol": "http",
-							"host": [
-								"127",
-								"0",
-								"0",
-								"1"
-							],
-							"port": "3000",
-							"path": [
-								"recalls",
-								"vin",
-								"ABCD122CBAD11432"
-							],
-							"query": [
-								{
-									"key": "dvsaCampaignReference",
-									"value": "R/2022/001"
-								}
 							]
 						}
 					},
@@ -766,6 +766,138 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "put recall - vehicle is already marked as not fixed",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 400\", function () {",
+									"    pm.response.to.have.status(400);",
+									"});",
+									"pm.test(\"Body matches string\", function () {",
+									"    pm.expect(pm.response.text()).to.include(\"Vehicle recall has already been marked as not fixed\");",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c",
+								"type": "default"
+							},
+							{
+								"key": "x-api-key",
+								"value": "theprovidedapiusagekey",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"rectificationDate\": \"2022-09-05\",\n    \"repairStatus\": \"NOT_FIXED\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://127.0.0.1:3000/recalls/vin/ABCD122CBAD11433?dvsaCampaignReference=R/2022/002",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "3000",
+							"path": [
+								"recalls",
+								"vin",
+								"ABCD122CBAD11433"
+							],
+							"query": [
+								{
+									"key": "dvsaCampaignReference",
+									"value": "R/2022/002"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "put recall - vehicle is already marked as fixed",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 400\", function () {",
+									"    pm.response.to.have.status(400);",
+									"});",
+									"pm.test(\"Body matches string\", function () {",
+									"    pm.expect(pm.response.text()).to.include(\"Vehicle recall has already been marked as fixed\");",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c",
+								"type": "default"
+							},
+							{
+								"key": "x-api-key",
+								"value": "theprovidedapiusagekey",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"rectificationDate\": \"2022-09-05\",\n    \"repairStatus\": \"FIXED\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://127.0.0.1:3000/recalls/vin/ABCD122CBAD11432?dvsaCampaignReference=R/2022/001",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "3000",
+							"path": [
+								"recalls",
+								"vin",
+								"ABCD122CBAD11432"
+							],
+							"query": [
+								{
+									"key": "dvsaCampaignReference",
+									"value": "R/2022/001"
+								}
+							]
+						}
+					},
+					"response": []
 				}
 			]
 		},
@@ -785,6 +917,9 @@
 				}
 			],
 			"request": {
+				"auth": {
+					"type": "noauth"
+				},
 				"method": "POST",
 				"header": [
 					{
@@ -820,9 +955,12 @@
 					]
 				},
 				"url": {
-					"raw": "localhost:3000/oauth2/v2.0/token",
+					"raw": "127.0.0.1:3000/oauth2/v2.0/token",
 					"host": [
-						"localhost"
+						"127",
+						"0",
+						"0",
+						"1"
 					],
 					"port": "3000",
 					"path": [
@@ -889,7 +1027,7 @@
 			"response": []
 		},
 		{
-			"name": "put recall",
+			"name": "put recall -mark as fixed",
 			"event": [
 				{
 					"listen": "test",
@@ -919,7 +1057,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n  \"rectificationDate\": \"2022-09-05\",\n  \"repairStatus\": \"FIXED\"\n}",
+					"raw": "{\n    \"rectificationDate\": \"2022-09-05\",\n    \"repairStatus\": \"FIXED\"\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -945,6 +1083,69 @@
 						{
 							"key": "dvsaCampaignReference",
 							"value": "R/2022/002"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "put recall - mark as not fixed",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 204\", function () {",
+							"    pm.response.to.have.status(204);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c",
+						"type": "default"
+					},
+					{
+						"key": "x-api-key",
+						"value": "theprovidedapiusagekey",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"repairStatus\": \"NOT_FIXED\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://127.0.0.1:3000/recalls/vin/ABCD122CBAD11432?dvsaCampaignReference=R/2022/001",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "3000",
+					"path": [
+						"recalls",
+						"vin",
+						"ABCD122CBAD11432"
+					],
+					"query": [
+						{
+							"key": "dvsaCampaignReference",
+							"value": "R/2022/001"
 						}
 					]
 				}

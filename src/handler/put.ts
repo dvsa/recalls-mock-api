@@ -5,8 +5,8 @@ import ExternalApiErrorMessages from '../util/externalApiReferences';
 import HttpResponse from '../util/httpResponse';
 import validAuthorisation from '../util/authorisation';
 import Vehicles from '../util/vehicles';
-import { RecallsUpdateRequest } from '../util/payloads';
-import { allRequiredFieldsUpdateRecall, alreadyRepaired, validDateFormat } from '../util/validatorsRecall';
+import { RecallsUpdateRequest, RepairStatus } from '../util/payloads';
+import { allRequiredFieldsUpdateFixedRecall, allRequiredFieldsUpdateNonfixedRecall, validDateFormat } from '../util/validatorsRecall';
 import logger from '../util/logger';
 import validUsageKey from '../util/apiUsageKey';
 
@@ -33,18 +33,18 @@ export const handler = async (event: APIGatewayProxyEvent): Promise<APIGatewayPr
   if (!event.queryStringParameters.manufacturerCampaignReference && !event.queryStringParameters.dvsaCampaignReference) {
     return HttpResponse(StatusCodes.BAD_REQUEST, ExternalApiErrorMessages.DvsaAndManufacturerCampaignReferenceMissing);
   }
-  let recallUpdate: RecallsUpdateRequest;
-  try {
-    recallUpdate = JSON.parse(event.body) as RecallsUpdateRequest;
-    if (!allRequiredFieldsUpdateRecall(recallUpdate)) {
-      return HttpResponse(StatusCodes.BAD_REQUEST, ExternalApiErrorMessages.InvalidRequestBody);
-    }
-  } catch (err) {
-    return HttpResponse(StatusCodes.BAD_REQUEST, ExternalApiErrorMessages.InvalidRequestBody);
-  }
+
   const { vin } = event.pathParameters;
   const { manufacturerCampaignReference, dvsaCampaignReference } = event.queryStringParameters;
+  const recallUpdate = JSON.parse(event.body) as RecallsUpdateRequest;
+  if (recallUpdate.repairStatus == RepairStatus.FIXED) {
+    if (!validDateFormat(recallUpdate.rectificationDate)) {
+      return HttpResponse(StatusCodes.BAD_REQUEST, ExternalApiErrorMessages.InvalidDateFormat);
+    }
+  }
+
   let vehicleFound;
+
   if (dvsaCampaignReference) {
     vehicleFound = Vehicles.find((vehicle) => vehicle.vin === vin && vehicle.dvsaCampaignReference === dvsaCampaignReference);
     logger.info('dvsaCampaignreference', { vehicleFound });
@@ -52,14 +52,35 @@ export const handler = async (event: APIGatewayProxyEvent): Promise<APIGatewayPr
     vehicleFound = Vehicles.find((vehicle) => vehicle.vin === vin && vehicle.manufacturerCampaignReference === manufacturerCampaignReference);
     logger.info('manufacturerCampaignreference', { vehicleFound });
   }
-  if (vehicleFound) {
-    if (alreadyRepaired(vehicleFound)) {
+
+  if (!vehicleFound) {
+    return HttpResponse(StatusCodes.NOT_FOUND, getReasonPhrase(StatusCodes.NOT_FOUND));
+  }
+
+  if (vehicleFound.repairStatus === RepairStatus.NOT_FIXED) {
+    if (!allRequiredFieldsUpdateNonfixedRecall(recallUpdate)) {
+      return HttpResponse(StatusCodes.BAD_REQUEST, ExternalApiErrorMessages.InvalidRequestBody);
+    }
+    if (recallUpdate.repairStatus === RepairStatus.FIXED) {
+      if (vehicleFound) {
+        return HttpResponse(StatusCodes.NO_CONTENT, getReasonPhrase(StatusCodes.NO_CONTENT));
+      }
+    } else {
+      return HttpResponse(StatusCodes.BAD_REQUEST, ExternalApiErrorMessages.VehicleRecallAlreadyNotFixed);
+    }
+  } else {
+    if (!allRequiredFieldsUpdateFixedRecall(recallUpdate)) {
+      return HttpResponse(StatusCodes.BAD_REQUEST, ExternalApiErrorMessages.InvalidRequestBody);
+    }
+    if (recallUpdate.repairStatus === RepairStatus.NOT_FIXED) {
+      if (vehicleFound) {
+        return HttpResponse(StatusCodes.NO_CONTENT, getReasonPhrase(StatusCodes.NO_CONTENT));
+      }
+    } else {
       return HttpResponse(StatusCodes.BAD_REQUEST, ExternalApiErrorMessages.VehicleRecallAlreadyFixed);
     }
-    if (!validDateFormat(recallUpdate.rectificationDate)) {
-      return HttpResponse(StatusCodes.BAD_REQUEST, ExternalApiErrorMessages.InvalidDateFormat);
-    }
-    return HttpResponse(StatusCodes.NO_CONTENT, getReasonPhrase(StatusCodes.NO_CONTENT));
   }
   return HttpResponse(StatusCodes.NOT_FOUND, getReasonPhrase(StatusCodes.NOT_FOUND));
 };
+
+
