@@ -2,6 +2,8 @@
 
 A SAM Local application to help development teams test output from their solution locally for the safety recalls API
 
+The purpose of this application is to test the functionality of the API calls, not to emulate the modification of records in the database. Therefore, it should only be used to verify that each call works as expected, follow up calls will not reflect previous actions.
+
 ## Requirements
 
 - node v16.17.1

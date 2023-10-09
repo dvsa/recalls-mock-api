@@ -6,7 +6,6 @@ import HttpResponse from '../util/httpResponse';
 import validAuthorisation from '../util/authorisation';
 import Vehicles from '../util/vehicles';
 import { alreadyRepaired } from '../util/validatorsRecall';
-import logger from '../util/logger';
 import validUsageKey from '../util/apiUsageKey';
 
 // eslint-disable-next-line @typescript-eslint/require-await
@@ -34,10 +33,8 @@ export const handler = async (event: APIGatewayProxyEvent): Promise<APIGatewayPr
   let vehicleFound;
   if (dvsaCampaignReference) {
     vehicleFound = Vehicles.find((vehicle) => vehicle.vin === vin && vehicle.dvsaCampaignReference === dvsaCampaignReference);
-    logger.info('dvsaCampaignreference', { vehicleFound });
   } else {
     vehicleFound = Vehicles.find((vehicle) => vehicle.vin === vin && vehicle.manufacturerCampaignReference === manufacturerCampaignReference);
-    logger.info('manufacturerCampaignreference', { vehicleFound });
   }
   if (vehicleFound) {
     if (alreadyRepaired(vehicleFound)) {
