@@ -63,7 +63,7 @@ An API Usage Key will be provided to you when you register for the service, this
   "recallCampaignStartDate": "2022-01-31"
 }
 ```
-### Update a recall as Fixed
+### Update a recall - Set status to fixed
  make a put request to http://127.0.0.1:3000/recalls/vin/ABCD122CBAD11433?dvsaCampaignReference=R/2022/002
  
  header:
@@ -79,7 +79,7 @@ An API Usage Key will be provided to you when you register for the service, this
 }
 ```
 
-### Update a recall as Not Fixed
+### Update a recall - Set status to not fixed
  make a put request to http://127.0.0.1:3000/recalls/vin/ABCD122CBAD11432?dvsaCampaignReference=R/2022/001
  
  header:
