@@ -62,9 +62,7 @@ export const handler = async (event: APIGatewayProxyEvent): Promise<APIGatewayPr
       return HttpResponse(StatusCodes.BAD_REQUEST, ExternalApiErrorMessages.InvalidRequestBody);
     }
     if (recallUpdate.repairStatus === RepairStatus.FIXED) {
-      if (vehicleFound) {
-        return HttpResponse(StatusCodes.NO_CONTENT, getReasonPhrase(StatusCodes.NO_CONTENT));
-      }
+      return HttpResponse(StatusCodes.NO_CONTENT, getReasonPhrase(StatusCodes.NO_CONTENT));
     } else {
       return HttpResponse(StatusCodes.BAD_REQUEST, ExternalApiErrorMessages.VehicleRecallAlreadyNotFixed);
     }
@@ -73,9 +71,7 @@ export const handler = async (event: APIGatewayProxyEvent): Promise<APIGatewayPr
       return HttpResponse(StatusCodes.BAD_REQUEST, ExternalApiErrorMessages.InvalidRequestBody);
     }
     if (recallUpdate.repairStatus === RepairStatus.NOT_FIXED) {
-      if (vehicleFound) {
-        return HttpResponse(StatusCodes.NO_CONTENT, getReasonPhrase(StatusCodes.NO_CONTENT));
-      }
+      return HttpResponse(StatusCodes.NO_CONTENT, getReasonPhrase(StatusCodes.NO_CONTENT));
     } else {
       return HttpResponse(StatusCodes.BAD_REQUEST, ExternalApiErrorMessages.VehicleRecallAlreadyFixed);
     }
