@@ -24,10 +24,17 @@ export const allRequiredFieldsCreateRecall = (recall:RecallsCreateRequest):boole
   return areAllRequiredFieldsPresent;
 };
 
-export const allRequiredFieldsUpdateRecall = (recall:RecallsUpdateRequest):boolean => {
+export const allRequiredFieldsUpdateNonfixedRecall = (recall:RecallsUpdateRequest):boolean => {
   const areAllRequiredFieldsPresent:boolean = (
     checkProperty(recall.rectificationDate)
     && checkProperty(recall.repairStatus)
+  );
+  return areAllRequiredFieldsPresent;
+};
+
+export const allRequiredFieldsUpdateFixedRecall = (recall:RecallsUpdateRequest):boolean => {
+  const areAllRequiredFieldsPresent:boolean = (
+    checkProperty(recall.repairStatus)
   );
   return areAllRequiredFieldsPresent;
 };

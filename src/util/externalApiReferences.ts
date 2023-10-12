@@ -5,6 +5,7 @@ enum ExternalApiErrorMessages {
   DvsaAndManufacturerCampaignReferenceMissing = 'Required dvsaCampaignReference and/or manufacturerCampaignReference parameter is missing',
   DvsaCampaignReferenceInvalid = 'Invalid dvsa campaign reference number',
   VehicleRecallAlreadyFixed = 'Vehicle recall has already been marked as fixed',
+  VehicleRecallAlreadyNotFixed = 'Vehicle recall has already been marked as not fixed',
   InvalidDateFormat = 'Invalid date format',
 }
 
