@@ -37,6 +37,11 @@ export const handler = async (event: APIGatewayProxyEvent): Promise<APIGatewayPr
   const { vin } = event.pathParameters;
   const { manufacturerCampaignReference, dvsaCampaignReference } = event.queryStringParameters;
   const recallUpdate = JSON.parse(event.body) as RecallsUpdateRequest;
+
+  if (!recallUpdate.repairStatus) {
+    return HttpResponse(StatusCodes.BAD_REQUEST, ExternalApiErrorMessages.InvalidRequestBody);
+  }
+
   if (recallUpdate.repairStatus == RepairStatus.FIXED) {
     if (!validDateFormat(recallUpdate.rectificationDate)) {
       return HttpResponse(StatusCodes.BAD_REQUEST, ExternalApiErrorMessages.InvalidDateFormat);
@@ -58,10 +63,10 @@ export const handler = async (event: APIGatewayProxyEvent): Promise<APIGatewayPr
   }
 
   if (vehicleFound.repairStatus === RepairStatus.NOT_FIXED) {
-    if (!allRequiredFieldsUpdateNonfixedRecall(recallUpdate)) {
-      return HttpResponse(StatusCodes.BAD_REQUEST, ExternalApiErrorMessages.InvalidRequestBody);
-    }
     if (recallUpdate.repairStatus === RepairStatus.FIXED) {
+      if (!allRequiredFieldsUpdateNonfixedRecall(recallUpdate)) {
+        return HttpResponse(StatusCodes.BAD_REQUEST, ExternalApiErrorMessages.InvalidRequestBody);
+      }
       return HttpResponse(StatusCodes.NO_CONTENT, getReasonPhrase(StatusCodes.NO_CONTENT));
     } else {
       return HttpResponse(StatusCodes.BAD_REQUEST, ExternalApiErrorMessages.VehicleRecallAlreadyNotFixed);
@@ -76,7 +81,6 @@ export const handler = async (event: APIGatewayProxyEvent): Promise<APIGatewayPr
       return HttpResponse(StatusCodes.BAD_REQUEST, ExternalApiErrorMessages.VehicleRecallAlreadyFixed);
     }
   }
-  return HttpResponse(StatusCodes.NOT_FOUND, getReasonPhrase(StatusCodes.NOT_FOUND));
 };
 
 

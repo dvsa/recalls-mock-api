@@ -369,7 +369,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"rectificationDate\": \"2022-09-05\"\n}",
+							"raw": "{\n    \"rectificationDate\": \"2022-09-05\",\n    \"repairStatus\": \"FIXED\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
