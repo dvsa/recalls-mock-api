@@ -6,8 +6,7 @@ import HttpResponse from '../util/httpResponse';
 import validAuthorisation from '../util/authorisation';
 import Vehicles from '../util/vehicles';
 import { RecallsUpdateRequest, RepairStatus } from '../util/payloads';
-import { allRequiredFieldsUpdateFixedRecall, allRequiredFieldsUpdateNonfixedRecall, validDateFormat } from '../util/validatorsRecall';
-import logger from '../util/logger';
+import { allRequiredFieldsUpdateFixedRecall, allRequiredFieldsUpdateNonfixedRecall, rectificationDateIsInvalid, validDateFormat } from '../util/validatorsRecall';
 import validUsageKey from '../util/apiUsageKey';
 
 // eslint-disable-next-line @typescript-eslint/require-await
@@ -52,14 +51,15 @@ export const handler = async (event: APIGatewayProxyEvent): Promise<APIGatewayPr
 
   if (dvsaCampaignReference) {
     vehicleFound = Vehicles.find((vehicle) => vehicle.vin === vin && vehicle.dvsaCampaignReference === dvsaCampaignReference);
-    logger.info('dvsaCampaignreference', { vehicleFound });
   } else {
     vehicleFound = Vehicles.find((vehicle) => vehicle.vin === vin && vehicle.manufacturerCampaignReference === manufacturerCampaignReference);
-    logger.info('manufacturerCampaignreference', { vehicleFound });
   }
 
   if (!vehicleFound) {
     return HttpResponse(StatusCodes.NOT_FOUND, getReasonPhrase(StatusCodes.NOT_FOUND));
+  }
+  if (recallUpdate.repairStatus == RepairStatus.FIXED && rectificationDateIsInvalid(recallUpdate.rectificationDate, vehicleFound.recallCampaignStartDate)) {
+    return HttpResponse(StatusCodes.BAD_REQUEST, ExternalApiErrorMessages.InvalidRectificationDate);
   }
 
   if (vehicleFound.repairStatus === RepairStatus.NOT_FIXED) {

@@ -39,4 +39,9 @@ export const allRequiredFieldsUpdateFixedRecall = (recall:RecallsUpdateRequest):
   return areAllRequiredFieldsPresent;
 };
 
+export const rectificationDateIsInvalid = (recallClosedDate:string, recallOpenDate:string ):boolean => {
+  const openDate = new Date(recallOpenDate);
+  const closedDate = new Date(recallClosedDate);
+  return closedDate < openDate;
+};
 const checkProperty = (objectProperty: string): boolean => objectProperty != null && objectProperty.length > 0;

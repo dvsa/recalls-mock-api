@@ -65,7 +65,8 @@ An API Usage Key will be provided to you when you register for the service, this
 ```
 ### Update a recall - Set status to fixed
  make a put request to http://127.0.0.1:3000/recalls/vin/ABCD122CBAD11433?dvsaCampaignReference=R/2022/002
- 
+ the rectification date must be later than the open recalls campaign start date
+
  header:
  ```json
   "Authorization": "insert bearer token",
@@ -118,5 +119,8 @@ An API Usage Key will be provided to you when you register for the service, this
 `src/handler/`
 Lambda handler methods here.
 
-`src/resources/util `
+`src/util `
 Logger utility / helper functions.
+
+`src/util/vehicles.ts `
+a list of vehicles to be used for testing.
