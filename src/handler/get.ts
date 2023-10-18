@@ -7,6 +7,7 @@ import Vehicles from '../util/vehicles';
 import { RecallResponseContract, RecallsDataReponseDetail, RecallsDataResponse } from '../util/payloads';
 import validUsageKey from '../util/apiUsageKey';
 
+
 // eslint-disable-next-line @typescript-eslint/require-await
 export const handler = async (event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> => {
   if (!validAuthorisation(event.headers)) {
@@ -30,24 +31,15 @@ export const handler = async (event: APIGatewayProxyEvent): Promise<APIGatewayPr
       dvsaCampaignReference = event.queryStringParameters.dvsaCampaignReference;
     }
   }
-  const vehicleFound = Vehicles.find((vehicle) => vehicle.vin === vin);
-  let vehiclesFound: RecallResponseContract[] = [];
+  let vehicleFound = Vehicles.filter((vehicle) => vehicle.vin === vin);
   if (dvsaCampaignReference) {
-    if (vehicleFound && vehicleFound.dvsaCampaignReference === dvsaCampaignReference) {
-      vehiclesFound.push(vehicleFound);
-      return HttpResponse(StatusCodes.OK, createRecallsDataResponse(vehiclesFound, vehicleFound.vin, vehicleFound.manufacturerId));
-    }
-  } else if (manufacturerCampaignReference) {
-    if (vehicleFound && vehicleFound.manufacturerCampaignReference === manufacturerCampaignReference) {
-      vehiclesFound.push(vehicleFound);
-      return HttpResponse(StatusCodes.OK, createRecallsDataResponse(vehiclesFound, vehicleFound.vin, vehicleFound.manufacturerId));
-    }
-  } else {
-    if (vehicleFound) {
-      vehiclesFound = Vehicles.filter((vehicle) => vehicle.vin === vin);
-      return HttpResponse(StatusCodes.OK, createRecallsDataResponse(vehiclesFound, vehicleFound.vin, vehicleFound.manufacturerId));
-    }
-    return HttpResponse(StatusCodes.NOT_FOUND, getReasonPhrase(StatusCodes.NOT_FOUND));
+    vehicleFound = vehicleFound.filter((vehicle) => vehicle.dvsaCampaignReference === dvsaCampaignReference);
+  }
+  if (manufacturerCampaignReference) {
+    vehicleFound = vehicleFound.filter((vehicle) => vehicle.manufacturerCampaignReference === manufacturerCampaignReference);
+  }
+  if (vehicleFound.length > 0) {
+    return HttpResponse(StatusCodes.OK, createRecallsDataResponse(vehicleFound, vin, vehicleFound[0].manufacturerId));
   }
   return HttpResponse(StatusCodes.NOT_FOUND, getReasonPhrase(StatusCodes.NOT_FOUND));
 };
