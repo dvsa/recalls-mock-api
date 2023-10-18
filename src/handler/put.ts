@@ -4,10 +4,10 @@ import type { APIGatewayProxyEvent, APIGatewayProxyResult } from 'aws-lambda';
 import ExternalApiErrorMessages from '../util/externalApiReferences';
 import HttpResponse from '../util/httpResponse';
 import validAuthorisation from '../util/authorisation';
-import Vehicles from '../util/vehicles';
 import { RecallsUpdateRequest, RepairStatus } from '../util/payloads';
 import { allRequiredFieldsUpdateFixedRecall, allRequiredFieldsUpdateNonfixedRecall, rectificationDateIsInvalid, validDateFormat } from '../util/validatorsRecall';
 import validUsageKey from '../util/apiUsageKey';
+import { findVehicle } from '../util/vehicleSearch';
 
 // eslint-disable-next-line @typescript-eslint/require-await
 export const handler = async (event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> => {
@@ -47,13 +47,7 @@ export const handler = async (event: APIGatewayProxyEvent): Promise<APIGatewayPr
     }
   }
 
-  let vehicleFound;
-
-  if (dvsaCampaignReference) {
-    vehicleFound = Vehicles.find((vehicle) => vehicle.vin === vin && vehicle.dvsaCampaignReference === dvsaCampaignReference);
-  } else {
-    vehicleFound = Vehicles.find((vehicle) => vehicle.vin === vin && vehicle.manufacturerCampaignReference === manufacturerCampaignReference);
-  }
+  const vehicleFound = findVehicle(vin, dvsaCampaignReference, manufacturerCampaignReference);
 
   if (!vehicleFound) {
     return HttpResponse(StatusCodes.NOT_FOUND, getReasonPhrase(StatusCodes.NOT_FOUND));
