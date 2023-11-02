@@ -2,6 +2,8 @@
 
 A SAM Local application to help development teams test output from their solution locally for the safety recalls API
 
+The purpose of this application is to test the functionality of the API calls, not to emulate the modification of records in the database. Therefore, it should only be used to verify that each call works as expected, follow up calls will not reflect previous actions.
+
 ## Requirements
 
 - node v16.17.1
@@ -61,9 +63,10 @@ An API Usage Key will be provided to you when you register for the service, this
   "recallCampaignStartDate": "2022-01-31"
 }
 ```
-### Update a recall as Fixed
+### Update a recall - Set status to fixed
  make a put request to http://127.0.0.1:3000/recalls/vin/ABCD122CBAD11433?dvsaCampaignReference=R/2022/002
- 
+ the rectification date must be later than the open recalls campaign start date
+
  header:
  ```json
   "Authorization": "insert bearer token",
@@ -77,7 +80,7 @@ An API Usage Key will be provided to you when you register for the service, this
 }
 ```
 
-### Update a recall as Not Fixed
+### Update a recall - Set status to not fixed
  make a put request to http://127.0.0.1:3000/recalls/vin/ABCD122CBAD11432?dvsaCampaignReference=R/2022/001
  
  header:
@@ -116,5 +119,8 @@ An API Usage Key will be provided to you when you register for the service, this
 `src/handler/`
 Lambda handler methods here.
 
-`src/resources/util `
+`src/util `
 Logger utility / helper functions.
+
+`src/util/vehicles.ts `
+a list of vehicles to be used for testing.

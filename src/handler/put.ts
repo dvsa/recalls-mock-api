@@ -4,11 +4,10 @@ import type { APIGatewayProxyEvent, APIGatewayProxyResult } from 'aws-lambda';
 import ExternalApiErrorMessages from '../util/externalApiReferences';
 import HttpResponse from '../util/httpResponse';
 import validAuthorisation from '../util/authorisation';
-import Vehicles from '../util/vehicles';
 import { RecallsUpdateRequest, RepairStatus } from '../util/payloads';
-import { allRequiredFieldsUpdateFixedRecall, allRequiredFieldsUpdateNonfixedRecall, validDateFormat } from '../util/validatorsRecall';
-import logger from '../util/logger';
+import { allRequiredFieldsUpdateFixedRecall, allRequiredFieldsUpdateNonfixedRecall, rectificationDateIsInvalid, validDateFormat } from '../util/validatorsRecall';
 import validUsageKey from '../util/apiUsageKey';
+import { findVehicle } from '../util/vehicleSearch';
 
 // eslint-disable-next-line @typescript-eslint/require-await
 export const handler = async (event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> => {
@@ -37,34 +36,32 @@ export const handler = async (event: APIGatewayProxyEvent): Promise<APIGatewayPr
   const { vin } = event.pathParameters;
   const { manufacturerCampaignReference, dvsaCampaignReference } = event.queryStringParameters;
   const recallUpdate = JSON.parse(event.body) as RecallsUpdateRequest;
+
+  if (!recallUpdate.repairStatus) {
+    return HttpResponse(StatusCodes.BAD_REQUEST, ExternalApiErrorMessages.InvalidRequestBody);
+  }
+
   if (recallUpdate.repairStatus == RepairStatus.FIXED) {
     if (!validDateFormat(recallUpdate.rectificationDate)) {
       return HttpResponse(StatusCodes.BAD_REQUEST, ExternalApiErrorMessages.InvalidDateFormat);
     }
   }
 
-  let vehicleFound;
-
-  if (dvsaCampaignReference) {
-    vehicleFound = Vehicles.find((vehicle) => vehicle.vin === vin && vehicle.dvsaCampaignReference === dvsaCampaignReference);
-    logger.info('dvsaCampaignreference', { vehicleFound });
-  } else {
-    vehicleFound = Vehicles.find((vehicle) => vehicle.vin === vin && vehicle.manufacturerCampaignReference === manufacturerCampaignReference);
-    logger.info('manufacturerCampaignreference', { vehicleFound });
-  }
+  const vehicleFound = findVehicle(vin, dvsaCampaignReference, manufacturerCampaignReference);
 
   if (!vehicleFound) {
     return HttpResponse(StatusCodes.NOT_FOUND, getReasonPhrase(StatusCodes.NOT_FOUND));
   }
+  if (recallUpdate.repairStatus == RepairStatus.FIXED && rectificationDateIsInvalid(recallUpdate.rectificationDate, vehicleFound.recallCampaignStartDate)) {
+    return HttpResponse(StatusCodes.BAD_REQUEST, ExternalApiErrorMessages.InvalidRectificationDate);
+  }
 
   if (vehicleFound.repairStatus === RepairStatus.NOT_FIXED) {
-    if (!allRequiredFieldsUpdateNonfixedRecall(recallUpdate)) {
-      return HttpResponse(StatusCodes.BAD_REQUEST, ExternalApiErrorMessages.InvalidRequestBody);
-    }
     if (recallUpdate.repairStatus === RepairStatus.FIXED) {
-      if (vehicleFound) {
-        return HttpResponse(StatusCodes.NO_CONTENT, getReasonPhrase(StatusCodes.NO_CONTENT));
+      if (!allRequiredFieldsUpdateNonfixedRecall(recallUpdate)) {
+        return HttpResponse(StatusCodes.BAD_REQUEST, ExternalApiErrorMessages.InvalidRequestBody);
       }
+      return HttpResponse(StatusCodes.NO_CONTENT, getReasonPhrase(StatusCodes.NO_CONTENT));
     } else {
       return HttpResponse(StatusCodes.BAD_REQUEST, ExternalApiErrorMessages.VehicleRecallAlreadyNotFixed);
     }
@@ -73,14 +70,11 @@ export const handler = async (event: APIGatewayProxyEvent): Promise<APIGatewayPr
       return HttpResponse(StatusCodes.BAD_REQUEST, ExternalApiErrorMessages.InvalidRequestBody);
     }
     if (recallUpdate.repairStatus === RepairStatus.NOT_FIXED) {
-      if (vehicleFound) {
-        return HttpResponse(StatusCodes.NO_CONTENT, getReasonPhrase(StatusCodes.NO_CONTENT));
-      }
+      return HttpResponse(StatusCodes.NO_CONTENT, getReasonPhrase(StatusCodes.NO_CONTENT));
     } else {
       return HttpResponse(StatusCodes.BAD_REQUEST, ExternalApiErrorMessages.VehicleRecallAlreadyFixed);
     }
   }
-  return HttpResponse(StatusCodes.NOT_FOUND, getReasonPhrase(StatusCodes.NOT_FOUND));
 };
 
 

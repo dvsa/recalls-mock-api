@@ -3,7 +3,7 @@ import type { APIGatewayProxyEvent, APIGatewayProxyResult } from 'aws-lambda';
 import { StatusCodes, getReasonPhrase } from 'http-status-codes';
 import { RecallsCreateRequest } from '../util/payloads';
 import HttpResponse from '../util/httpResponse';
-import { validDvsaCampaignReference, allRequiredFieldsCreateRecall, validDateFormat } from '../util/validatorsRecall';
+import { allRequiredFieldsCreateRecall, validDateFormat } from '../util/validatorsRecall';
 import validAuthorisation from '../util/authorisation';
 import Vehicles from '../util/vehicles';
 import ExternalApiErrorMessages from '../util/externalApiReferences';
@@ -25,9 +25,6 @@ export const handler = async (event: APIGatewayProxyEvent): Promise<APIGatewayPr
     recall = JSON.parse(event.body) as RecallsCreateRequest;
     if (!allRequiredFieldsCreateRecall(recall)) {
       return HttpResponse(StatusCodes.BAD_REQUEST, ExternalApiErrorMessages.InvalidRequestBody);
-    }
-    if (!validDvsaCampaignReference(recall.dvsaCampaignReference)) {
-      return HttpResponse(StatusCodes.BAD_REQUEST, ExternalApiErrorMessages.DvsaCampaignReferenceInvalid);
     }
     if (!validDateFormat(recall.recallCampaignStartDate)) {
       return HttpResponse(StatusCodes.BAD_REQUEST, ExternalApiErrorMessages.InvalidDateFormat);
