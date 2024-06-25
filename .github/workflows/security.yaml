@@ -4,6 +4,6 @@ on: push
 
 jobs:
   security:
-    uses: dvsa/.github/.github/workflows/nodejs-security.yml@v4.1.0
+    uses: dvsa/.github/.github/workflows/nodejs-security.yaml@v4.1.0
     secrets:
       SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
