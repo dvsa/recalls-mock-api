@@ -22,7 +22,7 @@
   ],
   "license": "Open Government Licence v3.0",
   "dependencies": {
-    "aws-sdk": "^2.1189.0",
+    "aws-sdk": "^2.1354.0",
     "http-status-codes": "^2.2.0"
   },
   "devDependencies": {
