@@ -18,6 +18,7 @@ export type RecallsDataResponse = {
   vin: string,
   manufacturer: string,
   recalls: Array<RecallsDataReponseDetail>
+  lastUpdatedDate: string,
 };
 
 export type RecallsDataReponseDetail = {

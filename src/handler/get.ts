@@ -16,12 +16,10 @@ export const handler = async (event: APIGatewayProxyEvent): Promise<APIGatewayPr
   if (!validUsageKey(event.headers)) {
     return HttpResponse(StatusCodes.FORBIDDEN, getReasonPhrase(StatusCodes.FORBIDDEN));
   }
-  if (!event.pathParameters) {
+  if (!event.pathParameters || !event.pathParameters.vin) {
     return HttpResponse(StatusCodes.NOT_FOUND, getReasonPhrase(StatusCodes.NOT_FOUND));
   }
-  if (!event.pathParameters.vin) {
-    return HttpResponse(StatusCodes.NOT_FOUND, getReasonPhrase(StatusCodes.NOT_FOUND));
-  }
+
   const { vin } = event.pathParameters;
   let manufacturerCampaignReference: string | undefined;
   let dvsaCampaignReference: string | undefined;
@@ -49,6 +47,7 @@ const createRecallsDataResponse = (vehicles:RecallResponseContract[], vin:string
   recallDataResponse.vin = vin;
   recallDataResponse.manufacturer = manufacturer;
   recallDataResponse.recalls = createArrayOfRecalls(vehicles);
+  recallDataResponse.lastUpdatedDate = createDate();
   return recallDataResponse;
 };
 
@@ -64,3 +63,7 @@ const createArrayOfRecalls = (vehicles:RecallResponseContract[]):RecallsDataRepo
   });
   return vehicleRecalls;
 };
+
+const createDate = (): string => {
+  return (new Date()).toISOString();
+}
