@@ -7,7 +7,7 @@ Resources:
       Properties:
         CodeUri: src/handler/
         Handler: get.handler
-        Runtime: nodejs16.x
+        Runtime: nodejs18.x
         Events:
           GetLambdaApiNoVin:
             Type: Api
@@ -25,7 +25,7 @@ Resources:
       Properties:
         CodeUri: src/handler/
         Handler: put.handler
-        Runtime: nodejs16.x
+        Runtime: nodejs18.x
         Events:
           GetLambdaApiNoVin:
             Type: Api
@@ -43,7 +43,7 @@ Resources:
       Properties:
         CodeUri: src/handler/
         Handler: post.handler
-        Runtime: nodejs14.x
+        Runtime: nodejs18.x
         Events:
           PostLambdaApi:
             Type: Api
@@ -56,7 +56,7 @@ Resources:
       Properties:
         CodeUri: src/handler/
         Handler: delete.handler
-        Runtime: nodejs14.x
+        Runtime: nodejs18.x
         Events:
           PostLambdaApiNoVin:
             Type: Api
@@ -74,7 +74,7 @@ Resources:
       Properties:
         CodeUri: src/handler/
         Handler: auth.handler
-        Runtime: nodejs14.x
+        Runtime: nodejs18.x
         Events:
           PostLambdaApi:
             Type: Api
