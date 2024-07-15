@@ -1,0 +1,91 @@
+AWSTemplateFormatVersion: 2010-09-09
+Transform: AWS::Serverless-2016-10-31
+Resources:
+  RecallsGetLambdaFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: RecallsGetLambdaFunction
+      Handler: app.handler
+      Runtime: nodejs18.x
+      Events:
+        GetLambdaApiNoVin:
+          Type: Api
+          Properties:
+            Path: /recalls/vin/
+            Method: get
+        GetLambdaApi:
+          Type: Api
+          Properties:
+            Path: /recalls/vin/{vin}
+            Method: get
+  RecallsPutLambdaFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: RecallsPutLambdaFunction
+      Handler: app.handler
+      Runtime: nodejs18.x
+      Events:
+        GetLambdaApiNoVin:
+          Type: Api
+          Properties:
+            Path: /recalls/vin/
+            Method: put
+        GetLambdaApi:
+          Type: Api
+          Properties:
+            Path: /recalls/vin/{vin}
+            Method: put
+  RecallsPostLambdaFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: RecallsPostLambdaFunction
+      Handler: app.handler
+      Runtime: nodejs18.x
+      Events:
+        PostLambdaApi:
+          Type: Api
+          Properties:
+            Path: /recalls
+            Method: post
+  RecallsDeleteLambdaFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: RecallsDeleteLambdaFunction
+      Handler: app.handler
+      Runtime: nodejs18.x
+      Events:
+        PostLambdaApiNoVin:
+          Type: Api
+          Properties:
+            Path: /recalls/vin/
+            Method: delete
+        PostLambdaApi:
+          Type: Api
+          Properties:
+            Path: /recalls/vin/{vin}
+            Method: delete
+  AuthPostLambdaFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: AuthPostLambdaFunction
+      Handler: app.handler
+      Runtime: nodejs18.x
+      Events:
+        PostLambdaApi:
+          Type: Api
+          Properties:
+            Path: /oauth2/v2.0/token
+            Method: post
+Outputs:
+  GetLambdaApi:
+    Description: API Gateway endpoint URL for GetLambdaFunction on dev stage
+    Value: !Sub https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Dev/
+  GetLambdaFunction:
+    Description: Get Lambda Function ARN
+    Value: !GetAtt GetLambdaFunction.Arn
+  PostLambdaApi:
+    Description: API Gateway endpoint URL for GetLambdaFunction on dev stage
+    Value: !Sub https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Dev/
+  PostLambdaFunction:
+    Description: Post Lambda Function ARN
+    Value: !GetAtt PostLambdaFunction.Arn
