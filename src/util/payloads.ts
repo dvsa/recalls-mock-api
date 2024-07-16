@@ -24,7 +24,7 @@ export type RecallsGetDataResponse = {
 export type RecallsCreateDataResponse = {
   manufacturer: string,
   recall: RecallDetail
-}
+};
 
 export type RecallDetail = {
   vin: string,
