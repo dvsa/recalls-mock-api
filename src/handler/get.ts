@@ -9,7 +9,7 @@ import validUsageKey from '../validator/apiUsageKey';
 import { createDate } from '../util/date';
 import { HttpErrorResponse } from '../response/httpErrorResponse';
 import ErrorCodes from '../util/errorCodes';
-import ErrorMessages from "../util/errorMessages";
+import ErrorMessages from '../util/errorMessages';
 
 
 // eslint-disable-next-line @typescript-eslint/require-await
