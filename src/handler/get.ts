@@ -1,24 +1,26 @@
 import 'dotenv/config';
 import { getReasonPhrase, StatusCodes } from 'http-status-codes';
 import type { APIGatewayProxyEvent, APIGatewayProxyResult } from 'aws-lambda';
-import HttpResponse from '../util/httpResponse';
+import HttpResponse from '../response/httpResponse';
 import validAuthorisation from '../validator/authorisation';
 import Vehicles from '../data/vehicles';
 import { RecallResponseContract, RecallsDataReponseDetail, RecallsGetDataResponse } from '../util/payloads';
 import validUsageKey from '../validator/apiUsageKey';
-import {createDate} from "../util/date";
+import { createDate } from '../util/date';
+import { HttpErrorResponse } from '../response/httpErrorResponse';
+import ErrorCodes from '../util/errorCodes';
 
 
 // eslint-disable-next-line @typescript-eslint/require-await
 export const handler = async (event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> => {
   if (!validAuthorisation(event.headers)) {
-    return HttpResponse(StatusCodes.UNAUTHORIZED, getReasonPhrase(StatusCodes.UNAUTHORIZED));
+    return HttpErrorResponse(StatusCodes.UNAUTHORIZED, ErrorCodes.UNAUTHORIZED, getReasonPhrase(StatusCodes.UNAUTHORIZED));
   }
   if (!validUsageKey(event.headers)) {
-    return HttpResponse(StatusCodes.FORBIDDEN, getReasonPhrase(StatusCodes.FORBIDDEN));
+    return HttpErrorResponse(StatusCodes.FORBIDDEN, ErrorCodes.FORBIDDEN, getReasonPhrase(StatusCodes.FORBIDDEN));
   }
   if (!event.pathParameters || !event.pathParameters.vin) {
-    return HttpResponse(StatusCodes.NOT_FOUND, getReasonPhrase(StatusCodes.NOT_FOUND));
+    return HttpErrorResponse(StatusCodes.NOT_FOUND, ErrorCodes.NO_DATA_FOUND, getReasonPhrase(StatusCodes.NOT_FOUND));
   }
 
   const { vin } = event.pathParameters;
@@ -40,7 +42,7 @@ export const handler = async (event: APIGatewayProxyEvent): Promise<APIGatewayPr
   if (vehicleFound.length > 0) {
     return HttpResponse(StatusCodes.OK, createRecallsDataResponse(vehicleFound, vin, vehicleFound[0].manufacturerId));
   }
-  return HttpResponse(StatusCodes.NOT_FOUND, getReasonPhrase(StatusCodes.NOT_FOUND));
+  return HttpErrorResponse(StatusCodes.NOT_FOUND, ErrorCodes.NO_DATA_FOUND, getReasonPhrase(StatusCodes.NOT_FOUND));
 };
 
 const createRecallsDataResponse = (vehicles:RecallResponseContract[], vin:string, manufacturer:string):RecallsGetDataResponse => {
