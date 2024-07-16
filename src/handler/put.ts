@@ -3,10 +3,10 @@ import { getReasonPhrase, StatusCodes } from 'http-status-codes';
 import type { APIGatewayProxyEvent, APIGatewayProxyResult } from 'aws-lambda';
 import ExternalApiErrorMessages from '../util/externalApiReferences';
 import HttpResponse from '../util/httpResponse';
-import validAuthorisation from '../util/authorisation';
+import validAuthorisation from '../validator/authorisation';
 import { RecallsUpdateRequest, RepairStatus } from '../util/payloads';
-import { allRequiredFieldsUpdateFixedRecall, allRequiredFieldsUpdateNonfixedRecall, rectificationDateIsInvalid, validDateFormat } from '../util/validatorsRecall';
-import validUsageKey from '../util/apiUsageKey';
+import { allRequiredFieldsUpdateFixedRecall, allRequiredFieldsUpdateNonfixedRecall, rectificationDateIsInvalid, validDateFormat } from '../validator/validatorsRecall';
+import validUsageKey from '../validator/apiUsageKey';
 import { findVehicle } from '../util/vehicleSearch';
 
 // eslint-disable-next-line @typescript-eslint/require-await

@@ -7,7 +7,7 @@ import {
 } from '../util/authorisationResponses';
 import {
   containsClientId, containsClientSecret, containsGrantType, containsScope,
-} from '../util/validatorsAuthentication';
+} from '../validator/validatorsAuthentication';
 
 // eslint-disable-next-line @typescript-eslint/require-await
 export const handler = async (event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> => {

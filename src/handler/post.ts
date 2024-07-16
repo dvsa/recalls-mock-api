@@ -1,13 +1,20 @@
 import 'dotenv/config';
 import type { APIGatewayProxyEvent, APIGatewayProxyResult } from 'aws-lambda';
 import { StatusCodes, getReasonPhrase } from 'http-status-codes';
-import { RecallsCreateRequest } from '../util/payloads';
+import {
+  RecallDetail,
+  RecallResponseContract,
+  RecallsCreateDataResponse,
+  RecallsCreateRequest,
+  RecallsGetDataResponse
+} from '../util/payloads';
 import HttpResponse from '../util/httpResponse';
-import { allRequiredFieldsCreateRecall, validDateFormat } from '../util/validatorsRecall';
-import validAuthorisation from '../util/authorisation';
-import Vehicles from '../util/vehicles';
+import { allRequiredFieldsCreateRecall, validDateFormat } from '../validator/validatorsRecall';
+import validAuthorisation from '../validator/authorisation';
+import Vehicles from '../data/vehicles';
 import ExternalApiErrorMessages from '../util/externalApiReferences';
-import validUsageKey from '../util/apiUsageKey';
+import validUsageKey from '../validator/apiUsageKey';
+import {createDate} from "../util/date";
 
 // eslint-disable-next-line @typescript-eslint/require-await
 export const handler = async (event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> => {
@@ -33,8 +40,20 @@ export const handler = async (event: APIGatewayProxyEvent): Promise<APIGatewayPr
     if (duplicateVehicle) {
       return HttpResponse(StatusCodes.CONFLICT, duplicateVehicle);
     }
-    return HttpResponse(StatusCodes.CREATED, getReasonPhrase(StatusCodes.CREATED));
+    return HttpResponse(StatusCodes.CREATED, createCreatedDataResponse(recall));
   } catch (err) {
     return HttpResponse(StatusCodes.BAD_REQUEST, ExternalApiErrorMessages.InvalidRequestBody);
   }
+};
+
+const createCreatedDataResponse = (recall:RecallsCreateRequest):RecallsCreateDataResponse => {
+  const recallDataResponse = <RecallsCreateDataResponse>{};
+  const recallDetail: RecallDetail = <RecallDetail>{}
+  recallDetail.vin = recall.vin;
+  recallDetail.manufacturerCampaignReference = recall.manufacturerCampaignReference,
+  recallDetail.dvsaCampaignReference = recall.dvsaCampaignReference;
+  recallDetail.recallCampaignStartDate = createDate()
+  recallDataResponse.manufacturer = 'mock_api_user';
+  recallDataResponse.recall = recallDetail
+  return recallDataResponse;
 };
