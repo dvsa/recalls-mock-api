@@ -9,15 +9,16 @@ import validUsageKey from '../validator/apiUsageKey';
 import { createDate } from '../util/date';
 import { HttpErrorResponse } from '../response/httpErrorResponse';
 import ErrorCodes from '../util/errorCodes';
+import ErrorMessages from "../util/errorMessages";
 
 
 // eslint-disable-next-line @typescript-eslint/require-await
 export const handler = async (event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> => {
   if (!validAuthorisation(event.headers)) {
-    return HttpErrorResponse(StatusCodes.UNAUTHORIZED, ErrorCodes.UNAUTHORIZED, getReasonPhrase(StatusCodes.UNAUTHORIZED));
+    return HttpErrorResponse(StatusCodes.UNAUTHORIZED, ErrorCodes.UNAUTHORIZED, ErrorMessages.UNAUTHORIZED);
   }
   if (!validUsageKey(event.headers)) {
-    return HttpErrorResponse(StatusCodes.FORBIDDEN, ErrorCodes.FORBIDDEN, getReasonPhrase(StatusCodes.FORBIDDEN));
+    return HttpErrorResponse(StatusCodes.FORBIDDEN, ErrorCodes.FORBIDDEN, ErrorMessages.UNRECOGNIZED_API_KEY);
   }
   if (!event.pathParameters || !event.pathParameters.vin) {
     return HttpErrorResponse(StatusCodes.NOT_FOUND, ErrorCodes.NO_DATA_FOUND, getReasonPhrase(StatusCodes.NOT_FOUND));
