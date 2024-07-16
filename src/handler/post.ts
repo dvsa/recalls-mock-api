@@ -11,7 +11,7 @@ import validUsageKey from '../validator/apiUsageKey';
 import { createDate } from '../util/date';
 import ErrorCodes from '../util/errorCodes';
 import { HttpErrorResponse } from '../response/httpErrorResponse';
-import ErrorMessages from "../util/errorMessages";
+import ErrorMessages from '../util/errorMessages';
 
 // eslint-disable-next-line @typescript-eslint/require-await
 export const handler = async (event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> => {
