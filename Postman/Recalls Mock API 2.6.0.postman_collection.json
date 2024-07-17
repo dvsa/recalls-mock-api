@@ -1,9 +1,10 @@
 {
 	"info": {
-		"_postman_id": "c7574902-1f0b-4110-ae64-3e0649304eaa",
-		"name": "Recalls",
+		"_postman_id": "f9392ee3-3dab-4f61-88bb-60200d87c34c",
+		"name": "Recalls Mock API 2.6.0",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "8553673"
+		"_exporter_id": "13612636",
+		"_collection_link": "https://warped-astronaut-3402-1.postman.co/workspace/New-Team-Workspace~6d61f506-9578-45f6-9bf4-3df7a897fa16/collection/13612636-f9392ee3-3dab-4f61-88bb-60200d87c34c?action=share&source=collection_link&creator=13612636"
 	},
 	"item": [
 		{
@@ -16,14 +17,10 @@
 							"listen": "test",
 							"script": {
 								"exec": [
-									"pm.test(\"Status code is 401\", function () {",
-									"    pm.response.to.have.status(401);",
-									"});",
-									"pm.test(\"Body matches string\", function () {",
-									"    pm.expect(pm.response.text()).to.include(\"Unauthorized\");",
-									"});"
+									""
 								],
-								"type": "text/javascript"
+								"type": "text/javascript",
+								"packages": {}
 							}
 						}
 					],
@@ -65,14 +62,10 @@
 							"listen": "test",
 							"script": {
 								"exec": [
-									"pm.test(\"Status code is 400\", function () {",
-									"    pm.response.to.have.status(400);",
-									"});",
-									"pm.test(\"Body matches string\", function () {",
-									"    pm.expect(pm.response.text()).to.include(\"Invalid request body\");",
-									"});"
+									""
 								],
-								"type": "text/javascript"
+								"type": "text/javascript",
+								"packages": {}
 							}
 						}
 					],
@@ -119,14 +112,10 @@
 							"listen": "test",
 							"script": {
 								"exec": [
-									"pm.test(\"Status code is 400\", function () {",
-									"    pm.response.to.have.status(400);",
-									"});",
-									"pm.test(\"Body matches string\", function () {",
-									"    pm.expect(pm.response.text()).to.include(\"Invalid date format\");",
-									"});"
+									""
 								],
-								"type": "text/javascript"
+								"type": "text/javascript",
+								"packages": {}
 							}
 						}
 					],

@@ -28,7 +28,7 @@ Ensure build steps have been completed.
 1. The lambdas should be available at `http://localhost:3000/`
 
 ###  To run recalls API tester locally
-To run the recalls mock api locally, you will need to use Postman to send requests at `http://localhost:3000/`. A [postman collection](Postman/Recalls.postman_collection.json) has been included with this repo.
+To run the recalls mock api locally, you will need to use Postman to send requests at `http://localhost:3000/`. A [postman collection](Postman/Recalls Mock API 2.6.0.postman_collection.json) has been included with this repo.
 
 ## Sample Calls
 
