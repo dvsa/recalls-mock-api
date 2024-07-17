@@ -1,13 +1,13 @@
 import 'dotenv/config';
 import type { APIGatewayProxyEvent, APIGatewayProxyResult } from 'aws-lambda';
 import { StatusCodes, getReasonPhrase } from 'http-status-codes';
-import HttpResponse from '../util/httpResponse';
+import HttpResponse from '../response/httpResponse';
 import {
   ErrorMissingGrantType, AuthenticatedMessage, ErrorMissingClientID, ErrorMissingClientSecret, ErrorMissingScope,
-} from '../util/authorisationResponses';
+} from '../response/authorisationResponses';
 import {
   containsClientId, containsClientSecret, containsGrantType, containsScope,
-} from '../util/validatorsAuthentication';
+} from '../validator/validatorsAuthentication';
 
 // eslint-disable-next-line @typescript-eslint/require-await
 export const handler = async (event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> => {

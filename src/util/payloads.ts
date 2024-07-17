@@ -14,10 +14,23 @@ export type RecallsResponse = {
   message: string,
 };
 
-export type RecallsDataResponse = {
+export type RecallsGetDataResponse = {
   vin: string,
   manufacturer: string,
   recalls: Array<RecallsDataReponseDetail>
+  lastUpdatedDate: string,
+};
+
+export type RecallsCreateDataResponse = {
+  manufacturer: string,
+  recall: RecallDetail
+};
+
+export type RecallDetail = {
+  vin: string,
+  manufacturerCampaignReference: string,
+  dvsaCampaignReference: string,
+  recallCampaignStartDate: string,
 };
 
 export type RecallsDataReponseDetail = {

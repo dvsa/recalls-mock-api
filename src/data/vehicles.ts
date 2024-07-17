@@ -1,4 +1,4 @@
-import { RecallResponseContract, RepairStatus } from './payloads';
+import { RecallResponseContract, RepairStatus } from '../util/payloads';
 
 const Vehicles:RecallResponseContract[] = [
   {

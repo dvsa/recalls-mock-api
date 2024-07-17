@@ -1,0 +1,4 @@
+{
+  "{src,tests}/**/*.{js,ts,jsx,tsx}": "eslint --max-warnings=0",
+  "src/**/*.{js,ts,jsx,tsx}": "npm run test -- --findRelatedTests"
+}

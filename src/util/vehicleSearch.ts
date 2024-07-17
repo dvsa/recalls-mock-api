@@ -1,4 +1,4 @@
-import Vehicles from './vehicles';
+import Vehicles from '../data/vehicles';
 
 export const findVehicle = (vin: string, dvsaCampaignReference?:string, manufacturerCampaignReference?:string) => {
   let vehicleFound;

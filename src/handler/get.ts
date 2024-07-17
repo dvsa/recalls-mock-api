@@ -1,27 +1,29 @@
 import 'dotenv/config';
 import { getReasonPhrase, StatusCodes } from 'http-status-codes';
 import type { APIGatewayProxyEvent, APIGatewayProxyResult } from 'aws-lambda';
-import HttpResponse from '../util/httpResponse';
-import validAuthorisation from '../util/authorisation';
-import Vehicles from '../util/vehicles';
-import { RecallResponseContract, RecallsDataReponseDetail, RecallsDataResponse } from '../util/payloads';
-import validUsageKey from '../util/apiUsageKey';
+import HttpResponse from '../response/httpResponse';
+import validAuthorisation from '../validator/authorisation';
+import Vehicles from '../data/vehicles';
+import { RecallResponseContract, RecallsDataReponseDetail, RecallsGetDataResponse } from '../util/payloads';
+import validUsageKey from '../validator/apiUsageKey';
+import { createDate } from '../util/date';
+import { HttpErrorResponse } from '../response/httpErrorResponse';
+import ErrorCodes from '../util/errorCodes';
+import ErrorMessages from '../util/errorMessages';
 
 
 // eslint-disable-next-line @typescript-eslint/require-await
 export const handler = async (event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> => {
   if (!validAuthorisation(event.headers)) {
-    return HttpResponse(StatusCodes.UNAUTHORIZED, getReasonPhrase(StatusCodes.UNAUTHORIZED));
+    return HttpErrorResponse(StatusCodes.UNAUTHORIZED, ErrorCodes.UNAUTHORIZED, ErrorMessages.UNAUTHORIZED);
   }
   if (!validUsageKey(event.headers)) {
-    return HttpResponse(StatusCodes.FORBIDDEN, getReasonPhrase(StatusCodes.FORBIDDEN));
+    return HttpErrorResponse(StatusCodes.FORBIDDEN, ErrorCodes.FORBIDDEN, ErrorMessages.UNRECOGNIZED_API_KEY);
   }
-  if (!event.pathParameters) {
-    return HttpResponse(StatusCodes.NOT_FOUND, getReasonPhrase(StatusCodes.NOT_FOUND));
+  if (!event.pathParameters || !event.pathParameters.vin) {
+    return HttpErrorResponse(StatusCodes.NOT_FOUND, ErrorCodes.NO_DATA_FOUND, getReasonPhrase(StatusCodes.NOT_FOUND));
   }
-  if (!event.pathParameters.vin) {
-    return HttpResponse(StatusCodes.NOT_FOUND, getReasonPhrase(StatusCodes.NOT_FOUND));
-  }
+
   const { vin } = event.pathParameters;
   let manufacturerCampaignReference: string | undefined;
   let dvsaCampaignReference: string | undefined;
@@ -41,14 +43,15 @@ export const handler = async (event: APIGatewayProxyEvent): Promise<APIGatewayPr
   if (vehicleFound.length > 0) {
     return HttpResponse(StatusCodes.OK, createRecallsDataResponse(vehicleFound, vin, vehicleFound[0].manufacturerId));
   }
-  return HttpResponse(StatusCodes.NOT_FOUND, getReasonPhrase(StatusCodes.NOT_FOUND));
+  return HttpErrorResponse(StatusCodes.NOT_FOUND, ErrorCodes.NO_DATA_FOUND, getReasonPhrase(StatusCodes.NOT_FOUND));
 };
 
-const createRecallsDataResponse = (vehicles:RecallResponseContract[], vin:string, manufacturer:string):RecallsDataResponse => {
-  const recallDataResponse = <RecallsDataResponse>{};
+const createRecallsDataResponse = (vehicles:RecallResponseContract[], vin:string, manufacturer:string):RecallsGetDataResponse => {
+  const recallDataResponse = <RecallsGetDataResponse>{};
   recallDataResponse.vin = vin;
   recallDataResponse.manufacturer = manufacturer;
   recallDataResponse.recalls = createArrayOfRecalls(vehicles);
+  recallDataResponse.lastUpdatedDate = createDate();
   return recallDataResponse;
 };
 
