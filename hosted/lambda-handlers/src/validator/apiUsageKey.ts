@@ -1,9 +1,9 @@
 import { APIGatewayProxyEventHeaders } from 'aws-lambda';
 
-const usageTokenRegex = new RegExp(/^.{10,}$/g);
+const usageTokenRegex = new RegExp(/^.{10,}$/);
 
 const validUsageKey = (headers:APIGatewayProxyEventHeaders):boolean => {
-  return headers['X-Api-Key'] != null && usageTokenRegex.test(headers['X-Api-Key']);
+  return headers['x-api-key'] != null && usageTokenRegex.test(headers['x-api-key']);
 };
 
 export default validUsageKey;

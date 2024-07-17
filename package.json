@@ -1,30 +1,6 @@
 {
-  "name": "dvsa-recalls-mock-api",
-  "version": "1.0.0",
-  "description": "A SAM Local application to help development teams test output from their solution locally for the safety recalls API",
-  "main": "index.js",
-  "scripts": {
-    "lint": "eslint '*/**/*.ts' --quiet --fix",
-    "lint:ci": "eslint '*/**/*.ts'",
-    "test": "jest --coverage",
-    "test:ci": "jest --ci",
-    "build:dev": "NODE_ENV=development webpack-cli --config webpack/webpack.development.js",
-    "watch:dev": "NODE_ENV=development webpack-cli --config webpack/webpack.development.watch.js",
-    "build:prod": "webpack-cli --config webpack/webpack.production.js",
-    "start:dev": "sam local start-api",
-    "invoke": "sam local invoke"
-  },
-  "contributors": [
-    {
-      "name": "Shaun Hare",
-      "email": "shaun.hare@dvsa.gov.uk"
-    }
-  ],
-  "license": "Open Government Licence v3.0",
-  "dependencies": {
-    "aws-sdk": "^2.1659.0",
-    "http-status-codes": "^2.3.0"
-  },
+  "name": "@dvsa/recalls-mock-api",
+  "description": "MOT Recalls Mock API",
   "devDependencies": {
     "@dvsa/eslint-config-ts": "^2.4.0",
     "@types/aws-lambda": "^8.10.141",
@@ -57,9 +33,24 @@
     "webpack": "^5.93.0",
     "webpack-cli": "^4.10.0",
     "webpack-merge": "^5.10.0",
-    "winston": "^3.13.1"
+    "winston": "^3.13.1",
+    "lerna": "^6.6.2",
+    "rimraf": "^5.0.0"
   },
-  "engines": {
-    "node": "^18.16.0"
-  }
+  "workspaces": [
+    "hosted/lambda-handlers",
+    "hosted/express-dev-server"
+  ],
+  "scripts": {
+    "start:dev": "lerna run start:dev --scope @recalls-mock-api/express-dev-server",
+    "test": "jest --coverage",
+    "test:ci": "jest --ci",
+    "lint": "eslint '*/**/*.ts' --quiet --fix",
+    "lint:ci": "eslint '*/**/*.ts'",
+    "lint:fix": "npm run lint -- --fix",
+    "clean:node-modules": "find . -name 'node_modules' -type d -prune -exec rm -rf '{}' +",
+    "clean:package-lock": "find . -name 'package-lock.json' -type f -prune -exec rm -rf '{}' +",
+    "clean": "npm run clean:package-lock && npm run clean:node-modules"
+  },
+  "version": "2.0.0"
 }
