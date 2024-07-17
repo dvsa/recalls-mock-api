@@ -1,6 +1,6 @@
 import 'dotenv/config';
 import type { APIGatewayProxyEvent, APIGatewayProxyResult } from 'aws-lambda';
-import { getReasonPhrase, StatusCodes } from 'http-status-codes';
+import { StatusCodes } from 'http-status-codes';
 import { RecallDetail, RecallResponseContract, RecallsCreateDataResponse, RecallsCreateRequest } from '../util/payloads';
 import HttpResponse from '../response/httpResponse';
 import { allRequiredFieldsCreateRecall, validDateFormat } from '../validator/validatorsRecall';
