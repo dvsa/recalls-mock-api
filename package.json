@@ -45,7 +45,7 @@
     "build:dev": "lerna run --parallel build:dev",
     "start:dev": "lerna run start:dev --scope @recalls-mock-api/express-dev-server",
     "test": "jest --coverage",
-    "test:ci": "jest --ci",
+    "test:ci": "lerna run --concurrency 1 test:ci",
     "lint": "eslint '*/**/*.ts' --quiet --fix",
     "lint:ci": "eslint '*/**/*.ts'",
     "lint:fix": "npm run lint -- --fix",
