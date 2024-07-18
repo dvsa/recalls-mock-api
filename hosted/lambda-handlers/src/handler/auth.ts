@@ -7,7 +7,7 @@ import {
 } from '../response/authorisationResponses';
 import {
   containsClientId, containsClientSecret, containsGrantType, containsScope,
-} from '../validator/validatorsAuthentication';
+} from '../validator/authentication';
 
 export const handler = async (event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> => {
   console.log(event.body);

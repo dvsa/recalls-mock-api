@@ -5,18 +5,18 @@ import { handler } from '../../src/handler/post';
 import validUsageKey from '../../src/validator/apiUsageKey';
 import validAuthorisation from '../../src/validator/authorisation';
 import Vehicles from '../../src/data/vehicles';
-import { allRequiredFieldsCreateRecall, validDateFormat } from '../../src/validator/validatorsRecall';
+import { allRequiredFieldsCreateRecall, validDateFormat } from '../../src/validator/recall';
 
 jest.mock('../../src/validator/authorisation.ts');
 jest.mock('../../src/validator/apiUsageKey.ts');
-jest.mock('../../src/validator/validatorsRecall');
+jest.mock('../../src/validator/recall');
 const mockAPIKeyValidator = jest.mocked(validUsageKey);
 const mockAuthValidator = jest.mocked(validAuthorisation);
 const mockDateValidator = jest.mocked(validDateFormat);
 const mockAllRequiredFieldsCreateRecall = jest.mocked(allRequiredFieldsCreateRecall);
 
 
-jest.mock('../../src/validator/validatorsRecall', () => {
+jest.mock('../../src/validator/recall', () => {
   return {
     validDateFormat: jest.fn().mockImplementation(() => mockDateValidator ),
     allRequiredFieldsCreateRecall: jest.fn().mockImplementation(() => mockAllRequiredFieldsCreateRecall ),

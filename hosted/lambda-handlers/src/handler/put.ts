@@ -10,7 +10,7 @@ import {
   allRequiredFieldsUpdateNonfixedRecall,
   rectificationDateIsInvalid,
   validDateFormat,
-} from '../validator/validatorsRecall';
+} from '../validator/recall';
 import validUsageKey from '../validator/apiUsageKey';
 import { findVehicle } from '../util/vehicleSearch';
 import { HttpErrorResponse } from '../response/httpErrorResponse';

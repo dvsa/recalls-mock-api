@@ -3,7 +3,7 @@ import type { APIGatewayProxyEvent, APIGatewayProxyResult } from 'aws-lambda';
 import { StatusCodes } from 'http-status-codes';
 import { RecallDetail, RecallResponseContract, RecallsCreateDataResponse, RecallsCreateRequest } from '../util/payloads';
 import HttpResponse from '../response/httpResponse';
-import { allRequiredFieldsCreateRecall, validDateFormat } from '../validator/validatorsRecall';
+import { allRequiredFieldsCreateRecall, validDateFormat } from '../validator/recall';
 import validAuthorisation from '../validator/authorisation';
 import Vehicles from '../data/vehicles';
 import ExternalApiErrorMessages from '../util/errorMessages';

@@ -13,21 +13,21 @@ import {
   allRequiredFieldsUpdateNonfixedRecall,
   rectificationDateIsInvalid,
   validDateFormat,
-} from '../../src/validator/validatorsRecall';
+} from '../../src/validator/recall';
 
 
 jest.mock('../../src/util/logger.ts');
 
 jest.mock('../../src/validator/authorisation.ts');
 jest.mock('../../src/validator/apiUsageKey.ts');
-jest.mock('../../src/validator/validatorsRecall');
+jest.mock('../../src/validator/recall');
 const mockAPIKeyValidator = jest.mocked(validUsageKey);
 const mockAuthValidator = jest.mocked(validAuthorisation);
 const mockDateValidator = jest.mocked(validDateFormat);
 const mockRequiredFields = jest.mocked(allRequiredFieldsUpdateNonfixedRecall);
 const mockRectificationDateInvalid = jest.mocked(rectificationDateIsInvalid);
 
-jest.mock('../../src/validator/validatorsRecall', () => {
+jest.mock('../../src/validator/recall', () => {
   return {
     validDateFormat: jest.fn().mockImplementation(() => mockDateValidator ),
     allRequiredFieldsUpdateNonfixedRecall: jest.fn().mockImplementation(() => mockRequiredFields ),

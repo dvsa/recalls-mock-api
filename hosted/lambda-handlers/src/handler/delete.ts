@@ -4,7 +4,7 @@ import type { APIGatewayProxyEvent, APIGatewayProxyResult } from 'aws-lambda';
 import ExternalApiErrorMessages from '../util/errorMessages';
 import HttpResponse from '../response/httpResponse';
 import validAuthorisation from '../validator/authorisation';
-import { alreadyRepaired } from '../validator/validatorsRecall';
+import { alreadyRepaired } from '../validator/recall';
 import validUsageKey from '../validator/apiUsageKey';
 import { findVehicle } from '../util/vehicleSearch';
 import { HttpErrorResponse } from '../response/httpErrorResponse';
