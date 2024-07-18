@@ -35,9 +35,7 @@ app.get('/recalls/vin/:vin', async (req, res) => {
     },
   } as unknown as APIGatewayProxyEvent;
   const response: APIGatewayProxyResult = await GetRecallsFunction.handler(event);
-  if (response.statusCode === 200) {
-    res.set('Content-Type', 'application/json');
-  }
+  res.set('Content-Type', 'application/json');
   console.log(response);
   res.status(response.statusCode);
   res.send(response.body);
@@ -52,9 +50,7 @@ app.post('/recalls', async (req, res) => {
     body: JSON.stringify(req.body),
   } as unknown as APIGatewayProxyEvent;
   const response: APIGatewayProxyResult = await CreateRecallsFunction.handler(event);
-  if (response.statusCode === 201) {
-    res.set('Content-Type', 'application/json');
-  }
+  res.set('Content-Type', 'application/json');
   console.log(response);
   res.status(response.statusCode);
   res.send(response.body);
@@ -78,9 +74,7 @@ app.put('/recalls/vin/:vin', async (req, res) => {
     body: JSON.stringify(req.body),
   } as unknown as APIGatewayProxyEvent;
   const response: APIGatewayProxyResult = await UpdateRecallsFunction.handler(event);
-  if (response.statusCode === 204) {
-    res.set('Content-Type', 'application/json');
-  }
+  res.set('Content-Type', 'application/json');
   console.log(response);
   res.status(response.statusCode);
   res.send(response.body);
@@ -103,9 +97,7 @@ app.delete('/recalls/vin/:vin', async (req, res) => {
     },
   } as unknown as APIGatewayProxyEvent;
   const response: APIGatewayProxyResult = await DeleteRecallsFunction.handler(event);
-  if (response.statusCode === 204) {
-    res.set('Content-Type', 'application/json');
-  }
+  res.set('Content-Type', 'application/json');
   console.log(response);
   res.status(response.statusCode);
   res.send(response.body);
@@ -120,9 +112,7 @@ app.post('/oauth2/v2.0/token', async (req, res) => {
     body: JSON.stringify(req.body),
   } as unknown as APIGatewayProxyEvent;
   const response: APIGatewayProxyResult = await AuthFunction.handler(event);
-  if (response.statusCode === 200) {
-    res.set('Content-Type', 'application/json');
-  }
+  res.set('Content-Type', 'application/json');
   console.log(response);
   res.status(response.statusCode);
   res.send(response.body);
