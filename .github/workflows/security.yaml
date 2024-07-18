@@ -4,13 +4,9 @@ on: push
 
 jobs:
   security:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - name: Run Snyk to check for vulnerabilities
-        uses: dvsa/.github/.github/workflows/nodejs-security.yaml@v4.1.0
-        env:
-          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
-        with:
-          continue-on-error: false
-          args: --all-projects --policy-path=.snyk
+    uses: dvsa/.github/.github/workflows/nodejs-security.yaml@v4.1.0
+    secrets:
+      SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+    with:
+      continue-on-error: false
+      args: --all-projects --policy-path=.snyk
