@@ -15,7 +15,7 @@ export default merge(common, {
       patterns: Object.keys(awsSamEntryMap).map((lambdaName) => ([
         { from: './.env', to: `.aws-sam/build/${lambdaName}/` },
       ].filter(Boolean) as CopyPlugin.ObjectPattern[]
-    )).flat(),
-}),
-],
+      )).flat(),
+    }),
+  ],
 });

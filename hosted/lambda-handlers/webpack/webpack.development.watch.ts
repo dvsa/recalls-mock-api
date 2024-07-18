@@ -1,7 +1,6 @@
-const { merge } = require('webpack-merge');
-const development = require('./webpack.development');
+import { merge } from 'webpack-merge';
+import development from './webpack.development';
 
 module.exports = merge(development, {
-  // @ts-ignore
-  watch: true
+  watch: true,
 });
