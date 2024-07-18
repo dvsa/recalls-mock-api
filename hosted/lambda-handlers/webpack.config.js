@@ -10,7 +10,7 @@ module.exports = {
 
   // Write the output to the .aws-sam/build folder
   output: {
-    filename: (chunkData) => awsSamPlugin.filename(chunkData),
+    filename: (/** @type {any} */ chunkData) => awsSamPlugin.filename(chunkData),
     libraryTarget: 'commonjs2',
     path: path.resolve('.')
   },

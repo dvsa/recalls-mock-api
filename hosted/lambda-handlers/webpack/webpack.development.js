@@ -8,6 +8,7 @@ module.exports = merge(common, {
   mode: 'development',
   devtool: 'source-map',
   plugins: [
+    // @ts-ignore
     new CopyPlugin({
       patterns: Object.keys((new AwsSamPlugin({ vscodeDebug: false }).entry())).map((lambdaName) => ([
         { from: './.env', to: `.aws-sam/build/${lambdaName}/`, noErrorOnMissing: true },
