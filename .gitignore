@@ -93,7 +93,7 @@ dist
 
 # Serverless directories
 .serverless/
-hosted/lambda-handlers/.aws-sam/build
+hosted/lambda-handlers/.aws-sam/
 
 # FuseBox cache
 .fusebox/
@@ -110,3 +110,4 @@ hosted/lambda-handlers/.aws-sam/build
 # IDE files
 .vscode
 .idea
+
