@@ -1,4 +1,4 @@
-import {RecallResponseContract, RecallsCreateRequest, RecallsUpdateRequest, RepairStatus,} from '../util/payloads';
+import { RecallResponseContract, RecallsCreateRequest, RecallsUpdateRequest, RepairStatus } from '../util/payloads';
 
 const dvsaCampaignRegex = new RegExp(/^[a-zA-Z]+\/[0-9]{4}\/[0-9]{3}/);
 const dateFormatRegex = new RegExp(/^[0-9]{4}-[0-9]{2}-[0-9]{2}/);

@@ -10,10 +10,7 @@ import { createDate } from '../util/date';
 import { HttpErrorResponse } from '../response/httpErrorResponse';
 import ErrorCodes from '../util/errorCodes';
 import ErrorMessages from '../util/errorMessages';
-const tokenRegex = new RegExp(/^Bearer\s.{12,}/g);
 
-
-// eslint-disable-next-line @typescript-eslint/require-await
 export const handler = async (event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> => {
   console.log(event.headers);
 

@@ -1,5 +1,5 @@
 const { merge } = require('webpack-merge');
-const development = require('./webpack.development.js');
+const development = require('./webpack.development');
 
 module.exports = merge(development, {
   // @ts-ignore

@@ -13,7 +13,6 @@ import ErrorCodes from '../util/errorCodes';
 import { HttpErrorResponse } from '../response/httpErrorResponse';
 import ErrorMessages from '../util/errorMessages';
 
-// eslint-disable-next-line @typescript-eslint/require-await
 export const handler = async (event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> => {
   if (!validAuthorisation(event.headers)) {
     return HttpErrorResponse(StatusCodes.UNAUTHORIZED, ErrorCodes.UNAUTHORIZED, ErrorMessages.UNAUTHORIZED);

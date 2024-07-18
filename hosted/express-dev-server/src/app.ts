@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/no-misused-promises */
-// Above rule disabled as express version 4 does not officially support async/await
 import express, { Express } from 'express';
 import { APIGatewayEventRequestContext, APIGatewayProxyEvent, APIGatewayProxyResult } from 'aws-lambda';
 
@@ -20,7 +18,6 @@ app.use(express.urlencoded({ extended: true }));
 
 app.get('/recalls/vin/:vin', async (req, res) => {
   const { dvsaCampaignReference, manufacturerCampaignReference } = req.query;
-  // console.log(req.headers);
   const event: APIGatewayProxyEvent = {
     requestContext: {
       requestId: v4(),
