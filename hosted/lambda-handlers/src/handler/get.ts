@@ -17,7 +17,7 @@ const tokenRegex = new RegExp(/^Bearer\s.{12,}/g);
 export const handler = async (event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> => {
   console.log(event.headers);
 
-  if(!validAuthorisation(event.headers)) {
+  if (!validAuthorisation(event.headers)) {
     return HttpErrorResponse(StatusCodes.UNAUTHORIZED, ErrorCodes.UNAUTHORIZED, ErrorMessages.UNAUTHORIZED);
   }
   if (!validUsageKey(event.headers)) {

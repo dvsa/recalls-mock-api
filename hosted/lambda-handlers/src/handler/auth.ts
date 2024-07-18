@@ -11,6 +11,7 @@ import {
 
 // eslint-disable-next-line @typescript-eslint/require-await
 export const handler = async (event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> => {
+  console.log(event.body);
   if (!event.body) {
     return HttpResponse(StatusCodes.BAD_REQUEST, ErrorMissingGrantType);
   }
