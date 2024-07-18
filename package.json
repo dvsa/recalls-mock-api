@@ -57,7 +57,7 @@
   },
   "lint-staged": {
     "*.ts": [
-      "eslint '*/**/*.ts' --quiet --fix",
+      "eslint '*/**/*.ts' --quiet --fix"
     ]
   },
   "version": "2.0.0"
