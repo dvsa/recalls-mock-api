@@ -1,58 +1,83 @@
-# Recalls API tester
+# MOT Recalls Mock API
 
-A SAM Local application to help development teams test output from their solution locally for the safety recalls API
+The Recalls Mock API is an application designed to help development teams locally test solutions which use DVSA's MOT Recalls API.
 
-The purpose of this application is to test the functionality of the API calls, not to emulate the modification of records in the database. Therefore, it should only be used to verify that each call works as expected, follow up calls will not reflect previous actions.
+The purpose of this application is to test the functionality of the API calls, not to emulate the modification of records in the database. Therefore, it should only be used to verify that each call works as expected, subsequent calls will not reflect previous actions.
+
+The app can be run as an express application or as a sam-local application 
 
 ## Requirements
 
-- node v16.17.1
-- [SAM CLI](https://docs.aws.amazon.com/serverless-application-model/latest/developerguide/serverless-sam-cli-install.html)
+- node v18.x
 - npm 8+
 
+If you would like to run the application using sam-local, you will also need:
+- Docker
+- [SAM CLI](https://docs.aws.amazon.com/serverless-application-model/latest/developerguide/serverless-sam-cli-install.html)
+
 ### Prerequisites
-- Create a `.env`
+- Create a `.env` in hosted/lambda-handlers
     ```shell
-    cp .env.example .env
+    npm run util:copy-env
     ```
 
 ## Build
 
-- `npm i`
-- `npm run build:dev`
+```shell
+  npm i
+```
+```shell
+  npm run build:dev
+```
 
-### Run using sam local
+# Run
+
+### Run using express
 Ensure build steps have been completed.
 
-1. `npm run start:dev`
-1. The lambdas should be available at `http://localhost:3000/`
+```shell
+  npm run start:dev
+```
 
-###  To run recalls API tester locally
-To run the recalls mock api locally, you will need to use Postman to send requests at `http://localhost:3000/`. A [postman collection](Postman/Recalls Mock API 2.6.0.postman_collection.json) has been included with this repo.
+### Run using sam local
+
+Ensure docker is running and build steps have been completed. 
+```shell
+  npm run start:sam
+```
+
+#### The lambdas will be available at `http://localhost:3000/`
+
+##  Testing Recalls Mock API locally
+To use the recalls mock api locally, send requests to `http://localhost:3000/`. 
+You can use tools such as [Postman](https://www.postman.com/) to do this. A [postman collection](Postman/Recalls Mock API 2.6.0.postman_collection.json) has been included with this repo.
 
 ## Sample Calls
 
-### API Usage Key
-An API Usage Key will be provided to you when you register for the service, this must be provided in the x-api-key header with every request.
-
 ### Authentication
- make a post request to http://127.0.0.1:3000/oauth2/v2.0/token
+
+The Recalls API requires users to generate a JWT token to add to the Authorization header of each request. 
+
+Make a post request to http://127.0.0.1:3000/oauth2/v2.0/token
  
  form data:
  ```json
-  grant_type:client_credentials
-  client_id:yourdvsaissuedclient_id
-  client_secret:yourdvsaissuedclient_secret
-  scope:http//:dvsaissuedscope.default
+  grant_type: client_credentials
+  client_id: yourdvsaissuedclient_id
+  client_secret: yourdvsaissuedclient_secret
+  scope: http//:dvsaissuedscope.default
 ```
+### API Usage Key
+An API Usage Key will be provided to you when you register for the MOT Recalls API service, this must be provided in the x-api-key header with every request. For the mock api, each request must contain the header 'x-api-key' or 'X-Api-Key' with a 10+ character string. 
+
 
 ### Create a new recall
- make a post request to http://127.0.0.1:3000/recalls/
+ make a POST request to http://127.0.0.1:3000/recalls/
  
- header:
+ headers:
  ```json
-  "Authorization": "insert bearer token",
-  "x-api-key": "insert usage key"
+  "Authorization": "Bearer token",
+  "x-api-key": "your usage key"
 ```
  body:
  ```json
@@ -64,13 +89,13 @@ An API Usage Key will be provided to you when you register for the service, this
 }
 ```
 ### Update a recall - Set status to fixed
- make a put request to http://127.0.0.1:3000/recalls/vin/ABCD122CBAD11433?dvsaCampaignReference=R/2022/002
+ make a PUT request to http://127.0.0.1:3000/recalls/vin/ABCD122CBAD11433?dvsaCampaignReference=R/2022/002
  the rectification date must be later than the open recalls campaign start date
 
- header:
+ headers:
  ```json
-  "Authorization": "insert bearer token",
-  "x-api-key": "insert usage key"
+  "Authorization": "Bearer token",
+  "x-api-key": "your usage key" 
 ```
  body:
  ```json
@@ -81,12 +106,12 @@ An API Usage Key will be provided to you when you register for the service, this
 ```
 
 ### Update a recall - Set status to not fixed
- make a put request to http://127.0.0.1:3000/recalls/vin/ABCD122CBAD11432?dvsaCampaignReference=R/2022/001
+ make a PUT request to http://127.0.0.1:3000/recalls/vin/ABCD122CBAD11432?dvsaCampaignReference=R/2022/001
  
- header:
+ headers:
  ```json
-  "Authorization": "insert bearer token",
-  "x-api-key": "insert usage key"
+  "Authorization": "Bearer token",
+  "x-api-key": "your usage key" 
 ```
  body:
  ```json
@@ -96,31 +121,47 @@ An API Usage Key will be provided to you when you register for the service, this
 ```
 ### Retrieve a recall
 
- make a get request to http://127.0.0.1:3000/recalls/vin/ABCD122CBAD11433?dvsaCampaignReference=R/2022/002
+ make a GET request to http://127.0.0.1:3000/recalls/vin/ABCD122CBAD11433?dvsaCampaignReference=R/2022/002
  
- header:
+ headers:
  ```json
-  "Authorization": "insert bearer token",
-  "x-api-key": "insert usage key"
+  "Authorization": "Bearer token",
+  "x-api-key": "your usage key" 
 ```
 
 ### Delete a recall
 
- make a delete request to http://127.0.0.1:3000/recalls/vin/ABCD122CBAD11433?dvsaCampaignReference=R/2022/002
+ make a DELETE request to http://127.0.0.1:3000/recalls/vin/ABCD122CBAD11433?dvsaCampaignReference=R/2022/002
  
- header:
+ headers:
  ```json
-  "Authorization": "insert bearer token",
-  "x-api-key": "insert usage key"
+  "Authorization": "Bearer token",
+  "x-api-key": "your usage key" 
 ```
 
 ## Directories
 
-`src/handler/`
-Lambda handler methods here.
+`hosted/lambda-handlers/src/handler/`
+Lambda handler methods.
 
-`src/util `
-Logger utility / helper functions.
+`hosted/lambda-handlers/src/util `
+Utility and helper functions, including the Logger.
 
-`src/util/vehicles.ts `
-a list of vehicles to be used for testing.
+`hosted/express-dev-server`
+Express app. 
+
+## Adding Test Data
+
+You can add more test data to the application by modifying `hosted/lambda-handlers/src/data/vehicles.ts `
+This file contains a list of vehicle recalls to be used for testing.
+To add another vehicle recalls, append to the array an object with the following format:
+```
+{
+  vin: 'YOUR VIN',
+  manufacturerCampaignReference: 'YOUR REF',
+  dvsaCampaignReference: 'YOUR REF',
+  recallCampaignStartDate: 'YYYY-MM-DD',
+  manufacturerId: 'YOUR MANUFACTURER NAME',
+  repairStatus: RepairStatus.NOT_FIXED or RepairStatus.FIXED,
+},
+```

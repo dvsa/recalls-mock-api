@@ -1,6 +1,25 @@
 {
   "name": "@dvsa/recalls-mock-api",
   "description": "MOT Recalls Mock API",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dvsa/recalls-mock-api.git"
+  },
+  "contributors": [
+    {
+      "name": "Shaun Hare",
+      "email": "shaun.hare@dvsa.gov.uk"
+    },
+    {
+      "name": "Alexis Corney",
+      "email": "a.corney@kainos.com"
+    },
+    {
+      "name": "Justin Johnston",
+      "email": "justin.johnston@kainos.com"
+    }
+  ],
+  "license": "Open Government Licence v3.0",
   "devDependencies": {
     "@dvsa/eslint-config-ts": "^2.4.0",
     "@types/aws-lambda": "^8.10.141",
@@ -42,9 +61,12 @@
     "hosted/lambda-handlers",
     "hosted/express-dev-server"
   ],
+
   "scripts": {
     "build:dev": "lerna run --parallel build:dev",
     "start:dev": "lerna run start:dev --scope @recalls-mock-api/express-dev-server",
+    "start:sam": "cd hosted/lambda-handlers && sam local start-api",
+    "util:copy-env": "cp hosted/lambda-handlers/.env.example hosted/lambda-handlers/.env",
     "test": "jest --coverage",
     "test:ci": "lerna run --concurrency 1 test:ci",
     "lint": "eslint '*/**/*.ts' --quiet --fix",
