@@ -55,7 +55,6 @@ app.post('/recalls', async (req, res) => {
 
 app.put('/recalls/vin/:vin', async (req, res) => {
   const { dvsaCampaignReference, manufacturerCampaignReference } = req.query;
-  // console.log(req.headers);
   const event: APIGatewayProxyEvent = {
     requestContext: {
       requestId: v4(),
@@ -79,7 +78,6 @@ app.put('/recalls/vin/:vin', async (req, res) => {
 
 app.delete('/recalls/vin/:vin', async (req, res) => {
   const { dvsaCampaignReference, manufacturerCampaignReference } = req.query;
-  // console.log(req.headers);
   const event: APIGatewayProxyEvent = {
     requestContext: {
       requestId: v4(),

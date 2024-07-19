@@ -12,8 +12,6 @@ import ErrorCodes from '../util/errorCodes';
 import ErrorMessages from '../util/errorMessages';
 
 export const handler = async (event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> => {
-  console.log(event.headers);
-
   if (!validAuthorisation(event.headers)) {
     return HttpErrorResponse(StatusCodes.UNAUTHORIZED, ErrorCodes.UNAUTHORIZED, ErrorMessages.UNAUTHORIZED);
   }
