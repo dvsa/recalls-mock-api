@@ -1,0 +1,4 @@
+{
+  "extends": "@recalls-mock-api/lambda-handlers/tsconfig.json",
+  "include": ["src/**/*.ts"]
+}

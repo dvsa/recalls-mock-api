@@ -15,6 +15,10 @@
       {
         "devDependencies": true
       }
-    ]
+    ],
+      // Disable the require-await rule because async handler functions have no 'await' expression
+      "@typescript-eslint/require-await": "off",
+      // no-misued-promises disabled as express version 4 does not officially support async/await
+      "@typescript-eslint/no-misused-promises": "off"
   }
 }

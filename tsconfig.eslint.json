@@ -1,0 +1,16 @@
+{
+  "compilerOptions": {
+    "types": ["@types/node", "@types/jest"],
+    "noEmit": true,
+    "allowJs": true
+  },
+  "extends": "./tsconfig.json",
+  "include": [
+    ".eslintrc.js",
+    "hosted/**/*",
+    "types/**/*",
+    "libraries/**/*",
+    "test-suites/api-tests",
+    "commitlint.config.js"
+  ]
+}

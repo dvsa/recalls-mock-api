@@ -1,0 +1,9 @@
+enum ErrorCodes {
+  BAD_REQUEST = 'RECALLS-BR-01',
+  UNAUTHORIZED = 'RECALLS-UA-01',
+  FORBIDDEN = 'RECALLS-FB-01',
+  NO_DATA_FOUND = 'RECALLS-NF-01',
+  CONFLICT = 'RECALLS-CF-01',
+}
+
+export default ErrorCodes;
