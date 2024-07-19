@@ -3,7 +3,8 @@ import { APIGatewayProxyEventHeaders } from 'aws-lambda';
 const tokenRegex = new RegExp(/^Bearer\s.{12,}/);
 
 const validAuthorisation = (headers:APIGatewayProxyEventHeaders):boolean => {
-  return headers.authorization != null && tokenRegex.test(headers.authorization) ;
+  const token = headers.authorization ?? headers['Authorization']
+  return token != null && tokenRegex.test(token) ;
 };
 
 export default validAuthorisation;

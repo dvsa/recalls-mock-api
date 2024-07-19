@@ -10,7 +10,6 @@ import {
 } from '../validator/authentication';
 
 export const handler = async (event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> => {
-  console.log(event.body);
   if (!event.body) {
     return HttpResponse(StatusCodes.BAD_REQUEST, ErrorMissingGrantType);
   }

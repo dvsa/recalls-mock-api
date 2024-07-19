@@ -19,13 +19,6 @@
     "url": "git+https://github.com/dvsa/recalls-mock-api.git",
     "directory": "hosted/lambda-handlers"
   },
-  "contributors": [
-    {
-      "name": "Shaun Hare",
-      "email": "shaun.hare@dvsa.gov.uk"
-    }
-  ],
-  "license": "Open Government Licence v3.0",
   "dependencies": {
     "aws-sdk": "^2.1659.0",
     "http-status-codes": "^2.3.0"
