@@ -10,9 +10,7 @@ import ErrorMessages from '../../src/util/errorMessages';
 import validUsageKey from '../../src/validator/apiUsageKey';
 import validAuthorisation from '../../src/validator/authorisation';
 
-
 jest.mock('../../src/util/logger.ts');
-
 jest.mock('../../src/validator/authorisation.ts');
 jest.mock('../../src/validator/apiUsageKey.ts');
 const mockAPIKeyValidator = jest.mocked(validUsageKey);

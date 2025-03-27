@@ -1,4 +1,5 @@
 import express, { Express } from 'express';
+import multer, { Multer } from 'multer';
 import { APIGatewayEventRequestContext, APIGatewayProxyEvent, APIGatewayProxyResult } from 'aws-lambda';
 
 import {
@@ -12,6 +13,7 @@ import {
 import 'dotenv/config';
 import { v4 } from 'uuid';
 
+const upload: Multer = multer();
 const app: Express = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -98,7 +100,7 @@ app.delete('/recalls/vin/:vin', async (req, res) => {
   res.send(response.body);
 });
 
-app.post('/oauth2/v2.0/token', async (req, res) => {
+app.post('/oauth2/v2.0/token', upload.none(), async (req, res) => {
   const event: APIGatewayProxyEvent = {
     requestContext: {
       requestId: v4(),

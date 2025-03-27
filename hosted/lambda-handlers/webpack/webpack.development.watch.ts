@@ -1,6 +1,6 @@
 import { merge } from 'webpack-merge';
 import development from './webpack.development';
 
-module.exports = merge(development, {
+export default merge(development, {
   watch: true,
 });

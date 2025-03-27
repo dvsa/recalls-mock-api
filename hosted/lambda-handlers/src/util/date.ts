@@ -1,3 +1,1 @@
-export const createDate = (): string => {
-  return (new Date()).toISOString();
-};
+export const createDate = (): string => (new Date()).toISOString();
