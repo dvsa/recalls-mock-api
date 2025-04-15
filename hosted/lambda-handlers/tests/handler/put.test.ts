@@ -15,9 +15,7 @@ import {
   validDateFormat,
 } from '../../src/validator/recall';
 
-
 jest.mock('../../src/util/logger.ts');
-
 jest.mock('../../src/validator/authorisation.ts');
 jest.mock('../../src/validator/apiUsageKey.ts');
 jest.mock('../../src/validator/recall');
@@ -27,22 +25,19 @@ const mockDateValidator = jest.mocked(validDateFormat);
 const mockRequiredFields = jest.mocked(allRequiredFieldsUpdateNonfixedRecall);
 const mockRectificationDateInvalid = jest.mocked(rectificationDateIsInvalid);
 
-jest.mock('../../src/validator/recall', () => {
-  return {
-    validDateFormat: jest.fn().mockImplementation(() => mockDateValidator ),
-    allRequiredFieldsUpdateNonfixedRecall: jest.fn().mockImplementation(() => mockRequiredFields ),
-    allRequiredFieldsUpdateFixedRecall: jest.fn().mockImplementation(() => mockRequiredFields ),
-    rectificationDateIsInvalid: jest.fn().mockImplementation( () => mockRectificationDateInvalid ),
-  };
-});
+jest.mock('../../src/validator/recall', () => ({
+  validDateFormat: jest.fn().mockImplementation(() => mockDateValidator),
+  allRequiredFieldsUpdateNonfixedRecall: jest.fn().mockImplementation(() => mockRequiredFields),
+  allRequiredFieldsUpdateFixedRecall: jest.fn().mockImplementation(() => mockRequiredFields),
+  rectificationDateIsInvalid: jest.fn().mockImplementation(() => mockRectificationDateInvalid),
+}));
 
 describe('Test PUT Lambda Function', () => {
-
   beforeEach(() => {
     jest.clearAllMocks();
     mockAuthValidator.mockReturnValue(true);
     mockAPIKeyValidator.mockReturnValue(true);
-    mockDateValidator .mockReturnValue(true);
+    mockDateValidator.mockReturnValue(true);
     mockRequiredFields.mockReturnValue(true);
     mockRectificationDateInvalid.mockReturnValue(false);
   });

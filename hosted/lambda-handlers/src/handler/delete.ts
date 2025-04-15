@@ -9,14 +9,13 @@ import validUsageKey from '../validator/apiUsageKey';
 import { findVehicle } from '../util/vehicleSearch';
 import { HttpErrorResponse } from '../response/httpErrorResponse';
 import ErrorCodes from '../util/errorCodes';
-import ErrorMessages from '../util/errorMessages';
 
 export const handler = async (event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> => {
   if (!validAuthorisation(event.headers)) {
-    return HttpErrorResponse(StatusCodes.UNAUTHORIZED, ErrorCodes.UNAUTHORIZED, ErrorMessages.UNAUTHORIZED);
+    return HttpErrorResponse(StatusCodes.UNAUTHORIZED, ErrorCodes.UNAUTHORIZED, ExternalApiErrorMessages.UNAUTHORIZED);
   }
   if (!validUsageKey(event.headers)) {
-    return HttpErrorResponse(StatusCodes.FORBIDDEN, ErrorCodes.FORBIDDEN, ErrorMessages.UNRECOGNIZED_API_KEY);
+    return HttpErrorResponse(StatusCodes.FORBIDDEN, ErrorCodes.FORBIDDEN, ExternalApiErrorMessages.UNRECOGNIZED_API_KEY);
   }
   if (!event.queryStringParameters) {
     return HttpErrorResponse(StatusCodes.BAD_REQUEST, ErrorCodes.BAD_REQUEST, ExternalApiErrorMessages.DvsaAndManufacturerCampaignReferenceMissing);

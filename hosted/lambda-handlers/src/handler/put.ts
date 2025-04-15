@@ -15,14 +15,13 @@ import validUsageKey from '../validator/apiUsageKey';
 import { findVehicle } from '../util/vehicleSearch';
 import { HttpErrorResponse } from '../response/httpErrorResponse';
 import ErrorCodes from '../util/errorCodes';
-import ErrorMessages from '../util/errorMessages';
 
 export const handler = async (event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> => {
   if (!validAuthorisation(event.headers)) {
-    return HttpErrorResponse(StatusCodes.UNAUTHORIZED, ErrorCodes.UNAUTHORIZED, ErrorMessages.UNAUTHORIZED);
+    return HttpErrorResponse(StatusCodes.UNAUTHORIZED, ErrorCodes.UNAUTHORIZED, ExternalApiErrorMessages.UNAUTHORIZED);
   }
   if (!validUsageKey(event.headers)) {
-    return HttpErrorResponse(StatusCodes.FORBIDDEN, ErrorCodes.FORBIDDEN, ErrorMessages.FORBIDDEN);
+    return HttpErrorResponse(StatusCodes.FORBIDDEN, ErrorCodes.FORBIDDEN, ExternalApiErrorMessages.FORBIDDEN);
   }
   if (!event.body) {
     return HttpErrorResponse(StatusCodes.BAD_REQUEST, ErrorCodes.BAD_REQUEST, ExternalApiErrorMessages.InvalidRequestBody);
@@ -46,7 +45,7 @@ export const handler = async (event: APIGatewayProxyEvent): Promise<APIGatewayPr
     return HttpErrorResponse(StatusCodes.BAD_REQUEST, ErrorCodes.BAD_REQUEST, ExternalApiErrorMessages.InvalidRequestBody);
   }
 
-  if (recallUpdate.repairStatus == RepairStatus.FIXED) {
+  if (recallUpdate.repairStatus === RepairStatus.FIXED) {
     if (!validDateFormat(recallUpdate.rectificationDate)) {
       return HttpErrorResponse(StatusCodes.BAD_REQUEST, ErrorCodes.BAD_REQUEST, ExternalApiErrorMessages.InvalidDateFormat);
     }
@@ -57,7 +56,7 @@ export const handler = async (event: APIGatewayProxyEvent): Promise<APIGatewayPr
   if (!vehicleFound) {
     return HttpErrorResponse(StatusCodes.NOT_FOUND, ErrorCodes.NO_DATA_FOUND, getReasonPhrase(StatusCodes.NOT_FOUND));
   }
-  if (recallUpdate.repairStatus == RepairStatus.FIXED && rectificationDateIsInvalid(recallUpdate.rectificationDate, vehicleFound.recallCampaignStartDate)) {
+  if (recallUpdate.repairStatus === RepairStatus.FIXED && rectificationDateIsInvalid(recallUpdate.rectificationDate, vehicleFound.recallCampaignStartDate)) {
     return HttpErrorResponse(StatusCodes.BAD_REQUEST, ErrorCodes.BAD_REQUEST, ExternalApiErrorMessages.InvalidRectificationDate);
   }
 
@@ -67,19 +66,14 @@ export const handler = async (event: APIGatewayProxyEvent): Promise<APIGatewayPr
         return HttpErrorResponse(StatusCodes.BAD_REQUEST, ErrorCodes.BAD_REQUEST, ExternalApiErrorMessages.InvalidRequestBody);
       }
       return HttpResponse(StatusCodes.NO_CONTENT, getReasonPhrase(StatusCodes.NO_CONTENT));
-    } else {
-      return HttpErrorResponse(StatusCodes.BAD_REQUEST, ErrorCodes.BAD_REQUEST, ExternalApiErrorMessages.VehicleRecallAlreadyNotFixed);
     }
-  } else {
-    if (!allRequiredFieldsUpdateFixedRecall(recallUpdate)) {
-      return HttpErrorResponse(StatusCodes.BAD_REQUEST, ErrorCodes.BAD_REQUEST, ExternalApiErrorMessages.InvalidRequestBody);
-    }
-    if (recallUpdate.repairStatus === RepairStatus.NOT_FIXED) {
-      return HttpResponse(StatusCodes.NO_CONTENT, getReasonPhrase(StatusCodes.NO_CONTENT));
-    } else {
-      return HttpErrorResponse(StatusCodes.BAD_REQUEST, ErrorCodes.BAD_REQUEST, ExternalApiErrorMessages.VehicleRecallAlreadyFixed);
-    }
+    return HttpErrorResponse(StatusCodes.BAD_REQUEST, ErrorCodes.BAD_REQUEST, ExternalApiErrorMessages.VehicleRecallAlreadyNotFixed);
   }
+  if (!allRequiredFieldsUpdateFixedRecall(recallUpdate)) {
+    return HttpErrorResponse(StatusCodes.BAD_REQUEST, ErrorCodes.BAD_REQUEST, ExternalApiErrorMessages.InvalidRequestBody);
+  }
+  if (recallUpdate.repairStatus === RepairStatus.NOT_FIXED) {
+    return HttpResponse(StatusCodes.NO_CONTENT, getReasonPhrase(StatusCodes.NO_CONTENT));
+  }
+  return HttpErrorResponse(StatusCodes.BAD_REQUEST, ErrorCodes.BAD_REQUEST, ExternalApiErrorMessages.VehicleRecallAlreadyFixed);
 };
-
-

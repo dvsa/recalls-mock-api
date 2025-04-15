@@ -8,8 +8,8 @@ The app can be run as an express application or as a sam-local application
 
 ## Requirements
 
-- node v18.x
-- npm 8+
+- node v20.x
+- npm 10+
 
 If you would like to run the application using sam-local, you will also need:
 - Docker

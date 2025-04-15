@@ -6,11 +6,7 @@
   },
   "extends": "./tsconfig.json",
   "include": [
-    ".eslintrc.js",
-    "hosted/**/*",
-    "types/**/*",
-    "libraries/**/*",
-    "test-suites/api-tests",
-    "commitlint.config.js"
+    ".eslintrc",
+    "hosted/**/*"
   ]
 }

@@ -15,13 +15,10 @@ const mockAuthValidator = jest.mocked(validAuthorisation);
 const mockDateValidator = jest.mocked(validDateFormat);
 const mockAllRequiredFieldsCreateRecall = jest.mocked(allRequiredFieldsCreateRecall);
 
-
-jest.mock('../../src/validator/recall', () => {
-  return {
-    validDateFormat: jest.fn().mockImplementation(() => mockDateValidator ),
-    allRequiredFieldsCreateRecall: jest.fn().mockImplementation(() => mockAllRequiredFieldsCreateRecall ),
-  };
-});
+jest.mock('../../src/validator/recall', () => ({
+  validDateFormat: jest.fn().mockImplementation(() => mockDateValidator),
+  allRequiredFieldsCreateRecall: jest.fn().mockImplementation(() => mockAllRequiredFieldsCreateRecall),
+}));
 
 jest.mock('../../src/util/logger.ts');
 
@@ -30,7 +27,7 @@ describe('Test Post Lambda Function', () => {
     jest.clearAllMocks();
     mockAuthValidator.mockReturnValue(true);
     mockAPIKeyValidator.mockReturnValue(true);
-    mockDateValidator .mockReturnValue(true);
+    mockDateValidator.mockReturnValue(true);
     mockAllRequiredFieldsCreateRecall.mockReturnValue(true);
   });
 

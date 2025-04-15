@@ -1,7 +1,9 @@
 import 'dotenv/config';
 import type { APIGatewayProxyEvent, APIGatewayProxyResult } from 'aws-lambda';
 import { StatusCodes } from 'http-status-codes';
-import { RecallDetail, RecallResponseContract, RecallsCreateDataResponse, RecallsCreateRequest } from '../util/payloads';
+import {
+  RecallDetail, RecallResponseContract, RecallsCreateDataResponse, RecallsCreateRequest,
+} from '../util/payloads';
 import HttpResponse from '../response/httpResponse';
 import { allRequiredFieldsCreateRecall, validDateFormat } from '../validator/recall';
 import validAuthorisation from '../validator/authorisation';
@@ -11,14 +13,13 @@ import validUsageKey from '../validator/apiUsageKey';
 import { createDate } from '../util/date';
 import ErrorCodes from '../util/errorCodes';
 import { HttpErrorResponse } from '../response/httpErrorResponse';
-import ErrorMessages from '../util/errorMessages';
 
 export const handler = async (event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> => {
   if (!validAuthorisation(event.headers)) {
-    return HttpErrorResponse(StatusCodes.UNAUTHORIZED, ErrorCodes.UNAUTHORIZED, ErrorMessages.UNAUTHORIZED);
+    return HttpErrorResponse(StatusCodes.UNAUTHORIZED, ErrorCodes.UNAUTHORIZED, ExternalApiErrorMessages.UNAUTHORIZED);
   }
   if (!validUsageKey(event.headers)) {
-    return HttpErrorResponse(StatusCodes.FORBIDDEN, ErrorCodes.FORBIDDEN, ErrorMessages.UNRECOGNIZED_API_KEY);
+    return HttpErrorResponse(StatusCodes.FORBIDDEN, ErrorCodes.FORBIDDEN, ExternalApiErrorMessages.UNRECOGNIZED_API_KEY);
   }
   if (!event.body) {
     return HttpErrorResponse(StatusCodes.BAD_REQUEST, ErrorCodes.BAD_REQUEST, ExternalApiErrorMessages.InvalidRequestBody);
@@ -54,6 +55,4 @@ const createCreatedDataResponse = (recall:RecallsCreateRequest):RecallsCreateDat
   return recallDataResponse;
 };
 
-const createConflictMessage = (duplicateVehicle: RecallResponseContract): string => {
-  return `Vehicle already registered with VIN: ${duplicateVehicle.vin} and DvsaCampaignReference: ${duplicateVehicle.dvsaCampaignReference}`;
-};
+const createConflictMessage = (duplicateVehicle: RecallResponseContract): string => `Vehicle already registered with VIN: ${duplicateVehicle.vin} and DvsaCampaignReference: ${duplicateVehicle.dvsaCampaignReference}`;

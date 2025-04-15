@@ -7,7 +7,7 @@ export const findVehicle = (vin: string, dvsaCampaignReference?:string, manufact
     vehicleFound = Vehicles.find((vehicle) => vehicle.vin === vin && vehicle.dvsaCampaignReference && vehicle.manufacturerCampaignReference === manufacturerCampaignReference);
   } else if (dvsaCampaignReference) {
     vehicleFound = Vehicles.find((vehicle) => vehicle.vin === vin && vehicle.dvsaCampaignReference === dvsaCampaignReference);
-  }  else {
+  } else {
     vehicleFound = Vehicles.find((vehicle) => vehicle.vin === vin && vehicle.manufacturerCampaignReference === manufacturerCampaignReference);
   }
 

@@ -8,16 +8,18 @@ permissions:
 
 jobs:
   lint:
-    uses: dvsa/.github/.github/workflows/nodejs-lint.yaml@v4.0.1
+    uses: dvsa/.github/.github/workflows/nodejs-lint.yaml@v5.0.4
+    with:
+      node-version: ${{ vars.NODE_VERSION }}
 
   test:
-    uses: dvsa/.github/.github/workflows/nodejs-test.yaml@v4.0.1
+    uses: dvsa/.github/.github/workflows/nodejs-test.yaml@v5.0.4
     with:
       test-command: npm run test:ci
-      npm-version: 9.8.0 # locked at this for now as workspace support removed from lerna in later npm versions
+      node-version: ${{ vars.NODE_VERSION }}
 
   security:
-    uses: dvsa/.github/.github/workflows/nodejs-security.yaml@v4.0.1
+    uses: dvsa/.github/.github/workflows/nodejs-security.yaml@v5.0.4
     secrets:
       SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
     with:
@@ -25,10 +27,11 @@ jobs:
       args: --all-projects --policy-path=.snyk
 
   build:
-    uses: dvsa/.github/.github/workflows/nodejs-build.yaml@v4.0.1
+    uses: dvsa/.github/.github/workflows/nodejs-build.yaml@v5.0.4
     needs: [test]
     with:
       upload-artifact: false
       build-folder: dist-build
       build-folder-path: ./hosted/lambda-handlers/dist
       build-command: npm run build:prod
+      node-version: ${{ vars.NODE_VERSION }}
