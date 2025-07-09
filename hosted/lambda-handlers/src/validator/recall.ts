@@ -17,7 +17,6 @@ export const alreadyRepaired = (vehicle:RecallResponseContract):boolean => vehic
 export const allRequiredFieldsCreateRecall = (recall:RecallsCreateRequest):boolean => (
   checkProperty(recall.vin)
     && checkProperty(recall.manufacturerCampaignReference)
-    && checkProperty(recall.dvsaCampaignReference)
     && checkProperty(recall.recallCampaignStartDate)
 );
 

@@ -1,7 +1,7 @@
 export type RecallsCreateRequest = {
   vin: string,
   manufacturerCampaignReference: string,
-  dvsaCampaignReference: string,
+  dvsaCampaignReference?: string,
   recallCampaignStartDate: string,
 };
 
@@ -29,7 +29,7 @@ export type RecallsCreateDataResponse = {
 export type RecallDetail = {
   vin: string,
   manufacturerCampaignReference: string,
-  dvsaCampaignReference: string,
+  dvsaCampaignReference?: string,
   recallCampaignStartDate: string,
 };
 
