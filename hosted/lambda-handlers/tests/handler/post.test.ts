@@ -68,6 +68,7 @@ describe('Test Post Lambda Function', () => {
       recallCampaignStartDate: '2022-01-31',
     };
 
+    // eslint-disable-next-line security/detect-object-injection
     delete body[field];
 
     const eventMock: APIGatewayProxyEvent = <APIGatewayProxyEvent> {
