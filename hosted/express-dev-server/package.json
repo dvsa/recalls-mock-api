@@ -19,7 +19,7 @@
     "@recalls-mock-api/lambda-handlers": "^1.0.0",
     "dotenv": "^16.4.7",
     "express": "^4.21.2",
-    "multer": "^2.0.1"
+    "multer": "^2.0.2"
   },
   "devDependencies": {
     "@types/aws-lambda": "^8.10.148",
