@@ -1,11 +1,15 @@
 import type {
-  APIGatewayProxyEvent, APIGatewayProxyResult,
+  APIGatewayProxyEvent,
+  APIGatewayProxyEventPathParameters,
+  APIGatewayProxyEventQueryStringParameters,
+  APIGatewayProxyResult,
 } from 'aws-lambda';
 import { handler } from '../../src/handler/post';
 import validUsageKey from '../../src/validator/apiUsageKey';
 import validAuthorisation from '../../src/validator/authorisation';
 import Vehicles from '../../src/data/vehicles';
 import { RecallsCreateRequest } from '../../src/util/payloads';
+import ErrorMessages from '../../src/util/errorMessages';
 
 jest.mock('../../src/validator/authorisation.ts');
 jest.mock('../../src/validator/apiUsageKey.ts');
@@ -70,6 +74,23 @@ describe('Test Post Lambda Function', () => {
 
     // eslint-disable-next-line security/detect-object-injection
     delete body[field];
+
+    const eventMock: APIGatewayProxyEvent = <APIGatewayProxyEvent> {
+      body: JSON.stringify(body),
+    };
+
+    const res: APIGatewayProxyResult = await handler(eventMock);
+
+    expect(res.statusCode).toBe(400);
+  });
+
+  test('should return 400 if campaign reference too long', async () => {
+    const body: RecallsCreateRequest = {
+      vin: Vehicles[0].vin,
+      manufacturerCampaignReference: '50CharactersLongManufacturerCampaignReferenceThatExceedsTheLimit',
+      dvsaCampaignReference: Vehicles[0].dvsaCampaignReference,
+      recallCampaignStartDate: '2025-07-23',
+    };
 
     const eventMock: APIGatewayProxyEvent = <APIGatewayProxyEvent> {
       body: JSON.stringify(body),
