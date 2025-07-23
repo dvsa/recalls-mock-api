@@ -1,7 +1,5 @@
 import type {
   APIGatewayProxyEvent,
-  APIGatewayProxyEventPathParameters,
-  APIGatewayProxyEventQueryStringParameters,
   APIGatewayProxyResult,
 } from 'aws-lambda';
 import { handler } from '../../src/handler/post';
@@ -9,7 +7,6 @@ import validUsageKey from '../../src/validator/apiUsageKey';
 import validAuthorisation from '../../src/validator/authorisation';
 import Vehicles from '../../src/data/vehicles';
 import { RecallsCreateRequest } from '../../src/util/payloads';
-import ErrorMessages from '../../src/util/errorMessages';
 
 jest.mock('../../src/validator/authorisation.ts');
 jest.mock('../../src/validator/apiUsageKey.ts');
