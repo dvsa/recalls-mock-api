@@ -85,5 +85,9 @@
   "engines": {
     "node": "20.*",
     "npm": "10.*"
+  },
+  "overrides": {
+    "form-data": "^4.0.4",
+    "brace-expansion": "^2.0.1"
   }
 }
